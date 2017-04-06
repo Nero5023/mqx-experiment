@@ -31,7 +31,7 @@ void task_uart0_re(uint32_t initial)
 
 		DISABLE_INTERRUPTS;
 		// 根据硬件过滤地址，判断帧类型（握手帧还是转发帧）
-		uart_send_string(UART_0,"Got a frame.");
+		uart_send_string(UART_0,"Got a frame from UART0.\n");
 		if(g_uart_recvBuf[2] == 0)    //握手命令
 	    	{
 	    		g_uart_sentBuf[0]=(uint_8)'M';     //

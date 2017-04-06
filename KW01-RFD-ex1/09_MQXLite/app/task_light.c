@@ -7,7 +7,7 @@
 #include "01_app_include.h"    //应用任务公共头文件
 
 // 宏定义任务内部使用的常量
-#define DELAY_TIMES       200
+#define ONE_SECOND_DELAY  200
 
 //===========================================================================
 //任务名称：task_light
@@ -26,6 +26,12 @@ void task_light(uint_32 initial)
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
 
 		//2）任务延时1秒
-		_time_delay_ticks(DELAY_TIMES); //每个tick对应5ms，延时200*5ms=1s
+		_time_delay_ticks(ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+
+		HD_adr=255;
+	    RF_Init(HD_adr);		    //RF模块初始化
+
+		 _lwevent_set(&lwevent_group,EVENT_RF_SEND);	//置RF发送事件位（EVENT_RF_SEND），触发task_rf_send任务
+
 	}//任务循环体end_while
 }

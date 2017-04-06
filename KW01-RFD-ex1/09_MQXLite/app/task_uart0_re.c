@@ -32,26 +32,26 @@ void task_uart0_re(uint32_t initial)
 		DISABLE_INTERRUPTS;
 		// 根据硬件过滤地址，判断帧类型（握手帧还是转发帧）
 		uart_send_string(UART_0,"Got a frame.");
-		if(g_uart_recvBuf[2] == 0)    //握手命令
-	    	{
-	    		g_uart_sentBuf[0]=(uint_8)'M';     //
-	    		g_uart_sentBuf[1]=7;               //
-	    		g_uart_sentBuf[2]  = (uint_8)'C';  //
-	    		g_uart_sentBuf[3]  = (uint_8)'P';  //"PCNode"
-	    		g_uart_sentBuf[4]  = (uint_8)'C';
-	    		g_uart_sentBuf[5]  = (uint_8)'N';
-	    		g_uart_sentBuf[6]  = (uint_8)'o';
-	    		g_uart_sentBuf[7]  = (uint_8)'d';
-	    		g_uart_sentBuf[8]  = (uint_8)'e';
-	    		g_uart_sentBuf[9]  = (uint_8)'U';  //
-				uart_sendN(UART_0,10,&g_uart_sentBuf[0]);
-	    	}
-		else      // 启动转发
-		{
-			HD_adr=g_uart_recvBuf[2];   //HD_adr为全局变量，硬件地址
-		    RF_Init(HD_adr);		    //RF模块初始化
-			 _lwevent_set(&lwevent_group,EVENT_RF_SEND);	//置RF发送事件位（EVENT_RF_SEND），触发task_rf_send任务
-		}
+//		if(g_uart_recvBuf[2] == 0)    //握手命令
+//	    	{
+//	    		g_uart_sentBuf[0]=(uint_8)'M';     //
+//	    		g_uart_sentBuf[1]=7;               //
+//	    		g_uart_sentBuf[2]  = (uint_8)'C';  //
+//	    		g_uart_sentBuf[3]  = (uint_8)'P';  //"PCNode"
+//	    		g_uart_sentBuf[4]  = (uint_8)'C';
+//	    		g_uart_sentBuf[5]  = (uint_8)'N';
+//	    		g_uart_sentBuf[6]  = (uint_8)'o';
+//	    		g_uart_sentBuf[7]  = (uint_8)'d';
+//	    		g_uart_sentBuf[8]  = (uint_8)'e';
+//	    		g_uart_sentBuf[9]  = (uint_8)'U';  //
+//				uart_sendN(UART_0,10,&g_uart_sentBuf[0]);
+//	    	}
+//		else      // 启动转发
+//		{
+//			HD_adr=g_uart_recvBuf[2];   //HD_adr为全局变量，硬件地址
+//		    RF_Init(HD_adr);		    //RF模块初始化
+//			 _lwevent_set(&lwevent_group,EVENT_RF_SEND);	//置RF发送事件位（EVENT_RF_SEND），触发task_rf_send任务
+//		}
 //		//2）解帧g_uart_recvBuf,g_uart_recvBuf[2]是命令字节
 //		switch(g_uart_recvBuf[2])
 //		{

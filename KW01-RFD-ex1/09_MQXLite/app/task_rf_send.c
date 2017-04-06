@@ -26,7 +26,7 @@ void task_rf_send(uint32_t initial)
 		//1）无限等待RF发送事件位置一
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_SEND, FALSE, NULL);
 
-
+		/*
 		rf_sentDataLen = g_uart_recvBuf[1]-1;  //需要RF转发的字节数
 
 		for (i=0;i<rf_sentDataLen;i++) rf_sentBuf[i]=g_uart_recvBuf[i+3];
@@ -37,6 +37,9 @@ void task_rf_send(uint32_t initial)
 	        RFSendDataByCSMACA(rf_sentDataLen,&rf_sentBuf[0],0,HD_adr);
 		else
 	        RFSendDataByCSMACA(rf_sentDataLen,&rf_sentBuf[0],1,HD_adr);
+		*/
+		RFSendDataByCSMACA(15,"An RF test msg.",0,HD_adr);
+		uart_send_string(UART_0,"Sended a test frame.\n");
 
 		//清除RF发送事件位
 		_lwevent_clear(&lwevent_group, EVENT_RF_SEND);
