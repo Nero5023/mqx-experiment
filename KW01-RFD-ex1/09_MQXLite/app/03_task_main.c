@@ -16,7 +16,6 @@ void task_main(uint32_t initial_data)
 	//1. 声明主任务使用的变量
 	//1）创建轻量级事件组
 	_lwevent_create(&lwevent_group,0);
-
 	HD_adr=0xFF;
 
 	//2. 关总中断
@@ -30,6 +29,7 @@ void task_main(uint32_t initial_data)
 
     //4. 给有关变量赋初值
     seconds=0;
+    net_status = UNREGISTERED;
 
     //5. 创建其他任务
     _task_create_at(0, TASK_LIGHT,   0, task_light_stack,      TASK_LIGHT_STACK_SIZE);
@@ -37,6 +37,7 @@ void task_main(uint32_t initial_data)
     _task_create_at(0, TASK_UART0_RE,0, task_uart0_Recv_stack, TASK_UART0_RECV_STACK_SIZE);
     _task_create_at(0, TASK_RF_SEND, 0, task_rf_send_stack,    TASK_RF_SEND_STACK_SIZE);
      _task_create_at(0, TASK_FLASH,   0, task_flash_stack,       TASK_FLASH_STACK_SIZE);
+     _task_create_at(0, TASK_WP_REGISTER,0,task_wp_register_stack, TASK_WP_REGISTER_STACK_SIZE);
 
     //6. 安装用户ISR
     _int_install_isr(INT_UART0,isr_uart0_re,NULL);//串口0的ISR

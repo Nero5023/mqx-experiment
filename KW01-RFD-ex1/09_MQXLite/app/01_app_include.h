@@ -24,6 +24,7 @@
 #include "lwmsgq.h"
 #include "mutex.h"
 #include "flash.h"
+#include "wp.h"
 
 //1.2 宏定义常量
 
@@ -70,6 +71,7 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_UART          5
 #define TASK_UART0_RE      8
 #define TASK_FLASH	       9
+#define TASK_WP_REGISTER   10
 
 //2.2 宏定义任务栈大小
 #define TASK_MAIN_STACK_SIZE       (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
@@ -78,6 +80,7 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_UART0_RECV_STACK_SIZE (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_RF_SEND_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_FLASH_STACK_SIZE      (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)///TODO:大小是否合适？
+#define TASK_WP_REGISTER_STACK_SIZE    (sizeof(TD_STRUCT) + 200 + PSP_STACK_ALIGNMENT + 1)
 
 //2.3 声明任务函数
 void task_main(uint32_t initial_data);
@@ -86,6 +89,8 @@ void task_rf_recv(uint32_t initial_data);
 void task_uart0_re(uint32_t initial_data);
 void task_rf_send(uint32_t initial_data);
 void task_flash(uint32_t initial_data);
+void task_wp_register(uint32_t initial);
+
 
 //2.4 声明任务栈
 uint_8 task_main_stack[TASK_MAIN_STACK_SIZE];
@@ -94,6 +99,7 @@ uint_8 task_rf_recv_stack[TASK_RF_RECV_STACK_SIZE];
 uint_8 task_rf_send_stack[TASK_RF_SEND_STACK_SIZE];
 uint_8 task_uart0_Recv_stack[TASK_UART0_RECV_STACK_SIZE];
 uint_8 task_flash_stack[TASK_FLASH_STACK_SIZE];
+uint_8 task_wp_register_stack[TASK_WP_REGISTER_STACK_SIZE];
 
 //---------------------------------------------------------------------------
 #endif    //01_app_include.h

@@ -86,6 +86,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/07_Soft_Component/common&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/06_App_Component&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/06_App_Component/light&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/06_App_Component/wirelessprotocol&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.other.408541719" name="Other compiler flags" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.other" useByScannerDiscovery="true" value="-c -fmessage-length=0" valueType="string"/>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1517604535" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input"/>

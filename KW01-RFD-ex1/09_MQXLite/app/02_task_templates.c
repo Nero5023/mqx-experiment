@@ -18,11 +18,12 @@ const uint_8 * mqx_task_stack_pointers[] =
 const TASK_TEMPLATE_STRUCT MQX_template_list[] =
 {
 	// 任务编号,        任务函数,          任务栈大小,                    优先级,  任务名,            任务属性
-	{TASK_MAIN,      task_main,      TASK_MAIN_STACK_SIZE,       7,     "main",           MQX_AUTO_START_TASK},
+	{TASK_MAIN,      task_main,      TASK_MAIN_STACK_SIZE,       5,     "main",           MQX_AUTO_START_TASK},
 	{TASK_LIGHT,     task_light,     TASK_LIGHT_STACK_SIZE,      14,    "task_light",     0},
 	{TASK_UART0_RE,  task_uart0_re,  TASK_UART0_RECV_STACK_SIZE, 8,     "task_uart0_Re",  0},
 	{TASK_RF_RECV,   task_rf_recv,   TASK_RF_RECV_STACK_SIZE,    8,     "task_rf_recv",   0},
 	{TASK_RF_SEND,   task_rf_send,   TASK_RF_SEND_STACK_SIZE,    8,     "task_rf_send",   0},
 	{TASK_FLASH,     task_flash,     TASK_FLASH_STACK_SIZE,      8,     "task_flash",     0},
+	{TASK_WP_REGISTER, task_wp_register , TASK_WP_REGISTER_STACK_SIZE, 7, "task_wp_register" , 0},
 	{0}
 };
