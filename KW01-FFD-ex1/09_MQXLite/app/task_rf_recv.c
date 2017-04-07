@@ -27,7 +27,8 @@ void task_rf_recv(uint32_t initial)
 		//以下加入用户程序--------------------------------------------------------
 		//1）无限等待RF接收事件位置一
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
-		uart_send_string(UART_0,"Got a msg from RF.\n");
+//		uart_send_string(UART_0,"Got a msg from RF.\n");
+		uart_sendN(UART_0,64,rf_recvBuf);
 		//串口发送数据全局数组
 //		g_uart_sentBuf[0]='M';    //77
 //

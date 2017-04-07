@@ -26,7 +26,7 @@ void task_light(uint_32 initial)
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
 
 		//2）任务延时1秒
-		_time_delay_ticks(ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+		_time_delay_ticks(3*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
 
 		HD_adr=255;
 	    RF_Init(HD_adr);		    //RF模块初始化
