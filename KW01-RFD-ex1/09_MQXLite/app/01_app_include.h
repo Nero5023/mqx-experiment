@@ -26,6 +26,7 @@
 #include "flash.h"
 #include "wp.h"
 #include "Protocol.h"
+#include "adc.h"
 
 //1.2 宏定义常量
 
