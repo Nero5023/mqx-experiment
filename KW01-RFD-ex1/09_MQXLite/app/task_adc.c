@@ -16,7 +16,6 @@ void task_adc(uint32_t initial_data)
 {
 	//1. 声明任务使用的变量
 	uint_16 temp;        //用于存储温度物理量的读取
-
 	//2. 给有关变量赋初值
 
 	//3. 进入任务循环体

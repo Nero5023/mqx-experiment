@@ -26,6 +26,12 @@
 #include "flash.h"
 #include "Protocol.h"
 
+#ifndef GLOBAL_VAR
+#define GLOBAL_VAR_PRE extern
+#else
+#define GLOBAL_VAR_PRE
+#endif
+
 //1.2 ºê¶¨Òå³£Á¿
 
 //1.3 ÉùÃ÷È«¾Ö±äÁ¿
@@ -38,8 +44,8 @@ uint_8 rf_sentBuf[64];          //RF·¢ËÍÊý¾Ý³¤¶È+Êý¾ÝÄÚÈÝ£¨Êý¾ÝÄÚÈÝ³¤¶È²»³¬¹ý64×
 uint_8 HD_adr;
 uint_8 rf_sentDataLength;
 
-char rfdAddrs[8] = {0};        // store the rfd addrs
-char rfdKeys[9] = {0};         // store the rfdkeys 
+GLOBAL_VAR_PRE char rfdAddrs[8];        // store the rfd addrs
+GLOBAL_VAR_PRE char rfdKeys[9];         // store the rfdkeys
 uint_8 SELF_ADDR;
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //½ÓÊÕ²Ù×÷»¥³âÐÅºÅÁ¿
@@ -118,7 +124,6 @@ uint_8 task_pc_command_stack[TASK_PC_COMMAND_STACK_SIZE];
 
 uint_32 register_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RE_NUM_MESSAGES*RE_MSG_SIZE]; //´Ó»ú×¢²áÏûÏ¢¶ÓÁÐ
 uint_32 pccommand_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+COMMAND_NUM_MESSAGES*COMMAND_MSG_SIZE]; //pcÖ¸ÁîÏûÏ¢¶ÓÁÐ
-
 
 
 //---------------------------------------------------------------------------
