@@ -33,6 +33,13 @@ void task_main(uint32_t initial_data)
 
     //4. 给有关变量赋初值
     seconds=0;
+    int i=0;
+    for(i=0;i<8;i++){
+    	rfdAddrs[i]=0;
+    }
+    for(i=0;i<9;i++){
+    	rfdKeys[i]=0;
+    }
 
 	//初始化消息队列
 	_lwmsgq_init((pointer)pccommand_queue,COMMAND_NUM_MESSAGES,COMMAND_MSG_SIZE);
