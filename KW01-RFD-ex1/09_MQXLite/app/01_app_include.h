@@ -42,6 +42,7 @@ MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
 uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）
 float g_temperature;          //芯片温度
 uint_8 g_rfRecCount;
+uint_8 rf_sentDataLength;
 
 
 //1.4 声明轻量级事件组

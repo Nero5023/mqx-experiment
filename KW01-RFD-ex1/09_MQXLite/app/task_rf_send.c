@@ -15,7 +15,7 @@ void task_rf_send(uint32_t initial)
 {	
 	//1. 声明任务使用的变量
 	uint_8 i;
-	uint_8 rf_sentDataLen ;
+
 
 	//2. 给有关变量赋初值
 
@@ -38,8 +38,10 @@ void task_rf_send(uint32_t initial)
 		else
 	        RFSendDataByCSMACA(rf_sentDataLen,&rf_sentBuf[0],1,HD_adr);
 		*/
-		RFSendDataByCSMACA(15,"An RF test msg.",0,HD_adr);
-		uart_send_string(UART_0,"Sended a test frame.\n");
+//		RFSendDataByCSMACA(15,"An RF test msg.",0,HD_adr);
+//		uart_send_string(UART_0,"Sended a test frame.\n");
+
+		RFSendDataByCSMACA(rf_sentDataLength,rf_sentBuf,0,255);
 
 		//清除RF发送事件位
 		_lwevent_clear(&lwevent_group, EVENT_RF_SEND);
