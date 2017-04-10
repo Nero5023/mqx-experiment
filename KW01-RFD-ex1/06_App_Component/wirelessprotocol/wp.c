@@ -9,10 +9,6 @@ char* encrypted(char* data){
 }
 
 
-void generateRegisterData(){
-
-}
-
 void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted) {
     if (needEncrypted)
         data = encrypted(data); //to do: encrypted
