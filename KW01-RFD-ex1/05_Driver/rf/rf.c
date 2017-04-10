@@ -461,7 +461,6 @@ uint_8 RF_ReceiveFrame(uint_8* pbuf, uint_8* plen,uint_8 HW_ADR )
     	goto RF_ReceiveFrame_err;           //接收个数或校验和错误
     //8. 接收正确
     	 flag = 0;          //冗余赋值
-    	///plen = checkadr;   //带回接收帧的长度
     	 *plen = ReDataLen;   //带回接收帧的长度
 
 //        //20141124 添加 判断重帧
@@ -475,15 +474,15 @@ uint_8 RF_ReceiveFrame(uint_8* pbuf, uint_8* plen,uint_8 HW_ADR )
 	   	pbuf[ReDataLen]=Rssi;
 	   	goto RF_ReceiveFrame_exit;
 
-RF_ReceiveFrame_err:
-        flag = 1;            //接收失败标志位
-RF_ReceiveFrame_exit:
-    //清FIFO
-    while(MKW01Drv_ReadRegister(MKW01_Reg_IrqFlags2) & 0x40)
-	       (void)MKW01Drv_ReadRegister(MKW01_Reg_Fifo);
-    //重新设置为接收模式
-    MKW01Drv_SetOperatingMode(OpMode_Receiver);
-    return flag;
+		RF_ReceiveFrame_err:
+				flag = 1;            //接收失败标志位
+		RF_ReceiveFrame_exit:
+		//清FIFO
+		while(MKW01Drv_ReadRegister(MKW01_Reg_IrqFlags2) & 0x40)
+			   (void)MKW01Drv_ReadRegister(MKW01_Reg_Fifo);
+		//重新设置为接收模式
+		MKW01Drv_SetOperatingMode(OpMode_Receiver);
+		return flag;
 }
 
 //=========================================================================

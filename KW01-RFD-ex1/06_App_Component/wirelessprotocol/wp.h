@@ -8,14 +8,16 @@
 
 
 typedef enum NET_STATUS{
-	UNREGISTERED=1, //尚未注册
-	REGISTERING, //注册中
-	REGISTERED //已注册
+	UNREGISTERED=1, 			//尚未注册 		--> task_wp_register函数发送注册信息
+	REGISTERING, 				//注册中  			--> task_rf_recv函数等待接收返回
+	REGISTERING_WITH_ECHO,		//注册中且收到反馈 	--> task_wp_register函数判断注册是否成功
+	REGISTERED 					//已注册 			--> task_wp_register函数终止
 }NET_STATUS;
 
 static NET_STATUS net_status = UNREGISTERED;
 
 
 void generateRegisterData();
+
 
 #endif

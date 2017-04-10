@@ -28,26 +28,19 @@ void task_rf_recv(uint32_t initial)
 		//1）无限等待RF接收事件位置一
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
 
-		//串口发送数据全局数组
-//		g_uart_sentBuf[0]='M';    //77
-//
-//		g_uart_sentBuf[1]=g_rfRecCount+1;
-//
-//		g_uart_sentBuf[2]='B';                    //66
-//
-//		for (i=3;i<=g_uart_sentBuf[1]+1;i++)	g_uart_sentBuf[i]=rf_recvBuf[i-3];
-//
-//		g_uart_sentBuf[g_uart_sentBuf[1]+2]='U';   //85=U
+		//接收数组 rf_recvBuf,接收到的有效长度  g_rfRecCount
+		switch (net_status) {
+			case REGISTERING:
+				//若在注册过程中接收到rf信包,则交由task_wp_register函数处理
+				net_status = REGISTERING_WITH_ECHO;
+				break;
+			default:
+				break;
+		}
 
-		//2）调用接收函数
-		//rf_recvBuf[60]=(uint_16)g_temperature;   		     //整数部分
-		//rf_recvBuf[61]=(g_temperature-rf_recvBuf[60])*10+0.5;//小数部分(保留一位小数，四舍五入)
-		//rf_recvBuf[62]=RFEnergyDetect();
 
-//uart_sendN(UART_0,g_uart_sentBuf[1]+3,&g_uart_sentBuf[0]);              //通过测试串口0发送数据
 
-		for (i=0;i<rf_recvBuf[1]+3;i++)	g_uart_sentBuf[i]=rf_recvBuf[i];
-		uart_sendN(UART_0,rf_recvBuf[1]+3,&g_uart_sentBuf[0]);
+
 		//3）RF接收事件位清零
 		_lwevent_clear(&lwevent_group, EVENT_RF_RECV);
 	}//任务循环体end_while

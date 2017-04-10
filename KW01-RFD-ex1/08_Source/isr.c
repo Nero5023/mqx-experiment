@@ -10,48 +10,6 @@
 //内部函数声明
 uint8_t CreateFrame(uint8_t Data,uint8_t * buffer);
 
-//===========================================================================
-//函数名称：isr_uart0_re
-//参数说明：user_isr_ptr：用户自定义参数，此处未用
-//功能概要：UART_0（串口0）中断服务例程
-//===========================================================================
-//void isr_uart0_re(pointer user_isr_ptr)
-//{
-//	uint_8 c;
-//	DISABLE_INTERRUPTS;                //关总中断
-//	//-----------------------------------------------------------------------
-//
-//    uart_re1(UART_0, &c);             //接收一个字节
-//
-//    //调用内部函数CreateFrame进行组帧
-//    if(CreateFrame(c,g_uart_recvBuf)!=0)    //组帧成功
-//    {
-//    	//g_uart_recvBuf[2]是命令字节
-//    	if(g_uart_recvBuf[2] == 0)    //握手命令
-//    	{
-//    		g_uart_sentBuf[0]=(uint_8)'M';     //
-//    		g_uart_sentBuf[1]=7;               //
-//    		g_uart_sentBuf[2]  = (uint_8)'C';  //
-//    		g_uart_sentBuf[3]  = (uint_8)'P';  //"PCNode"
-//    		g_uart_sentBuf[4]  = (uint_8)'C';
-//    		g_uart_sentBuf[5]  = (uint_8)'N';
-//    		g_uart_sentBuf[6]  = (uint_8)'o';
-//    		g_uart_sentBuf[7]  = (uint_8)'d';
-//    		g_uart_sentBuf[8]  = (uint_8)'e';
-//    		g_uart_sentBuf[9]  = (uint_8)'U';  //
-//			uart_sendN(UART_0,10,&g_uart_sentBuf[0]);
-//    	}
-//    	//
-//    	else   //其他情况,置“串口0接收完整数据帧事件位(EVENT_UART0_RE)”,触发task_uart0_re任务处理
-//    	{
-//    		_lwevent_set(&lwevent_group,EVENT_UART0_RE);
-//    	}
-//    }
-//
-//    //-----------------------------------------------------------------------
-//	ENABLE_INTERRUPTS;                //开总中断
-//}
-
 
 void isr_uart0_re(pointer user_isr_ptr)
 {
