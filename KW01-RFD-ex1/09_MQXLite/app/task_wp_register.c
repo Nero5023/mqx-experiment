@@ -23,6 +23,9 @@ void task_wp_register(uint32_t initial){
 				    key[2] = 'b';
 				    key[3] = 'c';
 				    ENCRYPT_KEY = key[0];
+
+				    uart_send_string(UART_0,"Try register...");
+
 					WPSendData(key, 4, NZP_REGISTER, 0xff, 0);
 					net_status = REGISTERING;//标记状态为注册中
 				}
