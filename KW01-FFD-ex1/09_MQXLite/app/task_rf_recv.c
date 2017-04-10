@@ -52,13 +52,23 @@ void task_rf_recv(uint32_t initial)
 //		uart_sendN(UART_0,rf_recvBuf[1]+3,&g_uart_sentBuf[0]);
 //		uart_send_string(UART_0,rf_recvBuf);
 
-		uint_8 length = length_of_NZP(rf_recvBuf);
-		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
+		uint_8 length = length_of_NZP((pointer)rf_recvBuf);
+		uint_8 data_length = data_length_of_NZP((pointer)rf_recvBuf);
 		char data[56];
-		if (parse_NZP(rf_recvBuf, length, data)) {
+		if (parse_NZP((pointer)rf_recvBuf, length, data)) {
 			// uart data
-			NZP_TYPE type = type_of_NZP(rf_recvBuf);
-			uart_sendN(UART_0, data_length, data);
+			NZP_TYPE type = type_of_NZP((pointer)rf_recvBuf);
+			switch (type) {
+				case NZP_REGISTER://有注册消息到来
+					_lwmsgq_send((pointer)register_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
+					break;
+				case NZP_DATA://需要直接打印的消息
+					uart_sendN(UART_0, data_length, data);
+				default:
+					break;
+			}
+
+
 		}
 		
 		//3）RF接收事件位清零

@@ -29,7 +29,7 @@ void task_light(uint_32 initial)
 
 		//2）任务延时1秒
 		_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
-		WPSendData("Hello?",6,NZP_DATA,15,0);
+		WPSendData("Hei!",4,NZP_REGISTER,15,0);
 
 	}//任务循环体end_while
 }

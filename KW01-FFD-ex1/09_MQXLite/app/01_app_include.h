@@ -71,6 +71,7 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_UART          5
 #define TASK_UART0_RE      8
 #define TASK_FLASH	       9
+#define TASK_REGISTER_PROCESS 10
 
 //2.2 宏定义任务栈大小
 #define TASK_MAIN_STACK_SIZE       (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
@@ -79,6 +80,7 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_UART0_RECV_STACK_SIZE (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_RF_SEND_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_FLASH_STACK_SIZE      (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)///TODO:大小是否合适？
+#define TASK_REGISTER_PROCESS_STACK_SIZE    (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
 
 //2.3 声明任务函数
 void task_main(uint32_t initial_data);
@@ -87,6 +89,7 @@ void task_rf_recv(uint32_t initial_data);
 void task_uart0_re(uint32_t initial_data);
 void task_rf_send(uint32_t initial_data);
 void task_flash(uint32_t initial_data);
+void task_register_process(uint32_t initial_data);
 
 //2.4 声明任务栈
 uint_8 task_main_stack[TASK_MAIN_STACK_SIZE];
@@ -95,6 +98,20 @@ uint_8 task_rf_recv_stack[TASK_RF_RECV_STACK_SIZE];
 uint_8 task_rf_send_stack[TASK_RF_SEND_STACK_SIZE];
 uint_8 task_uart0_Recv_stack[TASK_UART0_RECV_STACK_SIZE];
 uint_8 task_flash_stack[TASK_FLASH_STACK_SIZE];
+uint_8 task_register_process_stack[TASK_REGISTER_PROCESS_STACK_SIZE];
+
+//3.1消息队列
+#define COMMAND_NUM_MESSAGES  3
+#define COMMAND_MSG_SIZE      1
+
+#define RE_NUM_MESSAGES  3
+#define RE_MSG_SIZE      1
+
+
+uint_32 register_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RE_NUM_MESSAGES*RE_MSG_SIZE]; //从机注册消息队列
+uint_32 pccommand_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+COMMAND_NUM_MESSAGES*COMMAND_MSG_SIZE]; //pc指令消息队列
+
+
 
 //---------------------------------------------------------------------------
 #endif    //01_app_include.h
