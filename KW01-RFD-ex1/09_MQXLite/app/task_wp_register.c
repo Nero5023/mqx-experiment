@@ -16,8 +16,9 @@ void task_wp_register(uint32_t initial){
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
 				if (SELF_ADDR == 0) {
-					srand(0);
-				    char key[4] = {rand() % 100};
+					srand(123);
+				    char key[4];
+				    key[0]=(rand() % 100+1);
 				    key[1] = 'a';
 				    key[2] = 'b';
 				    key[3] = 'c';
@@ -42,6 +43,7 @@ void task_wp_register(uint32_t initial){
 				break;
 			case REGISTERED:
 				//注册成功,函数结束
+				WPSendData("Registered successfully!",24,NZP_DATA,0xff,0);
 				return;
 			default:
 				break;
