@@ -1,8 +1,5 @@
 #include "01_app_include.h"    //应用任务公共头文件
 
-char rfdAddrs[8] = {0};
-char rfdKeys[8] = {0};
-
 char generateAddr() {
     int i = 0;
     while (rfdAddrs[i] != 0) {

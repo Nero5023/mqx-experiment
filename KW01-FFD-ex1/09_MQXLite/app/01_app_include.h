@@ -37,6 +37,8 @@ uint_8 rf_sentBuf[64];          //RF·¢ËÍÊı¾İ³¤¶È+Êı¾İÄÚÈİ£¨Êı¾İÄÚÈİ³¤¶È²»³¬¹ı64×
 
 uint_8 HD_adr;
 
+char rfdAddrs[8] = {0};        // store the rfd addrs
+char rfdKeys[9] = {0};         // store the rfdkeys 
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //½ÓÊÕ²Ù×÷»¥³âĞÅºÅÁ¿
 uint32_t seconds;	          //PIT¼ÇÂ¼¸´Î»ºóµÄÊ±¼ä£¨µ¥Î»£ºÃë£©
