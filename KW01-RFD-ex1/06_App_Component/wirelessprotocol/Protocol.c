@@ -131,7 +131,8 @@ int check_data_is_correct(char *message, int length) {
 // parse nzp protocol 1
 // length not use
 void parse_NZP_v1(char *message, int length, char *data) {
-    data = message + NZP_HEADER_LENGTH;
+    // data = message + NZP_HEADER_LENGTH;
+    memcpy(data, message + NZP_HEADER_LENGTH, length-NZP_HEADER_LENGTH);
 }
 
 
