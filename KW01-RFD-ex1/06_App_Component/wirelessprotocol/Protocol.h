@@ -32,9 +32,9 @@ typedef struct NZP_HEADER {
     unsigned short checksum;
 } NZP_HEADER;
 
-enum NZP_TYPE {
+typedef enum NZP_TYPE {
     NZP_DATA  = 1
-};
+}NZP_TYPE;
 
 //=====================================================================
 //函数名称：NZP_v1_data
