@@ -5,7 +5,7 @@
 
 #ifndef WP_H
 #define WP_H
-
+#include "Protocol.h"
 
 typedef enum NET_STATUS{
 	UNREGISTERED=1, 			//尚未注册 		--> task_wp_register函数发送注册信息
@@ -18,5 +18,6 @@ static NET_STATUS net_status = UNREGISTERED;
 
 
 void generateRegisterData();
+void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted);
 
 #endif

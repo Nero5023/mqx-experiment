@@ -11,15 +11,16 @@
 void task_wp_register(uint32_t initial){
 	generateRegisterData();		//生成注册信息
 	while(TRUE){
-		uint_8 wait_time=0;
+		// uint_8 wait_time=0;
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
-
-				HD_adr=255;
-				RF_Init(HD_adr);		    //RF模块初始化
-				_lwevent_set(&lwevent_group,EVENT_RF_SEND);	//置RF发送事件位（EVENT_RF_SEND），触发task_rf_send任务
-				net_status = REGISTERING;//标记状态为注册中
-
+				if (SELF_ADDR == 0) {
+					srand(0);
+				    char key = {roud() % 100};
+				    ENCRYPT_KEY = key[1];
+					WPSendData(&key, 1, NZP_REGISTER, 0xff, 0);
+					net_status = REGISTERING;//标记状态为注册中
+				}
 				break;
 
 			case REGISTERING: //注册中,等待主机返回结果
@@ -30,10 +31,10 @@ void task_wp_register(uint32_t initial){
 					net_status = UNREGISTERED; //注册超时
 					wait_time = 0;
 				}
-
+				break;
 			case REGISTERING_WITH_ECHO:
-				//判断是否注册成功
-
+			// 	//判断是否注册成功
+				net_status = REGISTERED;
 				break;
 			case REGISTERED:
 				//注册成功,函数结束

@@ -45,7 +45,14 @@ void task_rf_recv(uint32_t initial)
 		if (parse_NZP(rf_recvBuf, length, data)) {
 			// uart data
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
-			uart_sendN(UART_0, data_length, data);
+			if (type == NZP_REGISTER_Success) {
+				char clearText[2];
+				decode(data, clearText, 2, ENCRYPT_KEY);
+				if (clearText[0] == ENCRYPT_KEY) {
+					SELF_ADDR = clearText[1];
+					net_status = REGISTERING_WITH_ECHO;
+				}
+			}
 		}
 
 

@@ -26,6 +26,7 @@
 #include "flash.h"
 #include "wp.h"
 #include "Protocol.h"
+#include "encrypt.h"
 
 //1.2 宏定义常量
 
@@ -35,6 +36,9 @@ uint_8 g_uart_sentBuf[72];    //串口发送数据全局数组
 
 uint_8 rf_recvBuf[64];          //存放接收数据包
 uint_8 rf_sentBuf[64];          //RF发送数据长度+数据内容（数据内容长度不超过64字节）
+
+uint_8 SELF_ADDR;               // 本机的地址
+uint_8 ENCRYPT_KEY;            // 加密密钥
 
 // NZP_TYPE command_type;        // 接收到的数据的类型，做下一步的操作
 

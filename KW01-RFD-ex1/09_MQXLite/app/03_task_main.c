@@ -18,6 +18,7 @@ void task_main(uint32_t initial_data)
 	_lwevent_create(&lwevent_group,0);
 	HD_adr=0xFF;
 
+    SELF_ADDR = 0;
 	//2. ¹Ø×ÜÖÐ¶Ï
     DISABLE_INTERRUPTS;
 

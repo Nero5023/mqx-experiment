@@ -34,7 +34,9 @@ typedef struct NZP_HEADER {
 } NZP_HEADER;
 
 typedef enum NZP_TYPE {
-    NZP_DATA  = 1
+    NZP_DATA  = 1,
+    NZP_REGISTER,
+    NZP_REGISTER_Success
 }NZP_TYPE;
 
 //=====================================================================
