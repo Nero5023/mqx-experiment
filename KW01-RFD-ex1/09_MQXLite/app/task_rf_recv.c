@@ -7,6 +7,7 @@
 
 #include "01_app_include.h"    //应用任务公共头文件
 
+
 //===========================================================================
 //任务名称：task_rf_recv
 //功能概要：判断RF接收事件位EVENT_RF_RECV，调用RF_ReceiveFrame()接收PC Node节点RF测试数据包，
@@ -29,16 +30,23 @@ void task_rf_recv(uint32_t initial)
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
 
 		//接收数组 rf_recvBuf,接收到的有效长度  g_rfRecCount
-		switch (net_status) {
-			case REGISTERING:
-				//若在注册过程中接收到rf信包,则交由task_wp_register函数处理
-				net_status = REGISTERING_WITH_ECHO;
-				break;
-			default:
-				break;
+		// switch (net_status) {
+		// 	case REGISTERING:
+		// 		//若在注册过程中接收到rf信包,则交由task_wp_register函数处理
+		// 		net_status = REGISTERING_WITH_ECHO;
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
+
+		uint_8 length = length_of_NZP(rf_recvBuf);
+		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
+		char data[56];
+		if (parse_NZP(rf_recvBuf, length, data)) {
+			// uart data
+			NZP_TYPE type = type_of_NZP(rf_recvBuf);
+			uart_sendN(UART_0, data_length, data);
 		}
-
-
 
 
 		//3）RF接收事件位清零

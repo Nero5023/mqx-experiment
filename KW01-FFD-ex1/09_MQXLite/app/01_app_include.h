@@ -24,6 +24,7 @@
 #include "lwmsgq.h"
 #include "mutex.h"
 #include "flash.h"
+#include "Protocol.h"
 
 //1.2 宏定义常量
 
