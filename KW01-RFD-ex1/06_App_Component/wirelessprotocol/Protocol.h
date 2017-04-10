@@ -34,9 +34,16 @@ typedef struct NZP_HEADER {
 } NZP_HEADER;
 
 typedef enum NZP_TYPE {
+<<<<<<< HEAD
     NZP_DATA  = 1,
     NZP_REGISTER,
     NZP_REGISTER_Success
+||||||| merged common ancestors
+    NZP_DATA  = 1
+=======
+    NZP_DATA  = 1,
+	NZP_REGISTER = 2,
+>>>>>>> e62f29df6a05aaa2ac2782d91643918d8cef3d17
 }NZP_TYPE;
 
 //=====================================================================

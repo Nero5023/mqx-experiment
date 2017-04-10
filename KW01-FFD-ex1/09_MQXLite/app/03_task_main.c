@@ -31,12 +31,18 @@ void task_main(uint32_t initial_data)
     //4. 给有关变量赋初值
     seconds=0;
 
+	//初始化消息队列
+	_lwmsgq_init((pointer)pccommand_queue,COMMAND_NUM_MESSAGES,COMMAND_MSG_SIZE);
+	_lwmsgq_init((pointer)register_queue,RE_NUM_MESSAGES,RE_MSG_SIZE);
+
+
     //5. 创建其他任务
     _task_create_at(0, TASK_LIGHT,   0, task_light_stack,      TASK_LIGHT_STACK_SIZE);
     _task_create_at(0, TASK_RF_RECV, 0, task_rf_recv_stack,    TASK_RF_RECV_STACK_SIZE);
     _task_create_at(0, TASK_UART0_RE,0, task_uart0_Recv_stack, TASK_UART0_RECV_STACK_SIZE);
     _task_create_at(0, TASK_RF_SEND, 0, task_rf_send_stack,    TASK_RF_SEND_STACK_SIZE);
-     _task_create_at(0, TASK_FLASH,   0, task_flash_stack,       TASK_FLASH_STACK_SIZE);
+    _task_create_at(0, TASK_FLASH,   0, task_flash_stack,       TASK_FLASH_STACK_SIZE);
+    _task_create_at(0,TASK_REGISTER_PROCESS,0,task_register_process_stack, TASK_REGISTER_PROCESS_STACK_SIZE);
 
     //6. 安装用户ISR
     _int_install_isr(INT_UART0,isr_uart0_re,NULL);//串口0的ISR
@@ -45,6 +51,8 @@ void task_main(uint32_t initial_data)
     //7. 使能模块中断
 	uart_enable_re_int(UART_0);   //使能串口0接收中断
 	MKW01Drv_IRQ_DIO1_Enable();	  //开启DIO1中断
+
+
 
 	//8. 开总中断
 	ENABLE_INTERRUPTS;            //开总中断
