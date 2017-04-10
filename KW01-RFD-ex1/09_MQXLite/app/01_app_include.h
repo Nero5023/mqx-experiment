@@ -52,10 +52,11 @@ uint_8 rf_sentDataLength;
 LWEVENT_STRUCT  lwevent_group;
 
 //1.5 宏定义事件位
-#define  EVENT_RF_RECV        ((1uL)<<(1))   //RF接收事件位
-#define  EVENT_RF_SEND        ((1uL)<<(2))   //RF发送事件位
-#define  EVENT_UART0_RE       ((1uL)<<(4))   //串口0接收完整数据帧事件位
-#define  EVENT_FLASH          ((1uL)<<(5))   //Flash操作事件位
+#define  EVENT_RF_RECV       	 ((1uL)<<(1))   //RF接收事件位
+#define  EVENT_RF_SEND       	 ((1uL)<<(2))   //RF发送事件位
+#define  EVENT_UART0_RE     	 ((1uL)<<(4))   //串口0接收完整数据帧事件位
+#define  EVENT_FLASH        	 ((1uL)<<(5))   //Flash操作事件位
+#define  EVENT_COMMAND_PROCESS   ((1uL)<<(6))   //函数处理
 
 //---------------------------------------------------------------------------
 // 第二部分
