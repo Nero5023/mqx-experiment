@@ -20,6 +20,7 @@
 #ifndef Protocol_h
 #define Protocol_h
 
+#include "common.h"    //包含公共要素头文件
 #include <stdio.h>
 #define NZP_HEADER_LENGTH 8
 
@@ -44,7 +45,7 @@ typedef enum NZP_TYPE {
 //        destination：目标地址
 //功能概要：将数据变成 NZP 协议的
 //=====================================================================
-char * NZP_v1_data(char *data, unsigned short length, char destination, enum NZP_TYPE type);
+char * NZP_v1_data(uint8_t *data, uint16_t length, uint8_t destination,  NZP_TYPE type);
 
 
 //=====================================================================
@@ -73,5 +74,16 @@ int length_of_NZP(char *message);
 //功能概要：将 NZP 协议的字符解析成数据，
 //=====================================================================
 int parse_NZP(char *message, int length, char* data);
+
+
+//=====================================================================
+//函数名称：type_of_NZP
+//函数返回：NZP_TYPE 返回数据的类型
+//参数说明：message：NZP 协议的字符串指针
+//功能概要：通过传入的 message，返回 NZP 协议的类型
+//=====================================================================
+NZP_TYPE type_of_NZP(char *message);
+
+
 
 #endif /* Protocol_h */

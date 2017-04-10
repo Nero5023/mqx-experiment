@@ -14,6 +14,8 @@
 //功能概要：控制运行指示灯每隔1s闪烁，该任务优先级为14，仅仅高于task_adc
 //参数说明：未使用
 //===========================================================================
+
+
 void task_light(uint_32 initial)
 {	
 	//const uint32_t X1=0x01020304;
@@ -27,6 +29,7 @@ void task_light(uint_32 initial)
 
 		//2）任务延时1秒
 		_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+		WPSendData("Hello?",6,NZP_DATA,1,0);
 
 	}//任务循环体end_while
 }

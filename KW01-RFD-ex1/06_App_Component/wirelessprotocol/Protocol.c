@@ -3,11 +3,12 @@
 //  Protocol
 //
 //  Created by Nero Zuo on 17/3/29.
-//  Copyright © 2017年 Nero. All rights reserved.
+//  Copyright 漏 2017骞�Nero. All rights reserved.
 //
 
 #include "Protocol.h"
 #include <stdlib.h>
+#include "01_app_include.h"
 
 #define SELF_ADDR 0b00001111
 
@@ -25,7 +26,7 @@ void header_struct_to_str(NZP_HEADER* header, char *headStr);
 
 // make the NZP protocal data
 // length is the length of the data not include the header
-char * NZP_v1_data(char *data, unsigned short length, char destination, enum NZP_TYPE type) {
+char * NZP_v1_data(uint8_t *data, uint16_t length, uint8_t destination, NZP_TYPE type) {
     NZP_HEADER header;
     header.source = SELF_ADDR;
     header.destination = destination;
@@ -36,15 +37,16 @@ char * NZP_v1_data(char *data, unsigned short length, char destination, enum NZP
     
     char headerStr[NZP_HEADER_LENGTH];
     header_struct_to_str(&header, headerStr);
-    char *res = malloc(NZP_HEADER_LENGTH+length);
-    strcat_header_data(res, headerStr, data, length);
-    header.checksum = checksum(res, NZP_HEADER_LENGTH + length);
+    // char *res = malloc(NZP_HEADER_LENGTH+length);
+    strcat_header_data(rf_sentBuf, headerStr, data, length);
+    header.checksum = checksum(rf_sentBuf, NZP_HEADER_LENGTH + length);
     
     char newHeaderStr[NZP_HEADER_LENGTH];
     header_struct_to_str(&header, newHeaderStr);
-    strcat_header_data(res, newHeaderStr, data, length);
-    return res;
+    strcat_header_data(rf_sentBuf, newHeaderStr, data, length);
+    return rf_sentBuf;
 }
+
 
 
 // make the header struct to string
@@ -135,7 +137,7 @@ void parse_NZP_v1(char *message, int length, char *data) {
 
 // 1 : success
 // 0 : failed
-// length: 整个协议的长度
+// length: 鏁翠釜鍗忚鐨勯暱搴�
 int parse_NZP(char *message, int length, char *data) {
     if (check_if_send_to_self(message) == 0)
         return 0;
@@ -153,3 +155,11 @@ int parse_NZP(char *message, int length, char *data) {
 int data_length_in_NZP_v1(int message_length) {
     return message_length - NZP_HEADER_LENGTH;
 }
+
+
+// return the type of message
+NZP_TYPE type_of_NZP(char *message) {
+    NZP_HEADER *h = (NZP_HEADER *)message;
+    return h->type;
+}
+
