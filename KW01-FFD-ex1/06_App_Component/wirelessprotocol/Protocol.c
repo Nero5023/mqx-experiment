@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "01_app_include.h"
 
-#define SELF_ADDR 0b00001111
+// #define SELF_ADDR 0b00001111
 
 #define NZP_DATA_TYPE 1
 
