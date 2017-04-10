@@ -31,7 +31,7 @@ void task_pc_command(uint32_t initial_data){
                 break;
             case PC_COM_TEMP:
                 des = data[1];
-                WPSendData("a", 1, NZP_TEMPERATURE, des, 0);
+                WPSendData("a", 1, NZP_TEMPERATURE, des-'0', 0);
                 break;
             default:
                 break;
