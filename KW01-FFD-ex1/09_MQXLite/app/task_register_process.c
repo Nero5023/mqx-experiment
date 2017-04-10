@@ -31,7 +31,7 @@ void task_register_process(uint32_t initial_data){
 //        uart_sendN(UART_0,2,dataToSend);
         encode(dataToSend, dataToSend, 2, data[0]);
 //        uart_sendN(UART_0,2,dataToSend);
-        WPSendData(dataToSend, 2, NZP_REGISTER_Success, 0xff, 0);
+        WPSendData(dataToSend, 2, NZP_TEMPERATURE, 0xff, 0);
 //
 //		uart_sendN(UART_0,RE_MSG_SIZE*4,data);
 
