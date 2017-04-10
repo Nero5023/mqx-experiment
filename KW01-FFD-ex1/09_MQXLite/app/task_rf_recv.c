@@ -7,6 +7,23 @@
 
 #include "01_app_include.h"    //应用任务公共头文件
 
+char rfdAddrs[8] = {0};
+char rfdKeys[8] = {0};
+
+char generateAddr() {
+    int i = 0;
+    while (rfdAddrs[i] != 0) {
+        i++;
+    }
+    rfdAddrs[i] = (i+1);
+    return i+1;
+}
+
+void removeAddr(char addr) {
+    if (addr < 8)
+        rfdAddrs[addr] = 0;
+}
+
 //===========================================================================
 //任务名称：task_rf_recv
 //功能概要：判断RF接收事件位EVENT_RF_RECV，调用RF_ReceiveFrame()接收PC Node节点RF测试数据包，
@@ -58,6 +75,13 @@ void task_rf_recv(uint32_t initial)
 		if (parse_NZP(rf_recvBuf, length, data)) {
 			// uart data
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
+			if (type == NZP_REGISTER) {
+				addr = generateAddr();
+				rfdKeys[addr] = data[0];
+				char dataToSend[2] = {data[0], addr};
+				encode(dataToSend, dataToSend, 2, data[0]);
+				WPSendData(dataToSend, 2, NZP_REGISTER_Success, 0xff, 0);
+			}
 			uart_sendN(UART_0, data_length, data);
 		}
 		
