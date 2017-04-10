@@ -21,16 +21,19 @@ void task_register_process(uint32_t initial_data){
 
 	while(TRUE){
 		_lwmsgq_receive((pointer)register_queue,re_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0); //等待注册消息
+
+		uart_sendN(UART_0,9,"msgQueue.");
         char *data = re_msg;
 
         char addr = generateAddr();
-        rfdKeys[addr] = data[0];
+        rfdKeys[addr] = data[0];  //存放对应节点的秘钥
         char dataToSend[2] = {data[0], addr};
+//        uart_sendN(UART_0,2,dataToSend);
         encode(dataToSend, dataToSend, 2, data[0]);
+//        uart_sendN(UART_0,2,dataToSend);
         WPSendData(dataToSend, 2, NZP_REGISTER_Success, 0xff, 0);
-
-		uart_sendN(UART_0,RE_MSG_SIZE*4,data);
-        uart_sendN(UART_0, 2, dataToSend);
+//
+//		uart_sendN(UART_0,RE_MSG_SIZE*4,data);
 
 	}
 }

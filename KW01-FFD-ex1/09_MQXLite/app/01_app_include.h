@@ -36,9 +36,11 @@ uint_8 rf_recvBuf[64];          //存放接收数据包
 uint_8 rf_sentBuf[64];          //RF发送数据长度+数据内容（数据内容长度不超过64字节）
 
 uint_8 HD_adr;
+uint_8 rf_sentDataLength;
 
 char rfdAddrs[8] = {0};        // store the rfd addrs
 char rfdKeys[9] = {0};         // store the rfdkeys 
+uint_8 SELF_ADDR;
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
 uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）

@@ -15,7 +15,7 @@ void task_rf_send(uint32_t initial)
 {	
 	//1. 声明任务使用的变量
 	uint_8 i;
-	uint_8 rf_sentDataLen ;
+
 
 	//2. 给有关变量赋初值
 
@@ -27,16 +27,7 @@ void task_rf_send(uint32_t initial)
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_SEND, FALSE, NULL);
 
 
-		rf_sentDataLen = g_uart_recvBuf[1]-1;  //需要RF转发的字节数
-
-		for (i=0;i<rf_sentDataLen;i++) rf_sentBuf[i]=g_uart_recvBuf[i+3];
-
-
-		//2）RF模块发送数据,第三个参数，不检查信道和能量值
-		if(g_uart_recvBuf[58]=='N')
-	        RFSendDataByCSMACA(rf_sentDataLen,&rf_sentBuf[0],0,HD_adr);
-		else
-	        RFSendDataByCSMACA(rf_sentDataLen,&rf_sentBuf[0],1,HD_adr);
+		RFSendDataByCSMACA(rf_sentDataLength,rf_sentBuf,0,255);
 
 		//清除RF发送事件位
 		_lwevent_clear(&lwevent_group, EVENT_RF_SEND);

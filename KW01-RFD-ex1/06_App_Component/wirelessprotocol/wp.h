@@ -14,7 +14,7 @@ typedef enum NET_STATUS{
 	REGISTERED 					//ÒÑ×¢²á 			--> task_wp_registerº¯ÊıÖÕÖ¹
 }NET_STATUS;
 
-static NET_STATUS net_status = UNREGISTERED;
+NET_STATUS net_status;
 
 
 void generateRegisterData();

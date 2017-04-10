@@ -9,16 +9,21 @@
 #define REGISTER_TIMEOUT 3
 
 void task_wp_register(uint32_t initial){
-	generateRegisterData();		//生成注册信息
+	net_status = UNREGISTERED;
+	uint_8 wait_time=0;
 	while(TRUE){
 		// uint_8 wait_time=0;
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
 				if (SELF_ADDR == 0) {
-					srand(0);
-				    char key = {roud() % 100};
-				    ENCRYPT_KEY = key[1];
-					WPSendData(&key, 1, NZP_REGISTER, 0xff, 0);
+					srand(123);
+				    char key[4];
+				    key[0]=(rand() % 100+1);
+				    key[1] = 'a';
+				    key[2] = 'b';
+				    key[3] = 'c';
+				    ENCRYPT_KEY = key[0];
+					WPSendData(key, 4, NZP_REGISTER, 0xff, 0);
 					net_status = REGISTERING;//标记状态为注册中
 				}
 				break;
@@ -38,6 +43,7 @@ void task_wp_register(uint32_t initial){
 				break;
 			case REGISTERED:
 				//注册成功,函数结束
+				WPSendData("Registered successfully!",24,NZP_DATA,0xff,0);
 				return;
 			default:
 				break;
