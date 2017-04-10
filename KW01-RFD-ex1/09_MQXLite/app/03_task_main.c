@@ -49,6 +49,10 @@ void task_main(uint32_t initial_data)
 
 	//8. 开总中断
 	ENABLE_INTERRUPTS;            //开总中断
+
+	//9.初始化消息队列
+	_lwmsgq_init((pointer)command_queue,NUM_MESSAGES,MSG_SIZE);
+
     //------------执行完毕，本任务进入阻塞态----------------------------------------------
 
     _task_block();

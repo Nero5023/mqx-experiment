@@ -26,6 +26,7 @@
 #include "flash.h"
 #include "wp.h"
 #include "Protocol.h"
+#include "adc.h"
 
 //1.2 宏定义常量
 
@@ -105,6 +106,16 @@ uint_8 task_rf_send_stack[TASK_RF_SEND_STACK_SIZE];
 uint_8 task_uart0_Recv_stack[TASK_UART0_RECV_STACK_SIZE];
 uint_8 task_flash_stack[TASK_FLASH_STACK_SIZE];
 uint_8 task_wp_register_stack[TASK_WP_REGISTER_STACK_SIZE];
+
+
+//3.1 消息队列
+#define NUM_MESSAGES   3
+#define MSG_SIZE       1
+
+ //创建消息队列空间
+uint_32 command_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+NUM_MESSAGES*MSG_SIZE]; //为主机
+
+
 
 //---------------------------------------------------------------------------
 #endif    //01_app_include.h
