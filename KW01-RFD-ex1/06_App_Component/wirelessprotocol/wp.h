@@ -19,5 +19,6 @@ static NET_STATUS net_status = UNREGISTERED;
 
 void generateRegisterData();
 
+void WPSendData(char *data, NZP_TYPE type, char needEncrypted);
 
 #endif
