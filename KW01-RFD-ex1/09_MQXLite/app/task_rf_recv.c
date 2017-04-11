@@ -29,21 +29,18 @@ void task_rf_recv(uint32_t initial)
 		//1）无限等待RF接收事件位置一
 		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
 
-		//接收数组 rf_recvBuf,接收到的有效长度  g_rfRecCount
-		// switch (net_status) {
-		// 	case REGISTERING:
-		// 		//若在注册过程中接收到rf信包,则交由task_wp_register函数处理
-		// 		net_status = REGISTERING_WITH_ECHO;
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
 
 		uint_8 length = length_of_NZP(rf_recvBuf);
 		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
 		char data[56];
+
+		uart_sendN(UART_0,length,rf_recvBuf);
+
 		if (parse_NZP(rf_recvBuf, length, data)) {
 			// uart data
+
+			uart_sendN(UART_0,data_length,data);
+
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
 			if (type == NZP_REGISTER_Success) {
 				char clearText[2];

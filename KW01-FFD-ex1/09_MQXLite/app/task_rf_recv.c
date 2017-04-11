@@ -32,12 +32,12 @@ void task_rf_recv(uint32_t initial)
 		uint_8 length = length_of_NZP((pointer)rf_recvBuf);
 		uint_8 data_length = data_length_of_NZP((pointer)rf_recvBuf);
 
-		uart_sendN(UART_0,length,rf_recvBuf);
+//		uart_sendN(UART_0,length,rf_recvBuf);
 
 		char data[56];
 		if (parse_NZP((pointer)rf_recvBuf, length, data)) {
 			// uart data
-			uart_sendN(UART_0,data_length,data);
+//			uart_sendN(UART_0,data_length,data);
 
 			NZP_TYPE type = type_of_NZP((pointer)rf_recvBuf);
 			switch (type) {

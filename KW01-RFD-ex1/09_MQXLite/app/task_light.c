@@ -27,6 +27,7 @@ void task_light(uint_32 initial)
 		//1）控制运行指示灯闪烁
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
 
+//		WPSendData("Hei!",4,NZP_DATA,0xff,0);
 		//2）任务延时1秒
 		_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
 

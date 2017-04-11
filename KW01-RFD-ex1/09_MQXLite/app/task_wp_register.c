@@ -11,20 +11,20 @@
 void task_wp_register(uint32_t initial){
 	net_status = UNREGISTERED;
 	uint_8 wait_time=0;
+	char key[4];
 	while(TRUE){
 		// uint_8 wait_time=0;
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
 				if (SELF_ADDR == 0) {
 					srand(123);
-				    char key[4];
 				    key[0]=(rand() % 100+1);
 				    key[1] = 'a';
 				    key[2] = 'b';
 				    key[3] = 'c';
 				    ENCRYPT_KEY = key[0];
 
-				    uart_send_string(UART_0,"Try register...");
+//				    uart_send_string(UART_0,"Try register...");
 
 					WPSendData(key, 4, NZP_REGISTER, 0xff, 0);
 					net_status = REGISTERING;//标记状态为注册中
