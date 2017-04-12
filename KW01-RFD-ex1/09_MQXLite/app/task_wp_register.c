@@ -16,6 +16,7 @@ void task_wp_register(uint32_t initial){
 		// uint_8 wait_time=0;
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
+				_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
 				if (SELF_ADDR == 0) {
 					srand(123);
 				    key[0]=(rand() % 100+1);
