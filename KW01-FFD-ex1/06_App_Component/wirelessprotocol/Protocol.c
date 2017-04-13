@@ -3,7 +3,7 @@
 //  Protocol
 //
 //  Created by Nero Zuo on 17/3/29.
-//  Copyright 漏 2017骞�Nero. All rights reserved.
+//  Copyright 婕�2017楠烇拷Nero. All rights reserved.
 //
 
 #include "Protocol.h"
@@ -138,7 +138,7 @@ void parse_NZP_v1(char *message, int length, char *data) {
 
 // 1 : success
 // 0 : failed
-// length: 鏁翠釜鍗忚鐨勯暱搴�
+// length: 閺佺繝閲滈崡蹇氼唴閻ㄥ嫰鏆辨惔锟�
 int parse_NZP(char *message, int length, char *data) {
     if (check_if_send_to_self(message) == 0)
         return 0;
@@ -163,4 +163,11 @@ NZP_TYPE type_of_NZP(char *message) {
     NZP_HEADER *h = (NZP_HEADER *)message;
     return h->type;
 }
+
+//return the addr of message
+uint_8 addr_of_NZP(char *message){
+    NZP_HEADER *h = (NZP_HEADER *)message;
+    return h->source;
+}
+
 

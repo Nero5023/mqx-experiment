@@ -57,10 +57,10 @@ void task_rf_recv(uint32_t initial)
 			if(type ==  NZP_TEMPERATURE){
 				//1）获取26通道的温度物理量
 				g_temperature=adc_read(26);
-				uint_8 temp;
-				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
-				uart_send_string(UART_0,"Send t.");
-				WPSendData(&temp,1,NZP_DATA,0xff,0);
+//				uint_8 temp;
+//				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
+//				uart_send_string(UART_0,"Send t.");
+				WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
 //				WPSendData("24.7c%c",7,NZP_DATA,0xff,0);
 			}
 		}

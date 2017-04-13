@@ -19,21 +19,10 @@ void task_pc_command(uint32_t initial_data){
         switch (data[0]) {
             case PC_COM_NODES:        // all nodes of 
                 while (rfdAddrs[count] != 0) { count++; }
-
-                char str[64] = "Have x nodes ";
-                str[5] = count + '0';
-                for (i = 13; i < 13+count*2; i+=2) {
-                    str[i] = rfdAddrs[j] + '0';
-                    j++;
-                    str[i+1] = ' ';
-                }
-
-                uart_sendN(UART_0,13+count*2,str);
-
+                sendNodeStatus(count,rfdAddrs);
                 break;
             case PC_COM_TEMP:
                 des = data[1];
-//                uart_send1(UART_0,des-'0');
                 WPSendData("a", 1, NZP_TEMPERATURE, des-'0', 0);
                 break;
             default:

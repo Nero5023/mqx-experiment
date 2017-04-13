@@ -89,5 +89,7 @@ int parse_NZP(char *message, int length, char* data);
 NZP_TYPE type_of_NZP(char *message);
 
 
+uint_8 addr_of_NZP(char *message);
+
 
 #endif /* Protocol_h */

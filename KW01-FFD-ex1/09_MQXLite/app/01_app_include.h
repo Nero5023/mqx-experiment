@@ -25,6 +25,7 @@
 #include "mutex.h"
 #include "flash.h"
 #include "Protocol.h"
+#include "cp.h"
 
 #ifndef GLOBAL_VAR
 #define GLOBAL_VAR_PRE extern

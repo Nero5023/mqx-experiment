@@ -169,3 +169,12 @@ NZP_TYPE type_of_NZP(char *message) {
     return h->type;
 }
 
+//return the addr of message
+uint_8 addr_of_NZP(char *message){
+    NZP_HEADER *h = (NZP_HEADER *)message;
+    return h->source;
+}
+
+
+
+
