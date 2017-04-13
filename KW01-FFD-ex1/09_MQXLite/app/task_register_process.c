@@ -22,7 +22,7 @@ void task_register_process(uint32_t initial_data){
 	while(TRUE){
 		_lwmsgq_receive((pointer)register_queue,re_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0); //µÈ´ý×¢²áÏûÏ¢
 
-		uart_sendN(UART_0,9,"Receive re_msg.");
+		uart_sendN(UART_0,15,"Receive re_msg.");
         char *data = re_msg;
 
         char addr = generateAddr();

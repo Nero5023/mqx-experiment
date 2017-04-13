@@ -34,7 +34,7 @@ void task_rf_recv(uint32_t initial)
 		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
 		char data[56];
 
-		uart_sendN(UART_0,length,rf_recvBuf);
+//		uart_sendN(UART_0,length,rf_recvBuf);
 
 		if (parse_NZP(rf_recvBuf, length, data)) {
 			// uart data
@@ -42,6 +42,10 @@ void task_rf_recv(uint32_t initial)
 			uart_sendN(UART_0,data_length,data);
 
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
+
+//				uart_send1(UART_0,type);
+//				uart_sendN(UART_0,data_length,data);
+
 			if (type == NZP_REGISTER_Success) {
 				char clearText[2];
 				decode(data, clearText, 2, ENCRYPT_KEY);
@@ -53,6 +57,9 @@ void task_rf_recv(uint32_t initial)
 				WPSendData(&g_temperature,sizeof(g_temperature),NZP_DATA,0xff,0);
 				}
 			}
+		}
+		else{
+			uart_send_string(UART_0,"Parse Failed.");
 		}
 
 

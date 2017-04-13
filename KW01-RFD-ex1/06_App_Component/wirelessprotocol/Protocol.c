@@ -125,6 +125,7 @@ int check_data_is_correct(char *message, int length) {
         // success
         return 1;
     }
+    uart_send_string(UART_0,"CheckSum error.");
     return 0;
 }
 
@@ -140,11 +141,15 @@ void parse_NZP_v1(char *message, int length, char *data) {
 // 0 : failed
 // length: 鏁翠釜鍗忚鐨勯暱搴�
 int parse_NZP(char *message, int length, char *data) {
-    if (check_if_send_to_self(message) == 0)
-        return 0;
-    
-    if (check_data_is_correct(message, length) != 1)
-        return 0;
+    if (check_if_send_to_self(message) == 0){
+    	uart_send_string(UART_0,"Not send to self.");
+    	return 0;
+    }
+
+    if (check_data_is_correct(message, length) != 1){
+    	return 0;
+    }
+
     
     if (version_of_NZP(message) == NZP_V1) {
         parse_NZP_v1(message, length, data);
