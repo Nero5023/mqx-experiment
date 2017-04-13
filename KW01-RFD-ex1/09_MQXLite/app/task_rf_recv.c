@@ -53,9 +53,10 @@ void task_rf_recv(uint32_t initial)
 					SELF_ADDR = clearText[1];
 					net_status = REGISTERING_WITH_ECHO;
 				}
+			}
 			if(type ==  NZP_TEMPERATURE){
-				WPSendData(&g_temperature,sizeof(g_temperature),NZP_DATA,0xff,0);
-				}
+//				WPSendData(&g_temperature,sizeof(g_temperature),NZP_DATA,0xff,0);
+				WPSendData("24.7c%c",7,NZP_DATA,0xff,0);
 			}
 		}
 		else{
