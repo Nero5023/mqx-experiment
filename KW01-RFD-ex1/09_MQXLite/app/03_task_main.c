@@ -27,6 +27,7 @@ void task_main(uint32_t initial_data)
     light_init(LIGHT_RUN_1,LIGHT_OFF);   //初始化节点的运行指示灯1
     flash_init();                        //初始化Flash
     RF_Init(HD_adr);		         //RF模块初始化
+    adc_init(SINGLE_END,8,SAMPLE16);
 
     //4. 给有关变量赋初值
     seconds=0;

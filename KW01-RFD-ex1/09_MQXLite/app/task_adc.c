@@ -26,6 +26,7 @@ void task_adc(uint32_t initial_data)
 		temp=adc_read(26);
 		      //物理量回归，得到摄氏温度值
 		g_temperature=(25.0-(temp*3.3*1000/1024-719)/1.715);
+		uart_send_string(UART_0,"Got t.");
 		//2）任务延时1秒
 		_time_delay_ticks(5*200); //延时200*5ms=1s
 	}

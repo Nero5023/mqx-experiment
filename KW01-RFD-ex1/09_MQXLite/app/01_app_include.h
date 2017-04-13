@@ -54,6 +54,7 @@ uint_8 g_rfRecCount;
 uint_8 rf_sentDataLength;
 
 
+
 //1.4 声明轻量级事件组
 LWEVENT_STRUCT  lwevent_group;
 
