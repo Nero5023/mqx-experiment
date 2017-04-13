@@ -386,6 +386,8 @@ namespace SerialPort
                             PublicVar.g_ReceiveByteArray[i].ToString("X2") + "  ");
                     }
 
+                // 解析收到的数据
+                parseRecivedData(PublicVar.g_ReceiveByteArray);
                    // sci.SCIReceInt(SCIPort, 1);//设置产生接收中断的字节数【2014-5-5 注释，否则会导致程序无响应】
                     this.TSSLState.Text = "过程提示:数据接收成功!";
                 }
@@ -635,6 +637,83 @@ namespace SerialPort
         }
 
 
-      //------------------------------------------------------------------
+        //------------------------------------------------------------------
+
+        // Send data through uart
+        private void sendUARTData(string data, object sender, EventArgs e)
+        {
+            BtnSCIClearSend_Click(sender, e);
+            this.TbSCISend.Text = data;
+            BtnSCISend_Click(sender, e);
+        }
+        
+        // 发送请求节点信息数据 uart
+        private void sendQueryActiveNodes(object sender, EventArgs e)
+        {
+            sendUARTData(FFDDataType.NodeStatus.ToString(), sender, e);
+        }
+
+        // 发生请求节点温度数据 uart nodestr: "1" or "2" ...
+        private void sendQueryTempInfo(string nodeStr, object sender, EventArgs e)
+        {
+            string dataToSend = FFDDataType.TempInfo.ToString() + nodeStr;
+            sendUARTData(dataToSend, sender, e);
+        }
+
+        // node 注册成功通知
+        private void nodeHaveRegistered(byte nodeAddr)
+        {
+            Console.WriteLine("nodeHaveRegistered");
+        }
+
+        // nodes 在线的通知
+        private void nodesHaveChanged(int nodesNum, byte[] nodesAddrs)
+        {
+            Console.WriteLine("nodesHaveChanged");
+        }
+
+        // 收到 node 发送的温度通知
+        private void nodeHaveGottenTemp(byte nodeAddr, float temp)
+        {
+            Console.WriteLine("nodeHaveGottenTemp");
+        }
+
+        enum FFDDataType
+        {
+            RegisterSuccess = 's',  // s|node address
+            NodeStatus = 'n',       // n|num of nodes|node0|node1...
+            TempInfo = 't'        // t|node address|temp(float)
+        }
+
+        // 解析收到的信息
+        private void parseRecivedData(byte[] receiveData)
+        {
+            switch (receiveData[0])
+            {
+                case (byte)FFDDataType.RegisterSuccess:
+                    nodeHaveRegistered(receiveData[1]);
+                    break;
+                case (byte)FFDDataType.NodeStatus:
+                    byte nodesNum = receiveData[1];
+                    byte[] nodesAddrs = new byte[nodesNum];
+                    for (int i = 0; i < nodesNum; i = i + 1)
+                    {
+                        nodesAddrs[i] = receiveData[i + 2];
+                    }
+                    nodesHaveChanged(nodesNum, nodesAddrs);
+                    break;
+                case (byte)FFDDataType.TempInfo:
+                    float temp = System.BitConverter.ToSingle(receiveData, 2);
+                    nodeHaveGottenTemp(receiveData[1], temp);
+                    break;
+                default:
+                    // Console.WriteLine("Other");
+                    break;
+            }
+        }
+
     }
+
+
+
 }
