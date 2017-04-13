@@ -51,6 +51,10 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_TEMPERATURE:
 					sendNodeTempInfo(addr,data);
+					break;
+				case NZP_REGISTER_Success:
+					sendNodeReisterSuccessInfo(addr);
+					break;
 				default:
 					break;
 			}

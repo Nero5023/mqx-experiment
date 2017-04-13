@@ -47,7 +47,7 @@ void task_wp_register(uint32_t initial){
 				break;
 			case REGISTERED:
 				//注册成功,函数结束
-				WPSendData("Registered successfully!",24,NZP_DATA,0xff,0);
+				WPSendData("RS",2,NZP_REGISTER_Success,0xff,0);
 				return;
 			default:
 				break;

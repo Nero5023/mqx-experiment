@@ -42,26 +42,27 @@ void task_rf_recv(uint32_t initial)
 			uart_sendN(UART_0,data_length,data);
 
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
-
 //				uart_send1(UART_0,type);
 //				uart_sendN(UART_0,data_length,data);
 
-			if (type == NZP_REGISTER_Success) {
-				char clearText[2];
-				decode(data, clearText, 2, ENCRYPT_KEY);
-				if (clearText[0] == ENCRYPT_KEY) {
-					SELF_ADDR = clearText[1];
-					net_status = REGISTERING_WITH_ECHO;
-				}
-			}
-			if(type ==  NZP_TEMPERATURE){
-				//1）获取26通道的温度物理量
-				g_temperature=adc_read(26);
-//				uint_8 temp;
-//				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
-//				uart_send_string(UART_0,"Send t.");
-				WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
-//				WPSendData("24.7c%c",7,NZP_DATA,0xff,0);
+			char clearText[2];
+			switch (type) {
+				case NZP_REGISTER_Success:
+					decode(data, clearText, 2, ENCRYPT_KEY);
+					if (clearText[0] == ENCRYPT_KEY) {
+						SELF_ADDR = clearText[1];
+						net_status = REGISTERING_WITH_ECHO;
+					}
+					break;
+				case NZP_TEMPERATURE:
+					//获取26通道的温度物理量
+					g_temperature=adc_read(26);
+	//				uint_8 temp;
+	//				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
+					WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
+					break;
+				default:
+					break;
 			}
 		}
 		else{
