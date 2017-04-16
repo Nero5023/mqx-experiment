@@ -49,7 +49,17 @@ namespace SerialPort
             MyPicBoxList[3] = this.pictureBox4;
             MyPicBoxList[4] = this.pictureBox5;
             MyPicBoxList[5] = this.pictureBox6;
-            
+
+            MyProgressBarList[0] = this.progressBar7;
+            MyProgressBarList[1] = this.progressBar2;
+            MyProgressBarList[2] = this.progressBar3;
+            MyProgressBarList[3] = this.progressBar4;
+            MyProgressBarList[4] = this.progressBar5;
+            MyProgressBarList[5] = this.progressBar1;
+
+
+
+
         }
 
         ///-----------------------------------------------------------------
@@ -679,11 +689,17 @@ namespace SerialPort
         {
             nodeAddr =(byte)( (int)nodeAddr -1);
             new Animator2D(
-                new Path2D(MyPicBoxList[nodeAddr].Location.X, MyPicBoxList[nodeAddr].Location.X - (150), MyPicBoxList[nodeAddr].Location.Y, MyPicBoxList[nodeAddr].Location.Y, 1000)
+                new Path2D(MyPicBoxList[nodeAddr].Location.X, 150, MyPicBoxList[nodeAddr].Location.Y, MyPicBoxList[nodeAddr].Location.Y, 1000)
                 )
             .Play(MyPicBoxList[nodeAddr], Animator2D.KnownProperties.Location);
 
-            //MyPicBoxList[currentPic].BackColor = Color.LimeGreen;
+            new Animator2D(
+                new Path2D(MyProgressBarList[nodeAddr].Location.X, 5, MyProgressBarList[nodeAddr].Location.Y, MyProgressBarList[nodeAddr].Location.Y, 1000)
+             )
+            .Play(MyProgressBarList[nodeAddr], Animator2D.KnownProperties.Location);
+
+
+
 
             String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodeAddr);
             this.textBox3.Text += info;
@@ -700,8 +716,23 @@ namespace SerialPort
         // 收到 node 发送的温度通知
         private void nodeHaveGottenTemp(byte nodeAddr, float temp)
         {
-            String info = String.Format("节点[{0:G}]在当前温度:", nodeAddr) + temp.ToString() + "\r\n";
+            String info = String.Format("节点[{0:G}]当前光照强度:", nodeAddr) + temp.ToString() + "\r\n";
             this.textBox3.Text += info;
+
+            nodeAddr = (byte)((int)nodeAddr - 1);
+
+            if (temp - 130 > 100)
+            {
+                temp = 130 + 100;
+            }
+            if(temp - 130 < 0)
+            {
+                temp = 130 + 0;
+            }
+            new Animator(
+                new Path(MyProgressBarList[nodeAddr].Value, Math.Abs(temp - 130), 300)
+                ).Play(MyProgressBarList[nodeAddr], Animator.KnownProperties.Value);
+
         }
 
         enum FFDDataType
@@ -714,6 +745,10 @@ namespace SerialPort
         // 解析收到的信息
         private void parseRecivedData(byte[] receiveData)
         {
+            if (receiveData.Length <= 0)
+            {
+                return;
+            }
             switch (receiveData[0])
             {
                 case (byte)FFDDataType.RegisterSuccess:
@@ -776,11 +811,14 @@ namespace SerialPort
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             sendQueryActiveNodes(sender, e);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void updateProgressValue(int percent)
         {
 
         }

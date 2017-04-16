@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LbPortName = new System.Windows.Forms.Label();
             this.CbSCIComNum = new System.Windows.Forms.ComboBox();
             this.SetSerialPort = new System.Windows.Forms.GroupBox();
@@ -52,6 +53,13 @@
             this.TSSLState = new System.Windows.Forms.ToolStripStatusLabel();
             this.sSSerialPortInfo = new System.Windows.Forms.StatusStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.progressBar7 = new System.Windows.Forms.ProgressBar();
+            this.progressBar6 = new System.Windows.Forms.ProgressBar();
+            this.progressBar5 = new System.Windows.Forms.ProgressBar();
+            this.progressBar4 = new System.Windows.Forms.ProgressBar();
+            this.progressBar3 = new System.Windows.Forms.ProgressBar();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -62,6 +70,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.SetSerialPort.SuspendLayout();
             this.SerialPortSend.SuspendLayout();
             this.SerialPortReceive.SuspendLayout();
@@ -74,6 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // LbPortName
@@ -376,7 +386,7 @@
             this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 843);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(1183, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(1220, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -385,6 +395,13 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.progressBar7);
+            this.groupBox1.Controls.Add(this.progressBar6);
+            this.groupBox1.Controls.Add(this.progressBar5);
+            this.groupBox1.Controls.Add(this.progressBar4);
+            this.groupBox1.Controls.Add(this.progressBar3);
+            this.groupBox1.Controls.Add(this.progressBar2);
+            this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.pictureBox6);
             this.groupBox1.Controls.Add(this.pictureBox5);
@@ -393,12 +410,62 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.groupBox1.Location = new System.Drawing.Point(796, 29);
+            this.groupBox1.Location = new System.Drawing.Point(519, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(299, 709);
+            this.groupBox1.Size = new System.Drawing.Size(660, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
+            // 
+            // progressBar7
+            // 
+            this.progressBar7.ForeColor = System.Drawing.Color.Aquamarine;
+            this.progressBar7.Location = new System.Drawing.Point(404, 81);
+            this.progressBar7.Name = "progressBar7";
+            this.progressBar7.Size = new System.Drawing.Size(184, 25);
+            this.progressBar7.TabIndex = 25;
+            // 
+            // progressBar6
+            // 
+            this.progressBar6.Location = new System.Drawing.Point(404, 601);
+            this.progressBar6.Name = "progressBar6";
+            this.progressBar6.Size = new System.Drawing.Size(184, 25);
+            this.progressBar6.TabIndex = 24;
+            // 
+            // progressBar5
+            // 
+            this.progressBar5.Location = new System.Drawing.Point(404, 500);
+            this.progressBar5.Name = "progressBar5";
+            this.progressBar5.Size = new System.Drawing.Size(184, 25);
+            this.progressBar5.TabIndex = 23;
+            // 
+            // progressBar4
+            // 
+            this.progressBar4.Location = new System.Drawing.Point(404, 389);
+            this.progressBar4.Name = "progressBar4";
+            this.progressBar4.Size = new System.Drawing.Size(184, 25);
+            this.progressBar4.TabIndex = 22;
+            // 
+            // progressBar3
+            // 
+            this.progressBar3.Location = new System.Drawing.Point(404, 291);
+            this.progressBar3.Name = "progressBar3";
+            this.progressBar3.Size = new System.Drawing.Size(184, 25);
+            this.progressBar3.TabIndex = 21;
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Location = new System.Drawing.Point(404, 188);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(184, 25);
+            this.progressBar2.TabIndex = 20;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(-500, 77);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(235, 44);
+            this.progressBar1.TabIndex = 19;
             // 
             // pictureBox2
             // 
@@ -494,7 +561,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(739, 295);
+            this.groupBox2.Size = new System.Drawing.Size(481, 295);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "消息日志";
@@ -508,7 +575,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox3.Size = new System.Drawing.Size(686, 188);
+            this.textBox3.Size = new System.Drawing.Size(428, 188);
             this.textBox3.TabIndex = 9;
             // 
             // button2
@@ -538,11 +605,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // FrmSCI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 866);
+            this.ClientSize = new System.Drawing.Size(1220, 866);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -573,6 +644,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -606,6 +678,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
 
         private System.Windows.Forms.PictureBox[] MyPicBoxList = new System.Windows.Forms.PictureBox[8];
+        private System.Windows.Forms.ProgressBar[] MyProgressBarList = new System.Windows.Forms.ProgressBar[8];
         private int currentPic=0;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox6;
@@ -617,6 +690,14 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar7;
+        private System.Windows.Forms.ProgressBar progressBar6;
+        private System.Windows.Forms.ProgressBar progressBar5;
+        private System.Windows.Forms.ProgressBar progressBar4;
+        private System.Windows.Forms.ProgressBar progressBar3;
+        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
