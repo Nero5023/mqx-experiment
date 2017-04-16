@@ -386,7 +386,7 @@
             this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 843);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(1220, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(858, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -412,7 +412,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(519, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(660, 709);
+            this.groupBox1.Size = new System.Drawing.Size(298, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
@@ -613,7 +613,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1220, 866);
+            this.ClientSize = new System.Drawing.Size(858, 866);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
