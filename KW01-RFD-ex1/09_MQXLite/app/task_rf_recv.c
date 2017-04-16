@@ -56,7 +56,7 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_TEMPERATURE:
 					//获取26通道的温度物理量
-					g_temperature=adc_read(26);
+					g_temperature=adc_read(9);
 	//				uint_8 temp;
 	//				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
 					WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);

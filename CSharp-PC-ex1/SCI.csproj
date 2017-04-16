@@ -59,6 +59,10 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WinFormAnimation, Version=1.5.6298.3372, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WinFormAnimation.1.5.6298.3372\lib\net35-client\WinFormAnimation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="02-Form\FormSCI.cs">
@@ -80,6 +84,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,6 +106,8 @@
   <ItemGroup>
     <Content Include="01-Doc\工程说明.txt" />
     <Content Include="01-Doc\语言要素.txt" />
+    <Content Include="Resources\Double-Cutted-Circle-300px.png" />
+    <Content Include="Resources\node.png" />
     <None Include="Resources\Run_static.jpg" />
     <None Include="Resources\Run.gif" />
     <None Include="05-Image\Run_static.jpg" />

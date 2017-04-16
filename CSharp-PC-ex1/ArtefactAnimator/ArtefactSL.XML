@@ -1,0 +1,788 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArtefactSL</name>
+    </assembly>
+    <members>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.BlurRadius">
+            <summary>
+            DropShadowEffect.BlurRadiusProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.ShadowDepth">
+            <summary>
+            DropShadowEffect.ShadowDepthProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.Opacity">
+            <summary>
+            DropShadowEffect.Opacity
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.Color">
+            <summary>
+            DropShadowEffect.Color
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.Direction">
+            <summary>
+            DropShadowEffect.Direction
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.AnimationBlurEffects.DropShadowEffect">
+            <summary>
+            DropShadowEffect
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.RotationX">
+            <summary>
+            PlaneProjection.RotationXProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.RotationY">
+            <summary>
+            PlaneProjection.RotationYProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.RotationZ">
+            <summary>
+            PlaneProjection.RotationZProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.CenterOfRotationX">
+            <summary>
+            PlaneProjection.CenterOfRotationXProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.CenterOfRotationY">
+            <summary>
+            PlaneProjection.CenterOfRotationYProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.CenterOfRotationZ">
+            <summary>
+            PlaneProjection.CenterOfRotationZProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.LocalOffsetX">
+            <summary>
+            PlaneProjection.LocalOffsetXProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.LocalOffsetY">
+            <summary>
+            PlaneProjection.LocalOffsetYProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.LocalOffsetZ">
+            <summary>
+            PlaneProjection.LocalOffsetZProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.GlobalOffsetX">
+            <summary>
+            PlaneProjection.GlobalOffsetXProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.GlobalOffsetY">
+            <summary>
+            PlaneProjection.GlobalOffsetYProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.GlobalOffsetZ">
+            <summary>
+            PlaneProjection.GlobalOffsetZProperty 
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.ProjectionMatrix">
+            <summary>
+            PlaneProjection.ProjectionMatrix
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Extensions.Animation3DEffects.Projection">
+            <summary>
+            (PlaneProjection) UIElement.Projection  
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimatorExtensions.NormalizedTransformGroup(System.Windows.FrameworkElement)">
+            <summary>
+            Get FrameworkElement.RenderTransform with Children in standard order [ ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, ... ]
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimatorExtensions.NormalizeTransformGroup(System.Windows.FrameworkElement)">
+            <summary>
+            Sets and Returns FrameworkElement.RenderTransform with Children in standard order [ ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, ... ]
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimatorExtensions.GetNormalizedTransform``1(System.Windows.FrameworkElement)">
+            <summary>
+            T can be ScaleTransform, SkewTransform, RotateTransform, or TranslateTransform. If not found, the elements transform will be normalized and the function will run again.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Artefact.Utilities.PathUtils.ParsePathGeometryString(System.String)">
+            <summary>
+            Converts a string of Path.Data into PathGeometry. 
+            </summary>
+            <param name="pathStr">Path.Data in string form.</param>
+            <returns>PathGeometry from data string</returns>
+            <example>
+            pathStr = "M532,181 L532,219 L571,219 L570.54004,180.9397 z";
+            var geometry = PathUtils.ParsePathGeometryString(pathStr);
+            ArtefactAnimator.AddEase(myPath, Path.DataProperty, geometry, 3, AnimationTransitions.CubicEaseOut, 0);
+            </example>
+        </member>
+        <member name="M:Artefact.Animation.Timeout.#ctor(System.Double)">
+            <summary>
+            Triggers Complete event after Time has elapsed. 
+            </summary>
+            <param name="time">Time in Milliseconds</param>
+        </member>
+        <member name="M:Artefact.Animation.Timeout.#ctor(System.Double,System.Boolean)">
+            <summary>
+            Triggers Complete event after Time has elapsed. 
+            </summary>
+            <param name="time">Time in Milliseconds</param>
+            <param name="autoStart">If true, Start() is called in constructor</param>
+        </member>
+        <member name="M:Artefact.Animation.Timeout._Tick(System.Object,System.EventArgs)">
+            <summary>
+            Tick to handle timer event. Calculates elapsed time and determines if Timeout is complete.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:Artefact.Animation.Timeout.Time">
+            <summary>
+            Duration to wait for event trigger in milliseconds
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseObjectGroup.FinishGroup">
+            <summary>
+            Runs EaseObject.Finish() for each item in RunningItems and triggers the Complete function.
+            </summary>
+            <returns>
+            If the RunningItems count is greater than 0.
+            </returns>
+        </member>
+        <member name="M:Artefact.Animation.EaseObjectGroup.StopGroup">
+            <summary>
+            Runs EaseObject.Stop() for each item in RunningItems and triggers the Complete function.
+            </summary>
+            <returns>
+            If the RunningItems count is greater than 0.
+            </returns>
+        </member>
+        <member name="M:Artefact.Animation.EaseObjectGroup.Reset">
+            <summary>
+            Runs ClearGroup and ClearComplete
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseObjectGroup.ClearGroup">
+            <summary>
+            Removes all Items and RunningItems
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseObjectGroup.ClearComplete">
+            <summary>
+            Removes any Complete listeners
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Artefact.Animation.EaseObjectGroup.AddEaseObject(Artefact.Animation.IEaseObject)" -->
+        <member name="M:Artefact.Animation.EaseObjectGroup.EoComplete(Artefact.Animation.IEaseObject,System.Double)">
+            <summary>
+            Triggers Complete event if RunningItems.Count is 0
+            </summary>
+            <param name="eo"></param>
+        </member>
+        <member name="T:Artefact.Animation.TransformGroupIndexes">
+            <summary>
+            The expected order of System.Windows.Media.RenderTransform.Children created from ArtefactAnimator.NormalizeTransformGroup(FrameworkElement)
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.TransformGroupIndexes.ScaleTransform">
+            <summary>
+            Expected System.Windows.Media.RenderTransform child index of System.Windows.Media.ScaleTransform after using ArtefactAnimator.NormalizeTransformGroup(FrameworkElement).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.TransformGroupIndexes.SkewTransform">
+            <summary>
+            Expected Child index of System.Windows.Media.SkewTransform after using ArtefactAnimator.NormalizeTransformGroup(FrameworkElement).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.TransformGroupIndexes.RotateTransform">
+            <summary>
+            Expected Child index of System.Windows.Media.RotateTransform after using ArtefactAnimator.NormalizeTransformGroup(FrameworkElement).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.TransformGroupIndexes.TranslateTransform">
+            <summary>
+            Expected Child index of System.Windows.Media.TranslateTransform after using ArtefactAnimator.NormalizeTransformGroup(FrameworkElement).
+            </summary>
+        </member>
+        <member name="T:Artefact.Animation.Transform3DGroupIndexes">
+            <summary>
+            The expected order of System.Windows.Media.RenderTransform3D.Children created from ArtefactAnimator.NormalizeTransformGroup(Transform3DGroup)
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Transform3DGroupIndexes.TranslateTransform3D">
+            <summary>
+            Expected Child index of System.Windows.Media.TranslateTransform3D after using ArtefactAnimator.NormalizeTransformGroup(Transform3DGroup).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Transform3DGroupIndexes.ScaleTransform3D">
+            <summary>
+            Expected Child index of System.Windows.Media.ScaleTransform3D after using ArtefactAnimator.NormalizeTransformGroup(Transform3DGroup).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.Transform3DGroupIndexes.RotateTransform3D">
+            <summary>
+            Expected Child index of System.Windows.Media.RotateTransform3D after using ArtefactAnimator.NormalizeTransformGroup(Transform3DGroup).
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Data">
+            <summary>
+            Custom user data to add to EaseObject
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Delay">
+            <summary>
+            Duration of wait in milliseconds
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Ease">
+            <summary>
+            PercentHandler take one double value which is determined by the (ellapsed Time/total Time)
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Target">
+            <summary>
+            Object with currently easing properties -> see Props
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Props">
+            <summary>
+            Collection of GetterSetterData. IsActive determines if the property is currently being animated. 
+            When all props have their IsActive state set to false, the EaseObject will stop.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.EaseObject.Time">
+            <summary>
+            Duration of ease in milliseconds
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.EaseObject.Complete">
+            <summary>
+            Ease has completed without being stopped
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.EaseObject.Update">
+            <summary>
+            Ease percentages have beeen updated
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.EaseObject.Begin">
+            <summary>
+            Ease has started. Usefull if using a delay.
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.EaseObject.Stopped">
+            <summary>
+            Ease has been stop using Stop();
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.EaseObject.TimeStarted">
+            <summary>
+            Time in milliseconds taken from ArtefactAnimator.ElapsedMilliseconds to determine elapsed milliseconds
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.EaseObject.IsRunning">
+            <summary>
+            Currently subscribed to ArtefactAnimator and updating each tick
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.EaseObject.IsDelayed">
+            <summary>
+            Waiting for delay to ellapse before starting
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.EaseObject.PercentTime">
+            <summary>
+            Percentage of time determined from (ellapsed Time/total Time)
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.EaseObject.PercentEase">
+            <summary>
+            Value of PercentTime having passed through Ease.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.RowHeightPixels">
+            <summary>
+            Sets RowDefinition.Height to a new GridLength and applies eased value with GridUnitType.Pixel
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ColumWidthPixels">
+            <summary>
+            Sets ColumnDefinition.Width to a new GridLength and applies eased value with GridUnitType.Pixel
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.RowHeightStar">
+            <summary>
+            Sets RowDefinition.Height to a new GridLength and applies eased value with GridUnitType.Star
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ColumWidthStar">
+            <summary>
+            Sets ColumnDefinition.Width to a new GridLength and applies eased value with GridUnitType.Star
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.MarginTop">
+            <summary>
+            Sets FrameworkElement.Margin.Top by creating a new Thickness and setting the FrameworkElement.Margin property
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.MarginBottom">
+            <summary>
+            Sets FrameworkElement.Margin.Bottom by creating a new Thickness and setting the FrameworkElement.Margin property
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.MarginLeft">
+            <summary>
+            Sets FrameworkElement.Margin.Left by creating a new Thickness and setting the FrameworkElement.Margin property
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.MarginRight">
+            <summary>
+            Sets FrameworkElement.Margin.Rigth by creating a new Thickness and setting the FrameworkElement.Margin property
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.X">
+            <summary>
+            Affects the Canvas.Left property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Y">
+            <summary>
+            Affects the Canvas.Top property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Width">
+            <summary>
+            Affects the Canvas.Width property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Height">
+            <summary>
+            Affects the Canvas.Height property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ActualWidth">
+            <summary>
+            Affects the Canvas.ActualWidth property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ActualHeight">
+            <summary>
+            Affects the Canvas.Height property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Alpha">
+            <summary>
+            Affects the Canvas.Opacity property of a UIElement
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.AutoAlpha">
+            <summary>
+            Affects the Canvas.Opacity property of a UIElement. When in WPF, 0 will set the Visibility of an element to Visibility.Hidden - Silverlight uses Visibility.Collapsed.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.AutoAlphaCollapsed">
+            <summary>
+            Affects the Canvas.Opacity property of a UIElement. 0 will set the Visibility of an element to Visibility.Collapsed.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ScaleX">
+            <summary>
+            Applies to the ScaleTransform ScaleXProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ScaleY">
+            <summary>
+            Applies to the ScaleTransform ScaleYProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.SkewX">
+            <summary>
+            Applies to the SkewTransform AngleXProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.SkewY">
+            <summary>
+            Applies to the SkewTransform AngleYProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Rotation">
+            <summary>
+            Applies to the RotateTransform AngleProperty
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.OffsetX">
+            <summary>
+            Applies to the TranslateTransform OffsetX
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.OffsetY">
+            <summary>
+            Applies to the TranslateTransform OffsetY
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.ColorObj">
+            <summary> 
+            Eases the A,B,R,G values on a Color object to the values of a new Color Object.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.PositiveDoubleGetterSetter">
+            <summary>
+            Some values will throw errors
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.Shortcuts">
+            <summary>
+            String -> DependencyProperty Lookup
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.GetterSetterHash">
+            <summary>
+            String -> GetterSetter Lookup
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.GetterSettersByType">
+            <summary>
+            Type -> GetterSetter Lookup
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.AnimationTypes.GetterSettersByDependencyProperty">
+            <summary>
+            DependencyProperty -> GetterSetter Lookup
+            Allows you to pick an alternate getter/setter for any Dependency Property.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.AnimationTypes.RegisterDependencyPropertyForGetterSetter(System.Windows.DependencyProperty,Artefact.Animation.GetterSetter)">
+            <summary>
+            Links DependencyProperty to GetterSetter.
+            </summary>
+            <returns>Registration Success. False means the prop is already registered.</returns>
+        </member>
+        <member name="M:Artefact.Animation.AnimationTypes.RegisterGetterSetterForType(System.Type,Artefact.Animation.GetterSetter)">
+            <summary>
+            Links Type to GetterSetter.
+            </summary>
+            <returns>Registration Success. False means the propType is already registered.</returns>
+        </member>
+        <member name="M:Artefact.Animation.AnimationTypes.RegisterShortcut(System.String,System.Object)">
+            <summary>
+            Link string name to DependencyProperty used in GetterSetters.
+            </summary>
+            <returns>Registration Success. False means the propName is already registered.</returns>
+        </member>
+        <member name="M:Artefact.Animation.AnimationTypes.RegisterGetterSetter(System.String,Artefact.Animation.GetterSetter)">
+            <summary>
+            Link GetterSetter to string name
+            </summary>
+            <returns>Registration Success. False means the propName is already registered.</returns>
+        </member>
+        <member name="M:Artefact.Animation.AnimationTypes.GetPropertyByString(System.String)">
+            <summary>
+            Returns DependencyProperty as registered by the string name in Shortcuts or from the Unknowns list if not found.
+            </summary>
+            <param name="propName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Artefact.Animation.ArtefactAnimator">
+            <summary>
+            Core class to construct and manage EaseObjects.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.ArtefactAnimator.Author">
+            <summary>
+            Original Creator of ArtefactAnimator.
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.ArtefactAnimator.Link">
+            <summary>
+            Associated links
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.ArtefactAnimator.Version">
+            <summary>
+            Current version
+            </summary>
+        </member>
+        <member name="F:Artefact.Animation.ArtefactAnimator.Modified">
+            <summary>
+            Last month modified
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.ValidatePropAndValue(System.Object,System.Object,System.Object)">
+                    public static EaseObject AddEase(object obj, object props, object endValues, GetterSetter gettersGetters, double time, PercentHandler ease, double delay)
+                    {
+                        throw new NotImplementedException();
+                        return new EaseObject(time, ease, delay);
+                    }
+                    #region OVERLOADS
+                    #endregion
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.GetNames(System.Object[])">
+            <summary>
+            Converts any objects in object[] to string by finding their registered name and keeps string values the same.
+            </summary>
+            <param name="props">An Array to get the values from.</param>
+            <returns>All objects in object[] are returned as strings in a string[]</returns>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.GetDoubleDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyProperty)">
+            <summary>
+            Returns a casted Double from the current effective value of a dependency property from a System.Windows.DependencyObject.
+            </summary>
+            <param name="obj">The System.Windows.DependencyObject to retrieve the value from</param>
+            <param name="prop">The System.Windows.DependencyProperty identifier of the property to retrieve the value for</param>
+            <returns>Returns the current effective value.</returns>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.SetDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyProperty,System.Object)">
+            <summary>
+            Sets the local value of a dependency property on a System.Windows.DependencyObject.
+            </summary>
+            <param name="obj">The System.Windows.DependencyObject to set the value on.</param>
+            <param name="prop">The identifier of the dependency property to set.</param>
+            <param name="value">The new local value.</param>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.GetKeyFromValue(System.Collections.Generic.Dictionary{System.String,System.Object},System.Object)">
+            <summary>
+            Returns the key of a Dictionary(string, object) by passing the value, or null if the key can't be found.
+            </summary>
+            <param name="hash">Dictionary(string, object) to search.</param>
+            <param name="value">object value to search for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Artefact.Animation.ArtefactAnimator.NormalizeTransformGroup(System.Windows.FrameworkElement)">
+            <summary>
+            Get FrameworkElement.RenderTransform with Children in standard order [ ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, ... ]
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.ArtefactAnimator.Tick">
+            <summary>
+            Event dispatched from each trigger of the CompositionTarget.Rendering.
+            </summary>
+        </member>
+        <member name="E:Artefact.Animation.ArtefactAnimator.StopProps">
+            <summary>
+            Notification to all EaseObjects to stop easing values listed in the StopPropsEventHandler.
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.ArtefactAnimator.ElapsedMilliseconds">
+            <summary>
+            Total number of Milliseconds ArtefactAnimator has been active - used for evaluating time percentage.
+            </summary>
+        </member>
+        <member name="P:Artefact.Animation.ArtefactAnimator.StartTime">
+            <summary>
+            The DataTime ArtefactAnimator was started.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Double,System.Double,System.Double)">
+            <summary>
+            Returns new double by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Int32,System.Int32,System.Double)">
+            <summary>
+            Returns new int by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Decimal,System.Decimal,System.Double)">
+            <summary>
+            Returns new decimal by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Byte,System.Byte,System.Double)">
+            <summary>
+            Returns new byte by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.Color,System.Windows.Media.Color,System.Double)">
+            <summary>
+            Returns new Color with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.SolidColorBrush,System.Windows.Media.SolidColorBrush,System.Double)">
+            <summary>
+            Returns new SolidColorBrush with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.LinearGradientBrush,System.Windows.Media.LinearGradientBrush,System.Double)">
+            <summary>
+            Returns new LinearGradientBrush with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.RadialGradientBrush,System.Windows.Media.RadialGradientBrush,System.Double)">
+            <summary>
+            Returns new RadialGradientBrush with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.GradientStopCollection,System.Windows.Media.GradientStopCollection,System.Double)">
+            <summary>
+            Returns new GradientStopCollection with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Double[],System.Double[],System.Double)">
+            <summary>
+            Returns new double[] with all values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Point[],System.Windows.Point[],System.Double)">
+            <summary>
+            Returns new Point[] with all values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Point,System.Windows.Point,System.Double)">
+            <summary>
+            Returns new Point with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PointCollection,System.Windows.Media.PointCollection,System.Double)">
+            <summary>
+            Returns new PointCollection with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Rect,System.Windows.Rect,System.Double)">
+            <summary>
+            Returns new Rect with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.Matrix,System.Windows.Media.Matrix,System.Double)">
+            <summary>
+            Returns new Matrix with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.Media3D.Matrix3D,System.Windows.Media.Media3D.Matrix3D,System.Double)">
+            <summary>
+            Returns new Matrix3D with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.CornerRadius,System.Windows.CornerRadius,System.Double)">
+            <summary>
+            Returns new CornerRadius with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Thickness,System.Windows.Thickness,System.Double)">
+            <summary>
+            Returns new Thickness with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.GridLength,System.Windows.GridLength,System.Double)">
+            <summary>
+            Returns new GridLength with positive values eased from startValue to endValue using a time percentage 0 -> 1. GridUnitType is determined by the endValue.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.Effects.BlurEffect,System.Windows.Media.Effects.BlurEffect,System.Double)">
+            <summary>
+            Returns new BlurEffect with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.Effects.DropShadowEffect,System.Windows.Media.Effects.DropShadowEffect,System.Double)">
+            <summary>
+            Returns new DropShadowEffect with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Size,System.Windows.Size,System.Double)">
+            <summary>
+            Returns new Size by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PathGeometry,System.Windows.Media.PathGeometry,System.Double)">
+            <summary>
+            Returns new PathGeometry by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PathFigureCollection,System.Windows.Media.PathFigureCollection,System.Double)">
+            <summary>
+            Returns new PathFigureCollection by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PathSegmentCollection,System.Windows.Media.PathSegmentCollection,System.Double)">
+            <summary>
+            Returns new PathSegmentCollection by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PathFigure,System.Windows.Media.PathFigure,System.Double)">
+            <summary>
+            Returns new PathFigure by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PathSegment,System.Windows.Media.PathSegment,System.Double)">
+            <summary>
+            Returns new PathSegment by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.LineSegment,System.Windows.Media.LineSegment,System.Double)">
+            <summary>
+            Returns new LineSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Data="M 10,50 L 200,70"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.linesegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PolyLineSegment,System.Windows.Media.PolyLineSegment,System.Double)">
+            <summary>
+            Returns new PolyLineSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Points="50,100 50,150"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.polylinesegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PolyQuadraticBezierSegment,System.Windows.Media.PolyQuadraticBezierSegment,System.Double)">
+            <summary>
+            Returns new PolyQuadraticBezierSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Points="200,200 300,100 0,200 30,400"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.polyquadraticbeziersegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PolyBezierSegment,System.Windows.Media.PolyBezierSegment,System.Double)">
+            <summary>
+            Returns new PolyBezierSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Points="0,0 200,0 300,100 300,0 400,0 600,100"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.polybeziersegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.QuadraticBezierSegment,System.Windows.Media.QuadraticBezierSegment,System.Double)">
+            <summary>
+            Returns new QuadraticBezierSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Data="M 10,100 Q 200,200 300,100"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.quadraticbeziersegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.BezierSegment,System.Windows.Media.BezierSegment,System.Double)">
+            <summary>
+            Returns new BezierSegment  by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Data="M 10,100 C 100,0 200,200 300,100"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.beziersegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.ArcSegment,System.Windows.Media.ArcSegment,System.Double)">
+            <summary>
+            Returns new ArcSegment by easing startValue to endValue using a time percentage 0 -&gt; 1.
+            </summary>
+            <example>XAML: Data="M 10,100 A 100,50 45 1 0 200,100"</example>
+            <seealso cref="!:http://msdn.microsoft.com/en-us/library/system.windows.media.arcsegment.aspx"/>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.CompositeTransform,System.Windows.Media.CompositeTransform,System.Double)">
+            <summary>
+            Returns new CompositeTransform by easing startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+        <member name="M:Artefact.Animation.EaseHelper.EaseValue(System.Windows.Media.PlaneProjection,System.Windows.Media.PlaneProjection,System.Windows.Media.PlaneProjection,System.Double)">
+            <summary>
+            Ease PlaneProjection with values eased from startValue to endValue using a time percentage 0 -> 1.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormAnimation;
 
 namespace SerialPort
 {
@@ -28,8 +29,9 @@ namespace SerialPort
         private string msg = "无校验,8位数据位,1位停止位(No parity,8 data " +
                             "bits,1 stop bit)";
         private string str = "串口号(Serial Port Number)、波特率(Baud Rate):";
-
+          
         SCI sci;    //要调用SCI类中所定义的函数
+
 
         ///-----------------------------------------------------------------
         /// <summary>                                                       
@@ -41,6 +43,13 @@ namespace SerialPort
         public FrmSCI()
         {
             InitializeComponent();
+            MyPicBoxList[0] = this.pictureBox1;
+            MyPicBoxList[1] = this.pictureBox2;
+            MyPicBoxList[2] = this.pictureBox3;
+            MyPicBoxList[3] = this.pictureBox4;
+            MyPicBoxList[4] = this.pictureBox5;
+            MyPicBoxList[5] = this.pictureBox6;
+            
         }
 
         ///-----------------------------------------------------------------
@@ -62,6 +71,7 @@ namespace SerialPort
             this.CbSCIBaud.Enabled = true;    //[波特率选择框]处于可用状态
             this.CbSCIComNum.Enabled = true;　//[串口选择框]处于可用状态
             this.BtnSCISend.Enabled = false;  //发送按钮处于不可用状态
+            CheckForIllegalCrossThreadCalls = false;
             //自动搜索串口,并将其加入到[串口选择框]中
             int i;
             string[] SCIPorts;
@@ -171,14 +181,17 @@ namespace SerialPort
                     //状态上显示结果信息
                     this.TSSLState.Text = this.TSSLState.Text +
                                           "打开" + PublicVar.g_SCIComNum + "成功!" + "波特率选择：" + PublicVar.g_SCIBaudRate;
-                    this.pictureBox1.Image = SerialPort.Properties.Resources.Run;
+
                     this.BtnSCISend.Enabled = true;
+                    this.button1.Enabled = true;
+
+
                 }
                 else//串口打开失败
                 {
                     this.TSSLState.Text = this.TSSLState.Text +
                                           "打开" + PublicVar.g_SCIComNum + "失败!";
-                    this.pictureBox1.Image = SerialPort.Properties.Resources.Run_static;
+
                     this.BtnSCISend.Enabled = false;
                 }
             }
@@ -200,7 +213,7 @@ namespace SerialPort
                     //[波特率选择框]处于可用状态
                     this.CbSCIBaud.Enabled = true;
                     this.TSSLState.Text += "关闭"+PublicVar.g_SCIComNum+"成功!";
-                    this.pictureBox1.Image = SerialPort.Properties.Resources.Run_static;
+
                     this.BtnSCISend.Enabled = false;
                 }
                 else//串口关闭失败
@@ -224,6 +237,7 @@ namespace SerialPort
         ///-----------------------------------------------------------------
         private void BtnSCISend_Click(object sender, EventArgs e)
         {
+
             this.TSSLState.Text = "过程提示: 执行发送数据...";
 
             bool Flag;//判断数据发送是否成功
@@ -650,32 +664,44 @@ namespace SerialPort
         // 发送请求节点信息数据 uart
         private void sendQueryActiveNodes(object sender, EventArgs e)
         {
-            sendUARTData(FFDDataType.NodeStatus.ToString(), sender, e);
+            sendUARTData("n", sender, e);
         }
 
         // 发生请求节点温度数据 uart nodestr: "1" or "2" ...
         private void sendQueryTempInfo(string nodeStr, object sender, EventArgs e)
         {
-            string dataToSend = FFDDataType.TempInfo.ToString() + nodeStr;
+            string dataToSend = "t" + nodeStr;
             sendUARTData(dataToSend, sender, e);
         }
 
         // node 注册成功通知
         private void nodeHaveRegistered(byte nodeAddr)
         {
-            Console.WriteLine("nodeHaveRegistered");
+            nodeAddr =(byte)( (int)nodeAddr -1);
+            new Animator2D(
+                new Path2D(MyPicBoxList[nodeAddr].Location.X, MyPicBoxList[nodeAddr].Location.X - (150), MyPicBoxList[nodeAddr].Location.Y, MyPicBoxList[nodeAddr].Location.Y, 1000)
+                )
+            .Play(MyPicBoxList[nodeAddr], Animator2D.KnownProperties.Location);
+
+            //MyPicBoxList[currentPic].BackColor = Color.LimeGreen;
+
+            String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodeAddr);
+            this.textBox3.Text += info;
         }
 
         // nodes 在线的通知
         private void nodesHaveChanged(int nodesNum, byte[] nodesAddrs)
         {
-            Console.WriteLine("nodesHaveChanged");
+            for (int i = 0; i < nodesAddrs.Length; i++) {
+                nodeHaveRegistered(nodesAddrs[i]);
+            }
         }
 
         // 收到 node 发送的温度通知
         private void nodeHaveGottenTemp(byte nodeAddr, float temp)
         {
-            Console.WriteLine("nodeHaveGottenTemp");
+            String info = String.Format("节点[{0:G}]在当前温度:", nodeAddr) + temp.ToString() + "\r\n";
+            this.textBox3.Text += info;
         }
 
         enum FFDDataType
@@ -703,7 +729,8 @@ namespace SerialPort
                     nodesHaveChanged(nodesNum, nodesAddrs);
                     break;
                 case (byte)FFDDataType.TempInfo:
-                    float temp = System.BitConverter.ToSingle(receiveData, 2);
+                    
+                    float temp = System.BitConverter.ToSingle(receiveData,2);
                     nodeHaveGottenTemp(receiveData[1], temp);
                     break;
                 default:
@@ -712,6 +739,51 @@ namespace SerialPort
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.textBox3.Text = "";
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("1", sender, e);
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("2", sender, e);
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("3", sender, e);
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("4", sender, e);
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("5", sender, e);
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            sendQueryTempInfo("6", sender, e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            sendQueryActiveNodes(sender, e);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
