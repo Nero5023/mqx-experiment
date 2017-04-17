@@ -709,7 +709,7 @@ namespace SerialPort
         //
         private void sendContinusMinotor(string nodeStr, object sender, EventArgs e) 
         {
-            string dataToSend = 'c';
+            string dataToSend = "c" + nodeStr;
             sendUARTData(dataToSend, sender, e);
         }
 
@@ -866,11 +866,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox1_Click(sender, e);
-                }
+                sendContinusMinotor("1", sender, e);
             }
           
          
@@ -899,11 +895,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox2_Click(sender, e);
-                }
+                sendContinusMinotor("2", sender, e);
             }
 
 
@@ -922,11 +914,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox3_Click(sender, e);
-                }
+                sendContinusMinotor("3", sender, e);
             }
 
 
@@ -945,11 +933,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox4_Click(sender, e);
-                }
+                sendContinusMinotor("4", sender, e);
             }
 
 
@@ -968,11 +952,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox5_Click(sender, e);
-                }
+                sendContinusMinotor("5", sender, e);
             }
 
 
@@ -991,11 +971,7 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                while (MyBarWithPic[nodeaddr].isMonitored)
-                {
-                    Delay(800);
-                    pictureBox6_Click(sender, e);
-                }
+                sendContinusMinotor("6", sender, e);
             }
 
 

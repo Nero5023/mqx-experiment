@@ -53,6 +53,7 @@ float g_temperature;          //芯片温度
 uint_8 g_rfRecCount;
 uint_8 rf_sentDataLength;
 
+uint_8 is_continous_monitoring;
 
 
 //1.4 声明轻量级事件组
