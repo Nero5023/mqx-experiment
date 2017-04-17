@@ -18,6 +18,17 @@ NET_STATUS net_status;
 
 
 void generateRegisterData();
+
+//=====================================================================
+//函数名称：WPSendData
+//函数返回：无返回值
+//参数说明：   data: 将要发送数据的字符串指针
+//         length: 发送的数据长度
+//       NZP_TYPE: 发送 NZP 协议的种类
+//    destination: 发送的目的地
+//  needEncrypted: 是否需要发送目的地
+//功能概要：通过传入的 message，返回 NZP 协议报文的类型
+//=====================================================================
 void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted);
 
 #endif
