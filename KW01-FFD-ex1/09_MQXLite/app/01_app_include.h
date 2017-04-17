@@ -33,6 +33,9 @@
 #define GLOBAL_VAR_PRE
 #endif
 
+#define SELF_ADDR 0x09
+
+
 //1.2 宏定义常量
 
 //1.3 声明全局变量
@@ -47,7 +50,7 @@ uint_8 rf_sentDataLength;
 
 GLOBAL_VAR_PRE char rfdAddrs[8];        // store the rfd addrs
 GLOBAL_VAR_PRE char rfdKeys[9];         // store the rfdkeys
-uint_8 SELF_ADDR;
+
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
 uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）

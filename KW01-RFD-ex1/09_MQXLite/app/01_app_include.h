@@ -55,6 +55,8 @@ uint_8 rf_sentDataLength;
 
 uint_8 is_continous_monitoring;
 
+#define PC_NODE_ADDR   0x09
+
 
 //1.4 声明轻量级事件组
 LWEVENT_STRUCT  lwevent_group;

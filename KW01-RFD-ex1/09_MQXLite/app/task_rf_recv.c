@@ -56,7 +56,7 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_TEMPERATURE:
 					// 发送对应的全局变量
-					WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xfe,0);
+					WPSendData(&g_temperature,4,NZP_TEMPERATURE,PC_NODE_ADDR,0);
 					break;
 				case NZP_CONTIONUOUS_MONITOR:
 					if(is_continous_monitoring==0){
