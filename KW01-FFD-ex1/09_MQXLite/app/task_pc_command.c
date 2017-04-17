@@ -4,7 +4,8 @@
 
 typedef enum PC_COM_TYPE {
     PC_COM_NODES  = 'n',
-    PC_COM_TEMP = 't'  // data[1] 代表 发送的目的地
+    PC_COM_TEMP = 't',  // data[1] 代表 发送的目的地
+    PC_COM_CONTIONUOUS = 'c' // data[1] 代表 发送的目的地
 } PC_COM_TYPE;
 
 void task_pc_command(uint32_t initial_data){
@@ -27,6 +28,9 @@ void task_pc_command(uint32_t initial_data){
                 des = data[1];       // 询问地址为 des 节点的温度信息
                 WPSendData("a", 1, NZP_TEMPERATURE, des-'0', 0);
                 break;
+            case PC_COM_CONTIONUOUS:
+                des = data[1];
+                WPSendData("a", 1, NZP_CONTIONUOUS_MONITOR, des-'0', 0);
             default:
                 break;
         }
