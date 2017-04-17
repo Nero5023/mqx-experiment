@@ -32,6 +32,20 @@ namespace SerialPort
           
         SCI sci;    //要调用SCI类中所定义的函数
 
+        private class BarWithPic{
+            public PictureBox pic;
+            public ProgressBar bar;
+            public bool isMonitored;
+            public BarWithPic(PictureBox pic , ProgressBar bar)
+            {
+                this.pic = pic;
+                this.bar = bar;
+                isMonitored = false;
+            }
+
+        }
+
+
 
         ///-----------------------------------------------------------------
         /// <summary>                                                       
@@ -43,6 +57,14 @@ namespace SerialPort
         public FrmSCI()
         {
             InitializeComponent();
+            MyBarWithPic[0] = new BarWithPic(this.pictureBox1, this.progressBar7);
+            MyBarWithPic[1] = new BarWithPic(this.pictureBox2, this.progressBar2);
+            MyBarWithPic[2] = new BarWithPic(this.pictureBox3, this.progressBar3);
+            MyBarWithPic[3] = new BarWithPic(this.pictureBox4, this.progressBar4);
+            MyBarWithPic[4] = new BarWithPic(this.pictureBox5, this.progressBar5);
+            MyBarWithPic[5] = new BarWithPic(this.pictureBox6, this.progressBar1);
+
+            /*
             MyPicBoxList[0] = this.pictureBox1;
             MyPicBoxList[1] = this.pictureBox2;
             MyPicBoxList[2] = this.pictureBox3;
@@ -56,7 +78,7 @@ namespace SerialPort
             MyProgressBarList[3] = this.progressBar4;
             MyProgressBarList[4] = this.progressBar5;
             MyProgressBarList[5] = this.progressBar1;
-
+            */
 
 
 
@@ -689,14 +711,14 @@ namespace SerialPort
         {
             nodeAddr =(byte)( (int)nodeAddr -1);
             new Animator2D(
-                new Path2D(MyPicBoxList[nodeAddr].Location.X, 150, MyPicBoxList[nodeAddr].Location.Y, MyPicBoxList[nodeAddr].Location.Y, 1000)
+                new Path2D(MyBarWithPic[nodeAddr].pic.Location.X, 150, MyBarWithPic[nodeAddr].pic.Location.Y, MyBarWithPic[nodeAddr].pic.Location.Y, 1000)
                 )
-            .Play(MyPicBoxList[nodeAddr], Animator2D.KnownProperties.Location);
+            .Play(MyBarWithPic[nodeAddr].pic, Animator2D.KnownProperties.Location);
 
             new Animator2D(
-                new Path2D(MyProgressBarList[nodeAddr].Location.X, 5, MyProgressBarList[nodeAddr].Location.Y, MyProgressBarList[nodeAddr].Location.Y, 1000)
+                new Path2D(MyBarWithPic[nodeAddr].bar.Location.X, 5, MyBarWithPic[nodeAddr].bar.Location.Y, MyBarWithPic[nodeAddr].bar.Location.Y, 1000)
              )
-            .Play(MyProgressBarList[nodeAddr], Animator2D.KnownProperties.Location);
+            .Play(MyBarWithPic[nodeAddr].bar, Animator2D.KnownProperties.Location);
 
 
 
@@ -730,8 +752,8 @@ namespace SerialPort
                 temp = 130 + 0;
             }
             new Animator(
-                new Path(MyProgressBarList[nodeAddr].Value, Math.Abs(temp - 130), 300)
-                ).Play(MyProgressBarList[nodeAddr], Animator.KnownProperties.Value);
+                new Path(MyBarWithPic[nodeAddr].bar.Value, Math.Abs(temp - 130), 300)
+                ).Play(MyBarWithPic[nodeAddr].bar, Animator.KnownProperties.Value);
 
         }
 
@@ -820,6 +842,154 @@ namespace SerialPort
         }
         private void updateProgressValue(int percent)
         {
+
+        }
+
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 0;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox1_Click(sender, e);
+                }
+            }
+          
+         
+        }
+
+
+        public static void Delay(int milliSecond)
+        {
+            int start = Environment.TickCount;
+            while (Math.Abs(Environment.TickCount - start) < milliSecond)
+            {
+                Application.DoEvents();
+            }
+        }
+
+        private void pictureBox2_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 1;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox2_Click(sender, e);
+                }
+            }
+
+
+        }
+
+        private void pictureBox3_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 2;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox3_Click(sender, e);
+                }
+            }
+
+
+        }
+
+        private void pictureBox4_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 3;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox4_Click(sender, e);
+                }
+            }
+
+
+        }
+
+        private void pictureBox5_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 4;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox5_Click(sender, e);
+                }
+            }
+
+
+        }
+
+        private void pictureBox6_DoubleClick(object sender, EventArgs e)
+        {
+            int nodeaddr = 5;
+            if (MyBarWithPic[nodeaddr].isMonitored)
+            {
+                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = false;
+                return;
+            }
+            else
+            {
+                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
+                MyBarWithPic[nodeaddr].isMonitored = true;
+                while (MyBarWithPic[nodeaddr].isMonitored)
+                {
+                    Delay(800);
+                    pictureBox6_Click(sender, e);
+                }
+            }
+
 
         }
     }
