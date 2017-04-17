@@ -47,8 +47,9 @@ void task_rf_recv(uint32_t initial)
 			switch (type) {
 				case NZP_REGISTER_Success:       // 接收到注册回复信息
 					// 解密数据
+
 					decode(data, clearText, 2, ENCRYPT_KEY);
-					if (clearText[0] == ENCRYPT_KEY) { // 解密信息中的密钥与自己密钥相同时，即为发送给自己的
+					if (clearText[0] == ENCRYPT_KEY && net_status == REGISTERING) { // 解密信息中的密钥与自己密钥相同时，即为发送给自己的
 						SELF_ADDR = clearText[1];  // 设置自己的地址
 						net_status = REGISTERING_WITH_ECHO;  // 将注册状态置为 REGISTERING_WITH_ECHO
 					}
