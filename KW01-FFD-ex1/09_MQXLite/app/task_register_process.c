@@ -28,12 +28,10 @@ void task_register_process(uint32_t initial_data){
         char addr = generateAddr();
         rfdKeys[addr] = data[0];  //存放对应节点的秘钥
         char dataToSend[2] = {data[0], addr};
-//        uart_sendN(UART_0,2,dataToSend);
+        // 加密数据
         encode(dataToSend, dataToSend, 2, data[0]);
-//        uart_sendN(UART_0,2,dataToSend);
+        // 将加密的数据发还给节点
         WPSendData(dataToSend, 2, NZP_REGISTER_Success, 0xff, 0);
-//
-//		uart_sendN(UART_0,RE_MSG_SIZE*4,data);
 
 	}
 }
