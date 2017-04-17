@@ -16,37 +16,36 @@ void task_wp_register(uint32_t initial){
 		// uint_8 wait_time=0;
 		switch (net_status) {
 			case UNREGISTERED: //尚未注册则开始注册
-//				_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
-				if (SELF_ADDR == 0) {
+				if (SELF_ADDR == 0) {  // 查看是否真的未注册
 					srand(123);
 				    key[0]=(rand() % 100+1);
+				    // 1-3 为填充数据，补全为 4 个字节
 				    key[1] = 'a';
 				    key[2] = 'b';
 				    key[3] = 'c';
 				    ENCRYPT_KEY = key[0];
 
-//				    uart_send_string(UART_0,"Try register...");
-
+				    // 广播自己的密钥，发送给主机节点
 					WPSendData(key, 4, NZP_REGISTER, 0xff, 0);
 					net_status = REGISTERING;//标记状态为注册中
 				}
 				break;
 
 			case REGISTERING: //注册中,等待主机返回结果
-				//延时1秒
-				_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+				//延时1秒 每个tick对应5ms，延时200*5ms=1s
+				_time_delay_ticks(1*ONE_SECOND_DELAY); 
 				wait_time++;
-				if(wait_time >= REGISTER_TIMEOUT){
+				if(wait_time >= REGISTER_TIMEOUT){ // 超时
 					net_status = UNREGISTERED; //注册超时
 					wait_time = 0;
 				}
 				break;
 			case REGISTERING_WITH_ECHO:
-			// 	//判断是否注册成功
+			 	//判断是否注册成功
 				net_status = REGISTERED;
 				break;
 			case REGISTERED:
-				//注册成功,函数结束
+				//注册成功,函数结束，发送注册成功信息
 				WPSendData("RS",2,NZP_REGISTER_Success,0xff,0);
 				return;
 			default:

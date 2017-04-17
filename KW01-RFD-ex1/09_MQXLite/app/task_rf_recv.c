@@ -34,31 +34,29 @@ void task_rf_recv(uint32_t initial)
 		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
 		char data[56];
 
-//		uart_sendN(UART_0,length,rf_recvBuf);
-
+		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP(rf_recvBuf, length, data)) {
-			// uart data
 
+			// 用于 debug
 			uart_sendN(UART_0,data_length,data);
 
+			// 获取数据报协议类型
 			NZP_TYPE type = type_of_NZP(rf_recvBuf);
-//				uart_send1(UART_0,type);
-//				uart_sendN(UART_0,data_length,data);
 
 			char clearText[2];
 			switch (type) {
-				case NZP_REGISTER_Success:
+				case NZP_REGISTER_Success:       // 接收到注册回复信息
+					// 解密数据
 					decode(data, clearText, 2, ENCRYPT_KEY);
-					if (clearText[0] == ENCRYPT_KEY) {
-						SELF_ADDR = clearText[1];
-						net_status = REGISTERING_WITH_ECHO;
+					if (clearText[0] == ENCRYPT_KEY) { // 解密信息中的密钥与自己密钥相同时，即为发送给自己的
+						SELF_ADDR = clearText[1];  // 设置自己的地址
+						net_status = REGISTERING_WITH_ECHO;  // 将注册状态置为 REGISTERING_WITH_ECHO
 					}
 					break;
 				case NZP_TEMPERATURE:
 					//获取26通道的温度物理量
 					g_temperature=adc_read(9);
-	//				uint_8 temp;
-	//				temp=(25.0-(g_temperature*3.3*1000/1024-719)/1.715);
+					// 获取到温度信息后发送给 FFD
 					WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
 					break;
 				default:
@@ -66,6 +64,7 @@ void task_rf_recv(uint32_t initial)
 			}
 		}
 		else{
+			// 用于 Debug
 			uart_send_string(UART_0,"Parse Failed.");
 		}
 
