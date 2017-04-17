@@ -25,5 +25,6 @@ const TASK_TEMPLATE_STRUCT MQX_template_list[] =
 	{TASK_RF_SEND,   task_rf_send,   TASK_RF_SEND_STACK_SIZE,    8,     "task_rf_send",   0},
 	{TASK_FLASH,     task_flash,     TASK_FLASH_STACK_SIZE,      8,     "task_flash",     0},
 	{TASK_WP_REGISTER, task_wp_register , TASK_WP_REGISTER_STACK_SIZE, 7, "task_wp_register" , 0},
+	{TASK_ADC,       task_adc,       TASK_ADC_STACK_SIZE,        9,     "task_adc",        0},
 	{0}
 };

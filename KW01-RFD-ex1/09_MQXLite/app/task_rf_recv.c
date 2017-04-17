@@ -55,9 +55,7 @@ void task_rf_recv(uint32_t initial)
 					}
 					break;
 				case NZP_TEMPERATURE:
-					//获取26通道的温度物理量
-					g_temperature=adc_read(9);
-					// 获取到温度信息后发送给 FFD
+					// 发送对应的全局变量
 					WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
 					break;
 				default:

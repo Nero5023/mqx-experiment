@@ -21,14 +21,10 @@ void task_adc(uint32_t initial_data)
 	//3. 进入任务循环体
 	while(TRUE)
 	{
-		//以下加入用户程序--------------------------------------------------------
-		//1）获取26通道的温度物理量
-		temp=adc_read(26);
-		      //物理量回归，得到摄氏温度值
-		g_temperature=(25.0-(temp*3.3*1000/1024-719)/1.715);
-		uart_send_string(UART_0,"Got t.");
-		//2）任务延时1秒
-		_time_delay_ticks(5*200); //延时200*5ms=1s
+		//获取9通道的物理量
+		g_temperature=adc_read(9);
+		//2）任务延时
+		_time_delay_ticks(400); //延时200*5ms=1s
 	}
 	//任务循环体end_while
 }
