@@ -32,27 +32,27 @@ void task_rf_recv(uint32_t initial)
 		uint_8 length = length_of_NZP((pointer)rf_recvBuf);
 		uint_8 data_length = data_length_of_NZP((pointer)rf_recvBuf);
 
-//		uart_sendN(UART_0,length,rf_recvBuf);
 
 		char data[56];
+		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP((pointer)rf_recvBuf, length, data)) {
 			// uart data
-//			uart_sendN(UART_0,data_length,data);
-
+			// 获取 NZP 的类型
 			NZP_TYPE type = type_of_NZP((pointer)rf_recvBuf);
+			// 获取发送源的地址
 			uint_8 addr = addr_of_NZP((pointer)rf_recvBuf);
 
 			switch (type) {
-				case NZP_REGISTER://有注册消息到来
+				case NZP_REGISTER:// 有注册消息到来
 					_lwmsgq_send((pointer)register_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
 					break;
-				case NZP_DATA://需要直接打印的消息
+				case NZP_DATA:// 需要直接打印的消息
 					uart_sendN(UART_0, data_length, data);
 					break;
-				case NZP_TEMPERATURE:
+				case NZP_TEMPERATURE: // 收到温度信息时候
 					sendNodeTempInfo(addr,data);
 					break;
-				case NZP_REGISTER_Success:
+				case NZP_REGISTER_Success: // 收到注册成功消息
 					sendNodeReisterSuccessInfo(addr);
 					break;
 				default:
