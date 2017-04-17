@@ -706,6 +706,13 @@ namespace SerialPort
             sendUARTData(dataToSend, sender, e);
         }
 
+        //
+        private void sendContinusMinotor(string nodeStr, object sender, EventArgs e) 
+        {
+            string dataToSend = 'c';
+            sendUARTData(dataToSend, sender, e);
+        }
+
         // node 注册成功通知
         private void nodeHaveRegistered(byte nodeAddr)
         {
@@ -761,7 +768,8 @@ namespace SerialPort
         {
             RegisterSuccess = 's',  // s|node address
             NodeStatus = 'n',       // n|num of nodes|node0|node1...
-            TempInfo = 't'        // t|node address|temp(float)
+            TempInfo = 't',       // t|node address|temp(float)
+            ADCContinuousMonitor = 'c' // c
         }
 
         // 解析收到的信息
