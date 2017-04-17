@@ -40,6 +40,7 @@ void task_main(uint32_t initial_data)
     for(i=0;i<9;i++){
     	rfdKeys[i]=0;
     }
+    SELF_ADDR = 0xfe;
 
 	//初始化消息队列
 	_lwmsgq_init((pointer)pccommand_queue,COMMAND_NUM_MESSAGES,COMMAND_MSG_SIZE);

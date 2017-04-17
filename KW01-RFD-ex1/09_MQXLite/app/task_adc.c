@@ -23,8 +23,9 @@ void task_adc(uint32_t initial_data)
 	{
 		//获取9通道的物理量
 		g_temperature=adc_read(9);
-		if(is_continous_monitoring){
+		if(is_continous_monitoring==1){
 			WPSendData(&g_temperature,4,NZP_TEMPERATURE,0xff,0);
+//			_time_delay_ticks(00);
 		}
 		//2）任务延时
 		_time_delay_ticks(400); //延时200*5ms=1s

@@ -386,7 +386,7 @@
             this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 843);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(858, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(857, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -412,53 +412,65 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(519, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(298, 709);
+            this.groupBox1.Size = new System.Drawing.Size(297, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
             // 
             // progressBar7
             // 
+            this.progressBar7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar7.ForeColor = System.Drawing.Color.Aquamarine;
             this.progressBar7.Location = new System.Drawing.Point(404, 81);
             this.progressBar7.Name = "progressBar7";
             this.progressBar7.Size = new System.Drawing.Size(184, 25);
             this.progressBar7.TabIndex = 25;
+            this.progressBar7.Click += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
             // progressBar6
             // 
+            this.progressBar6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar6.Location = new System.Drawing.Point(404, 601);
             this.progressBar6.Name = "progressBar6";
             this.progressBar6.Size = new System.Drawing.Size(184, 25);
             this.progressBar6.TabIndex = 24;
+            this.progressBar6.Click += new System.EventHandler(this.pictureBox6_DoubleClick);
             // 
             // progressBar5
             // 
+            this.progressBar5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar5.Location = new System.Drawing.Point(404, 500);
             this.progressBar5.Name = "progressBar5";
             this.progressBar5.Size = new System.Drawing.Size(184, 25);
             this.progressBar5.TabIndex = 23;
+            this.progressBar5.Click += new System.EventHandler(this.pictureBox5_Click);
             // 
             // progressBar4
             // 
+            this.progressBar4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar4.Location = new System.Drawing.Point(404, 389);
             this.progressBar4.Name = "progressBar4";
             this.progressBar4.Size = new System.Drawing.Size(184, 25);
             this.progressBar4.TabIndex = 22;
+            this.progressBar4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // progressBar3
             // 
+            this.progressBar3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar3.Location = new System.Drawing.Point(404, 291);
             this.progressBar3.Name = "progressBar3";
             this.progressBar3.Size = new System.Drawing.Size(184, 25);
             this.progressBar3.TabIndex = 21;
+            this.progressBar3.Click += new System.EventHandler(this.pictureBox3_DoubleClick);
             // 
             // progressBar2
             // 
+            this.progressBar2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.progressBar2.Location = new System.Drawing.Point(404, 188);
             this.progressBar2.Name = "progressBar2";
             this.progressBar2.Size = new System.Drawing.Size(184, 25);
             this.progressBar2.TabIndex = 20;
+            this.progressBar2.Click += new System.EventHandler(this.pictureBox2_DoubleClick);
             // 
             // progressBar1
             // 
@@ -619,7 +631,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 866);
+            this.ClientSize = new System.Drawing.Size(857, 866);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

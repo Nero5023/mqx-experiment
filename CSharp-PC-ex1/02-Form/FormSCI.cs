@@ -730,7 +730,7 @@ namespace SerialPort
 
 
 
-            String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodeAddr);
+            String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodeAddr+1);
             this.textBox3.Text += info;
         }
 
@@ -860,16 +860,17 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
+                
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("1", sender, e);
+                
             }
-          
-         
+
+            sendContinusMinotor("1", sender, e);
+
         }
 
 
@@ -889,15 +890,14 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("2", sender, e);
+                
             }
-
+            sendContinusMinotor("2", sender, e);
 
         }
 
@@ -908,16 +908,16 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
+        
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("3", sender, e);
+                
             }
 
-
+            sendContinusMinotor("3", sender, e);
         }
 
         private void pictureBox4_DoubleClick(object sender, EventArgs e)
@@ -927,15 +927,15 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
+               
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("4", sender, e);
+                
             }
-
+            sendContinusMinotor("4", sender, e);
 
         }
 
@@ -946,15 +946,15 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
+                
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("5", sender, e);
+                
             }
-
+            sendContinusMinotor("5", sender, e);
 
         }
 
@@ -965,15 +965,15 @@ namespace SerialPort
             {
                 this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = false;
-                return;
+                
             }
             else
             {
                 this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr);
                 MyBarWithPic[nodeaddr].isMonitored = true;
-                sendContinusMinotor("6", sender, e);
+                
             }
-
+            sendContinusMinotor("6", sender, e);
 
         }
     }

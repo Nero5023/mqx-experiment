@@ -32,7 +32,7 @@ void task_main(uint32_t initial_data)
     //4. 给有关变量赋初值
     seconds=0;
     net_status = UNREGISTERED;
-    is_continous_monitoring = FALSE;
+    is_continous_monitoring = 0;
 
     //5. 创建其他任务
     _task_create_at(0, TASK_LIGHT,   0, task_light_stack,      TASK_LIGHT_STACK_SIZE);

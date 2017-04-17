@@ -31,6 +31,7 @@ void task_pc_command(uint32_t initial_data){
             case PC_COM_CONTIONUOUS:
                 des = data[1];
                 WPSendData("a", 1, NZP_CONTIONUOUS_MONITOR, des-'0', 0);
+                break;
             default:
                 break;
         }
