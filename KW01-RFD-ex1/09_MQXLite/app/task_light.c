@@ -23,6 +23,7 @@ void task_light(uint_32 initial)
 	// 进入任务循环体
 	while(TRUE) 
 	{
+//		uart_send1(UART_0,'a');
 		//以下加入用户程序--------------------------------------------------------
 		//1）控制运行指示灯闪烁
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)

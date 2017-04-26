@@ -281,7 +281,6 @@
             this.SerialPortReceive.Controls.Add(this.BtnState);
             this.SerialPortReceive.Controls.Add(this.TbShowHex);
             this.SerialPortReceive.Controls.Add(this.lbDec);
-            this.SerialPortReceive.Controls.Add(this.TbShowDec);
             this.SerialPortReceive.Controls.Add(this.BtnSCIClearRec);
             this.SerialPortReceive.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SerialPortReceive.ForeColor = System.Drawing.Color.Red;
@@ -349,7 +348,7 @@
             // TbShowDec
             // 
             this.TbShowDec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TbShowDec.Location = new System.Drawing.Point(166, 31);
+            this.TbShowDec.Location = new System.Drawing.Point(31, 418);
             this.TbShowDec.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowDec.Multiline = true;
             this.TbShowDec.Name = "TbShowDec";
@@ -386,7 +385,7 @@
             this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 843);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(857, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(1148, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -412,7 +411,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(519, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(297, 709);
+            this.groupBox1.Size = new System.Drawing.Size(588, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
@@ -631,11 +630,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 866);
+            this.ClientSize = new System.Drawing.Size(1148, 866);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnSCISwitch);
+            this.Controls.Add(this.TbShowDec);
             this.Controls.Add(this.sSSerialPortInfo);
             this.Controls.Add(this.SerialPortReceive);
             this.Controls.Add(this.SerialPortSend);

@@ -36,24 +36,40 @@ void isr_uart0_re(pointer user_isr_ptr)
 //===========================================================================
 void gpio_CD_ISR(pointer user_isr_ptr)
 {
-	DISABLE_INTERRUPTS;           //关总中断
+//	DISABLE_INTERRUPTS;           //关总中断
 	//-----------------------------------------------------------------------
 
 	//Delay_ms(20);
 
-
+//	DEBUG_LOG(10,"==RF_ISR==")
 	if((PORTC_PCR4 & PORT_PCR_ISF_MASK)) 	//DIO1中断
 	{
+		_mqx_uint recv_msg_temp[RECV_MSG_SIZE];
 		//接收数据包成功，置事件位EVENT_RF_RECV，启动task_rf_recv任务
-		if(0 == RF_ReceiveFrame(rf_recvBuf,&g_rfRecCount,HD_adr))
+
+		if(0 == RF_ReceiveFrame(recv_msg_temp,&g_rfRecCount,HD_adr))
 		{
-			_lwmsgq_send((pointer)recv_queue,rf_recvBuf,LWMSGQ_SEND_BLOCK_ON_FULL);
+			uint_8 res1 = _lwmsgq_send((pointer)recv_queue,recv_msg_temp,0);
+			switch (res1) {
+				case LWMSGQ_INVALID:
+					DEBUG_LOG(25,"The handle  was not valid.");
+					break;
+				case LWMSGQ_FULL:
+					DEBUG_LOG(9,"Fuck full");
+					break;
+				case MQX_CANNOT_CALL_FUNCTION_FROM_ISR:
+					DEBUG_LOG(9,"Fuck ISR!");
+					break;
+				default:
+					break;
+			}
+
 		}
 			PORTC_PCR4 |= PORT_PCR_ISF_MASK; 	        //清标志位
 	}
 	//-----------------------------------------------------------------------
 	UART0_S1|=0x1F;
-    ENABLE_INTERRUPTS;                                  //开总中断
+//    ENABLE_INTERRUPTS;                                  //开总中断
 }
 
 //内部调用函数

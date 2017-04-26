@@ -29,8 +29,20 @@
 #include "encrypt.h"
 #include "adc.h"
 
+#ifndef GLOBAL_VAR
+#define GLOBAL_VAR_PRE extern
+#else
+#define GLOBAL_VAR_PRE
+#endif
+
+
+
+
 
 //1.2 宏定义常量
+#define IS_DEBUG_MODE 1
+#define DEBUG_LOG(len,str)  if(IS_DEBUG_MODE){uart_sendN(UART_0,len,str);}
+
 
 //1.3 声明全局变量
 uint_8 g_uart_recvBuf[72];    //串口接收数据全局数组
@@ -88,6 +100,8 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_WP_REGISTER   10
 #define TASK_ADC           11
 
+
+
 //2.2 宏定义任务栈大小
 #define TASK_MAIN_STACK_SIZE       (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_LIGHT_STACK_SIZE      (sizeof(TD_STRUCT) + 200 + PSP_STACK_ALIGNMENT + 1)
@@ -124,7 +138,11 @@ uint_8 task_adc_stack[TASK_ADC_STACK_SIZE];
 #define RECV_NUM_MESSAGES  3
 #define RECV_MSG_SIZE      16
 
+#define SEND_NUM_MESSAGES  3
+#define SEND_MSG_SIZE      16
+
 uint_32 recv_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RECV_NUM_MESSAGES*RECV_MSG_SIZE]; //来自主机的指令消息队列
+uint_32 send_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+SEND_NUM_MESSAGES*SEND_MSG_SIZE]; //待发送的指令消息队列
 
 
 

@@ -19,17 +19,17 @@ void task_rf_recv(uint32_t initial)
 {	
 	//1. 声明任务使用的变量
 	uint_8 i;
-	_mqx_int recv_msg[RECV_MSG_SIZE];//用于接收recv_queue中的消息
 
 	//2. 给有关变量赋初值
 
 	//3. 进入任务循环体
 	while(TRUE) 
 	{
+		_mqx_uint recv_msg[RECV_MSG_SIZE];//用于接收recv_queue中的消息
+
 		//以下加入用户程序--------------------------------------------------------
 		//1）无限等待RF接收事件位置一
 		_lwmsgq_receive((pointer)recv_queue,recv_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
-
 
 		uint_8 length = length_of_NZP(recv_msg);
 		uint_8 data_length = data_length_of_NZP(recv_msg);
