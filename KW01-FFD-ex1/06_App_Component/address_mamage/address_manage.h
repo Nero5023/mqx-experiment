@@ -11,7 +11,7 @@
 
 #include "common.h"    //包含公共要素头文件
 
-void init_reg_info();
+void init_addr_info();
 
 uint_8 regisger();
 

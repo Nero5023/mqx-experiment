@@ -53,6 +53,7 @@ void task_rf_recv(uint32_t initial)
 					sendNodeTempInfo(addr,data);
 					break;
 				case NZP_REGISTER_Success: // 收到注册成功消息
+					receive_heartbeat_from(addr);
 					sendNodeReisterSuccessInfo(addr);
 					break;
 				default:

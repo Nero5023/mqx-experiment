@@ -41,6 +41,8 @@ void task_main(uint32_t initial_data)
     	rfdKeys[i]=0;
     }
 
+    init_addr_info(); //初始化 ADDR_DATA
+
 
 	//初始化消息队列
 	_lwmsgq_init((pointer)pccommand_queue,COMMAND_NUM_MESSAGES,COMMAND_MSG_SIZE);
