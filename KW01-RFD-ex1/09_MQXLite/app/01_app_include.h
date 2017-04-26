@@ -62,7 +62,6 @@ uint_8 is_continous_monitoring;
 LWEVENT_STRUCT  lwevent_group;
 
 //1.5 宏定义事件位
-#define  EVENT_RF_RECV       	 ((1uL)<<(1))   //RF接收事件位
 #define  EVENT_RF_SEND       	 ((1uL)<<(2))   //RF发送事件位
 #define  EVENT_UART0_RE     	 ((1uL)<<(4))   //串口0接收完整数据帧事件位
 #define  EVENT_FLASH        	 ((1uL)<<(5))   //Flash操作事件位
@@ -119,5 +118,15 @@ uint_8 task_uart0_Recv_stack[TASK_UART0_RECV_STACK_SIZE];
 uint_8 task_flash_stack[TASK_FLASH_STACK_SIZE];
 uint_8 task_wp_register_stack[TASK_WP_REGISTER_STACK_SIZE];
 uint_8 task_adc_stack[TASK_ADC_STACK_SIZE];
+
+//3.1消息队列
+
+#define RECV_NUM_MESSAGES  3
+#define RECV_MSG_SIZE      16
+
+uint_32 recv_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RECV_NUM_MESSAGES*RECV_MSG_SIZE]; //来自主机的指令消息队列
+
+
+
 //---------------------------------------------------------------------------
 #endif    //01_app_include.h

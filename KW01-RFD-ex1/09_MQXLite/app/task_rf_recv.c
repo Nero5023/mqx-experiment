@@ -19,6 +19,7 @@ void task_rf_recv(uint32_t initial)
 {	
 	//1. 声明任务使用的变量
 	uint_8 i;
+	_mqx_int recv_msg[RECV_MSG_SIZE];//用于接收recv_queue中的消息
 
 	//2. 给有关变量赋初值
 
@@ -27,21 +28,21 @@ void task_rf_recv(uint32_t initial)
 	{
 		//以下加入用户程序--------------------------------------------------------
 		//1）无限等待RF接收事件位置一
-		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
+		_lwmsgq_receive((pointer)recv_queue,recv_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
 
 
-		uint_8 length = length_of_NZP(rf_recvBuf);
-		uint_8 data_length = data_length_of_NZP(rf_recvBuf);
+		uint_8 length = length_of_NZP(recv_msg);
+		uint_8 data_length = data_length_of_NZP(recv_msg);
 		char data[56];
 
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
-		if (parse_NZP(rf_recvBuf, length, data)) {
+		if (parse_NZP(recv_msg, length, data)) {
 
 			// 用于 debug
 			uart_sendN(UART_0,data_length,data);
 
 			// 获取数据报协议类型
-			NZP_TYPE type = type_of_NZP(rf_recvBuf);
+			NZP_TYPE type = type_of_NZP(recv_msg);
 
 			char clearText[2];
 			switch (type) {
@@ -74,9 +75,6 @@ void task_rf_recv(uint32_t initial)
 			uart_send_string(UART_0,"Parse Failed.");
 		}
 
-
-		//3）RF接收事件位清零
-		_lwevent_clear(&lwevent_group, EVENT_RF_RECV);
 	}//任务循环体end_while
 }
 

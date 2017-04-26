@@ -34,6 +34,9 @@ void task_main(uint32_t initial_data)
     net_status = UNREGISTERED;
     is_continous_monitoring = 0;
 
+	//初始化消息队列
+	_lwmsgq_init((pointer)recv_queue,RECV_NUM_MESSAGES,RECV_MSG_SIZE);
+
     //5. 创建其他任务
     _task_create_at(0, TASK_LIGHT,   0, task_light_stack,      TASK_LIGHT_STACK_SIZE);
     _task_create_at(0, TASK_RF_RECV, 0, task_rf_recv_stack,    TASK_RF_RECV_STACK_SIZE);

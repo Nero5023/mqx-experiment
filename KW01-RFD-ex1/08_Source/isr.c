@@ -47,7 +47,7 @@ void gpio_CD_ISR(pointer user_isr_ptr)
 		//接收数据包成功，置事件位EVENT_RF_RECV，启动task_rf_recv任务
 		if(0 == RF_ReceiveFrame(rf_recvBuf,&g_rfRecCount,HD_adr))
 		{
-			_lwevent_set(&lwevent_group,EVENT_RF_RECV);	//置RF接收事件位，启动RF接收任务
+			_lwmsgq_send((pointer)recv_queue,rf_recvBuf,LWMSGQ_SEND_BLOCK_ON_FULL);
 		}
 			PORTC_PCR4 |= PORT_PCR_ISF_MASK; 	        //清标志位
 	}
