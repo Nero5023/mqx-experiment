@@ -56,6 +56,9 @@ void task_rf_recv(uint32_t initial)
 					receive_heartbeat_from(addr);
 					sendNodeReisterSuccessInfo(addr);
 					break;
+				case NZP_HEARTBEAT:
+					receive_heartbeat_from(addr);
+					break;
 				default:
 					break;
 			}
