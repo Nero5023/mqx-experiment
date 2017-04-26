@@ -122,10 +122,10 @@ uint_8 task_pc_command_stack[TASK_PC_COMMAND_STACK_SIZE];
 
 //3.1消息队列
 #define COMMAND_NUM_MESSAGES  3
-#define COMMAND_MSG_SIZE      1
+#define COMMAND_MSG_SIZE      16
 
 #define RE_NUM_MESSAGES  3
-#define RE_MSG_SIZE      1
+#define RE_MSG_SIZE      16
 
 
 uint_32 register_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RE_NUM_MESSAGES*RE_MSG_SIZE]; //从机注册消息队列
