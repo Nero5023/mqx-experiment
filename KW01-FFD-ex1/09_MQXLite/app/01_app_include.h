@@ -51,6 +51,8 @@ uint_8 rf_sentDataLength;
 GLOBAL_VAR_PRE char rfdAddrs[8];        // store the rfd addrs
 GLOBAL_VAR_PRE char rfdKeys[9];         // store the rfdkeys
 
+uint_8 REG_INFO[10][3];
+
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
 uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）
