@@ -17,6 +17,8 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
     rf_sentDataLength = length_of_NZP(p_data);
 
     RF_Init(255);           //RFÄ£¿é³õÊ¼»¯
-    _lwevent_set(&lwevent_group,EVENT_RF_SEND);
+
+    _lwmsgq_send((pointer)send_queue,p_data,0);
+
 }
 
