@@ -16,6 +16,7 @@ void task_adc(uint32_t initial_data)
 {
 	//1. 声明任务使用的变量
 	uint_16 temp;        //用于存储温度物理量的读取
+	static float temp_adc=0;
 	//2. 给有关变量赋初值
 
 	//3. 进入任务循环体
@@ -23,12 +24,12 @@ void task_adc(uint32_t initial_data)
 	{
 		//获取9通道的物理量
 		g_temperature=adc_read(9);
-		if(is_continous_monitoring==1){
+		if(is_continous_monitoring==1 && abs(g_temperature-temp_adc)>20){
 			WPSendData(&g_temperature,4,NZP_TEMPERATURE,PC_NODE_ADDR,0);
-//			_time_delay_ticks(00);
+			temp_adc = g_temperature;
 		}
 		//2）任务延时
-		_time_delay_ticks(400); //延时200*5ms=1s
+		_time_delay_ticks(100); //延时200*5ms=1s
 	}
 	//任务循环体end_while
 }
