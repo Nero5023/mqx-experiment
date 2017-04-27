@@ -24,6 +24,9 @@ void task_light(uint_32 initial)
 		//以下加入用户程序--------------------------------------------------------
 		//1）控制运行指示灯闪烁
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
+		
+		//更新各个节点的TTL
+		updateTTL();
 
 		//2）任务延时1秒
 		_time_delay_ticks(DELAY_TIMES); //每个tick对应5ms，延时200*5ms=1s

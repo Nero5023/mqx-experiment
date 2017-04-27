@@ -25,13 +25,19 @@ void task_register_process(uint32_t initial_data){
 //		uart_sendN(UART_0,15,"Receive re_msg.");
         char *data = re_msg;
 
-        char addr = generateAddr();
-        rfdKeys[addr] = data[0];  //存放对应节点的秘钥
+        // char addr = generateAddr();
+        // rfdKeys[addr] = data[0];  //存放对应节点的秘钥
+        
+        uint_8 addr = regisger();
+        receive_key_from(addr, data[0]);
+
         char dataToSend[2] = {data[0], addr};
         // 加密数据
         encode(dataToSend, dataToSend, 2, data[0]);
         // 将加密的数据发还给节点
         WPSendData(dataToSend, 2, NZP_REGISTER_Success, 0xff, 0);
+
+
 
 	}
 }

@@ -26,6 +26,7 @@
 #include "flash.h"
 #include "Protocol.h"
 #include "cp.h"
+#include "address_manage.h"
 
 #ifndef GLOBAL_VAR
 #define GLOBAL_VAR_PRE extern
@@ -50,6 +51,8 @@ uint_8 rf_sentDataLength;
 
 GLOBAL_VAR_PRE char rfdAddrs[8];        // store the rfd addrs
 GLOBAL_VAR_PRE char rfdKeys[9];         // store the rfdkeys
+
+uint_8 ADDR_INFO[10][3];  // store register info 
 
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
