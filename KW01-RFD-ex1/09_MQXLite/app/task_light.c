@@ -9,6 +9,17 @@
 // 宏定义任务内部使用的常量
 #define ONE_SECOND_DELAY  200
 
+
+
+void SendHeartBeart(){
+	if(net_status==REGISTERED){
+		WPSendData("a",1,NZP_HEARTBEAT,PC_NODE_ADDR,0);
+	}
+}
+
+
+
+
 //===========================================================================
 //任务名称：task_light
 //功能概要：控制运行指示灯每隔1s闪烁，该任务优先级为14，仅仅高于task_adc
@@ -28,7 +39,12 @@ void task_light(uint_32 initial)
 		//1）控制运行指示灯闪烁
 		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
 		//2）任务延时1秒
-		_time_delay_ticks(1*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
-
+		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+		SendHeartBeart();
+		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+		SendHeartBeart();
 	}//任务循环体end_while
 }
+
+
+

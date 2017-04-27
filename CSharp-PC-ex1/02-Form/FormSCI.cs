@@ -727,11 +727,6 @@ namespace SerialPort
              )
             .Play(MyBarWithPic[nodeAddr].bar, Animator2D.KnownProperties.Location);
 
-
-
-
-            String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodeAddr+1);
-            this.textBox3.Text += info;
         }
 
 
@@ -748,9 +743,6 @@ namespace SerialPort
              )
             .Play(MyBarWithPic[nodeAddr].bar, Animator2D.KnownProperties.Location);
 
-
-            String info = String.Format("\n节点离开网络,地址:  {0:G}\r\n", nodeAddr + 1);
-            this.textBox3.Text += info;
         }
 
 
@@ -766,26 +758,34 @@ namespace SerialPort
                 bool isFind = false;
                 for (int i = 0; i < nodesAddrs.Length; i++)
                 {
-                    if(j== nodesAddrs[i])
+                    if((j+1)== nodesAddrs[i])
                     {
                         isFind = true;
                         if (isIn)
                         {
                             nodeHaveRegistered(nodesAddrs[i]);
+
+                            String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodesAddrs[i]);
+                            this.textBox3.Text += info;
                         }
                         else
                         {
                             nodeHaveLeft(nodesAddrs[i]);
+
+                            String info = String.Format("\n节点离开网络,地址:  {0:G}\r\n", nodesAddrs[i]);
+                            this.textBox3.Text += info;
                         }
                         break;
                     }
                 }
                 if (!isFind)
                 {
+                    /*
                     if(isIn)
                     {
-                        nodeHaveLeft((byte)j);
+                        nodeHaveLeft((byte)(j+1));
                     }
+                    */
                 }
             }
 
@@ -833,6 +833,8 @@ namespace SerialPort
             {
                 case (byte)FFDDataType.RegisterSuccess:
                     nodeHaveRegistered(receiveData[1]);
+                    String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", receiveData[1]);
+                    this.textBox3.Text += info;
                     break;
                 case (byte)FFDDataType.NodeStatus:
                     byte nodesNum = receiveData[1];

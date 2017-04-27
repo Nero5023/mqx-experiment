@@ -43,8 +43,13 @@ void updateTTL() {
 }
 
 void receive_heartbeat_from(uint_8 addr) {
+	if (addr <=0 || addr>= 11) {
+		return;
+	}
     uint_8 index = addr - 1;
-    ADDR_INFO[index][2] = DEFAULT_TTL;
+    if (ADDR_INFO[index][0] != 0) {
+    	ADDR_INFO[index][2] = DEFAULT_TTL;
+    }
 }
 
 void receive_key_from(uint_8 addr, uint_8 key) {

@@ -7,7 +7,7 @@
 #include "01_app_include.h"    //应用任务公共头文件
 
 // 宏定义任务内部使用的常量
-#define DELAY_TIMES       200
+#define ONE_SECONE_DELAY       200
 
 //===========================================================================
 //任务名称：task_light
@@ -29,6 +29,6 @@ void task_light(uint_32 initial)
 		updateTTL();
 
 		//2）任务延时1秒
-		_time_delay_ticks(DELAY_TIMES); //每个tick对应5ms，延时200*5ms=1s
+		_time_delay_ticks(ONE_SECONE_DELAY); //每个tick对应5ms，延时200*5ms=1s
 	}//任务循环体end_while
 }
