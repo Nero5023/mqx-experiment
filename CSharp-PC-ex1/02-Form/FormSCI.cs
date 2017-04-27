@@ -63,7 +63,7 @@ namespace SerialPort
             MyBarWithPic[3] = new BarWithPic(this.pictureBox4, this.progressBar4);
             MyBarWithPic[4] = new BarWithPic(this.pictureBox5, this.progressBar5);
             MyBarWithPic[5] = new BarWithPic(this.pictureBox6, this.progressBar1);
-
+            
             /*
             MyPicBoxList[0] = this.pictureBox1;
             MyPicBoxList[1] = this.pictureBox2;
@@ -766,26 +766,29 @@ namespace SerialPort
                             nodeHaveRegistered(nodesAddrs[i]);
 
                             String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", nodesAddrs[i]);
-                            this.textBox3.Text += info;
+                            this.textBox3.Text = info + this.textBox3.Text;
+                            this.textBox3.ScrollToCaret();
+                           
                         }
                         else
                         {
                             nodeHaveLeft(nodesAddrs[i]);
 
                             String info = String.Format("\n节点离开网络,地址:  {0:G}\r\n", nodesAddrs[i]);
-                            this.textBox3.Text += info;
+                            this.textBox3.Text = info+ this.textBox3.Text;
+                            this.textBox3.ScrollToCaret();
                         }
                         break;
                     }
                 }
                 if (!isFind)
                 {
-                    /*
+                    
                     if(isIn)
                     {
                         nodeHaveLeft((byte)(j+1));
                     }
-                    */
+                    
                 }
             }
 
@@ -795,7 +798,7 @@ namespace SerialPort
         private void nodeHaveGottenTemp(byte nodeAddr, float temp)
         {
             String info = String.Format("节点[{0:G}]当前光照强度:", nodeAddr) + temp.ToString() + "\r\n";
-            this.textBox3.Text += info;
+            this.textBox3.Text = info + this.textBox3.Text;
 
             nodeAddr = (byte)((int)nodeAddr - 1);
 
@@ -834,7 +837,7 @@ namespace SerialPort
                 case (byte)FFDDataType.RegisterSuccess:
                     nodeHaveRegistered(receiveData[1]);
                     String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", receiveData[1]);
-                    this.textBox3.Text += info;
+                    this.textBox3.Text = info + this.textBox3.Text;
                     break;
                 case (byte)FFDDataType.NodeStatus:
                     byte nodesNum = receiveData[1];
@@ -845,7 +848,7 @@ namespace SerialPort
                     }
                     if (nodesNum == 0)
                     {
-                        this.textBox3.Text += "当前网络中无节点\r\n";
+                        this.textBox3.Text = "当前网络中无节点\r\n" + this.textBox3.Text;
                     }
                     nodesHaveChanged(nodesNum, nodesAddrs,true);
                     break;
@@ -917,13 +920,13 @@ namespace SerialPort
             int nodeaddr = 0;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1)+this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
                 
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }
@@ -947,12 +950,12 @@ namespace SerialPort
             int nodeaddr = 1;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }
@@ -965,13 +968,13 @@ namespace SerialPort
             int nodeaddr = 2;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr+1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr+1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
         
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }
@@ -984,13 +987,13 @@ namespace SerialPort
             int nodeaddr = 3;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
                
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }
@@ -1003,13 +1006,13 @@ namespace SerialPort
             int nodeaddr = 4;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
                 
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }
@@ -1022,13 +1025,13 @@ namespace SerialPort
             int nodeaddr = 5;
             if (MyBarWithPic[nodeaddr].isMonitored)
             {
-                this.textBox3.Text += String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("停止监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = false;
                 
             }
             else
             {
-                this.textBox3.Text += String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1);
+                this.textBox3.Text = String.Format("开始持续监测节点[{0:G}]\r\n", nodeaddr + 1) + this.textBox3.Text;
                 MyBarWithPic[nodeaddr].isMonitored = true;
                 
             }

@@ -411,7 +411,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(528, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(607, 709);
+            this.groupBox1.Size = new System.Drawing.Size(300, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
