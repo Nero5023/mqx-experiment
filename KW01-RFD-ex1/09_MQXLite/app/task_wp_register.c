@@ -26,7 +26,7 @@ void task_wp_register(uint32_t initial){
 				    ENCRYPT_KEY = key[0];
 
 				    // 广播自己的密钥，发送给主机节点
-					WPSendData(key, 4, NZP_REGISTER, 0xff, 0);
+					WPSendData(key, 4, NZP_REGISTER, BROADCAST_ADDR, 0);
 					net_status = REGISTERING;//标记状态为注册中
 				}
 				break;
@@ -46,7 +46,7 @@ void task_wp_register(uint32_t initial){
 				break;
 			case REGISTERED:
 				//注册成功,函数结束，发送注册成功信息
-				WPSendData("RS",2,NZP_REGISTER_Success,0xff,0);
+				WPSendData("RS",2,NZP_REGISTER_Success,BROADCAST_ADDR,0);
 				return;
 			default:
 				break;

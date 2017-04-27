@@ -1,6 +1,6 @@
 //============================================================================
-//ÎÄ¼şÃû³Æ£ºwp.h
-//¹¦ÄÜ¸ÅÒª£ºÎŞÏßÍ¨ĞÅ¼°×éÍøĞ­ÒéÄ£¿é
+//æ–‡ä»¶åç§°ï¼šwp.h
+//åŠŸèƒ½æ¦‚è¦ï¼šæ— çº¿é€šä¿¡åŠç»„ç½‘åè®®æ¨¡å—
 //============================================================================
 
 #ifndef WP_H
@@ -8,26 +8,26 @@
 #include "Protocol.h"
 
 typedef enum NET_STATUS{
-	UNREGISTERED=1, 			//ÉĞÎ´×¢²á 		--> task_wp_registerº¯Êı·¢ËÍ×¢²áĞÅÏ¢
-	REGISTERING, 				//×¢²áÖĞ  			--> task_rf_recvº¯ÊıµÈ´ı½ÓÊÕ·µ»Ø
-	REGISTERING_WITH_ECHO,		//×¢²áÖĞÇÒÊÕµ½·´À¡ 	--> task_wp_registerº¯ÊıÅĞ¶Ï×¢²áÊÇ·ñ³É¹¦
-	REGISTERED 					//ÒÑ×¢²á 			--> task_wp_registerº¯ÊıÖÕÖ¹
+	UNREGISTERED=1, 			//å°šæœªæ³¨å†Œ 		--> task_wp_registerå‡½æ•°å‘é€æ³¨å†Œä¿¡æ¯
+	REGISTERING, 				//æ³¨å†Œä¸­  			--> task_rf_recvå‡½æ•°ç­‰å¾…æ¥æ”¶è¿”å›
+	REGISTERING_WITH_ECHO,		//æ³¨å†Œä¸­ä¸”æ”¶åˆ°åé¦ˆ 	--> task_wp_registerå‡½æ•°åˆ¤æ–­æ³¨å†Œæ˜¯å¦æˆåŠŸ
+	REGISTERED 					//å·²æ³¨å†Œ 			--> task_wp_registerå‡½æ•°ç»ˆæ­¢
 }NET_STATUS;
 
-static NET_STATUS net_status = UNREGISTERED;
+NET_STATUS net_status;
 
 
 void generateRegisterData();
 
 //=====================================================================
-//º¯ÊıÃû³Æ£ºWPSendData
-//º¯Êı·µ»Ø£ºÎŞ·µ»ØÖµ
-//²ÎÊıËµÃ÷£º   data: ½«Òª·¢ËÍÊı¾İµÄ×Ö·û´®Ö¸Õë
-//         length: ·¢ËÍµÄÊı¾İ³¤¶È
-//       NZP_TYPE: ·¢ËÍ NZP Ğ­ÒéµÄÖÖÀà
-//    destination: ·¢ËÍµÄÄ¿µÄµØ
-//  needEncrypted: ÊÇ·ñĞèÒª·¢ËÍÄ¿µÄµØ
-//¹¦ÄÜ¸ÅÒª£ºÍ¨¹ı´«ÈëµÄ message£¬·µ»Ø NZP Ğ­Òé±¨ÎÄµÄÀàĞÍ
+//å‡½æ•°åç§°ï¼šWPSendData
+//å‡½æ•°è¿”å›ï¼šæ— è¿”å›å€¼
+//å‚æ•°è¯´æ˜ï¼š   data: å°†è¦å‘é€æ•°æ®çš„å­—ç¬¦ä¸²æŒ‡é’ˆ
+//         length: å‘é€çš„æ•°æ®é•¿åº¦
+//       NZP_TYPE: å‘é€ NZP åè®®çš„ç§ç±»
+//    destination: å‘é€çš„ç›®çš„åœ°
+//  needEncrypted: æ˜¯å¦éœ€è¦å‘é€ç›®çš„åœ°
+//åŠŸèƒ½æ¦‚è¦ï¼šé€šè¿‡ä¼ å…¥çš„ messageï¼Œè¿”å› NZP åè®®æŠ¥æ–‡çš„ç±»å‹
 //=====================================================================
 void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted);
 

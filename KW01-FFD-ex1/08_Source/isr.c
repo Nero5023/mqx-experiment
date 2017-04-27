@@ -82,14 +82,16 @@ void gpio_CD_ISR(pointer user_isr_ptr)
 	//-----------------------------------------------------------------------
 
 	//Delay_ms(20);
-
+	_mqx_uint recv_msg_temp[RECV_MSG_SIZE];
 
 	if((PORTC_PCR4 & PORT_PCR_ISF_MASK)) 	//DIO1中断
 	{
 		//接收数据包成功，置事件位EVENT_RF_RECV，启动task_rf_recv任务
-		if(0 == RF_ReceiveFrame(rf_recvBuf,&g_rfRecCount,255))
+		if(0 == RF_ReceiveFrame(recv_msg_temp,&g_rfRecCount,255))
 		{
-			_lwevent_set(&lwevent_group,EVENT_RF_RECV);	//置RF接收事件位，启动RF接收任务
+
+			_lwmsgq_send((pointer)recv_queue,recv_msg_temp,0);
+
 		}
 			PORTC_PCR4 |= PORT_PCR_ISF_MASK; 	        //清标志位
 	}

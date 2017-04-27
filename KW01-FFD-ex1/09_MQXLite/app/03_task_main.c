@@ -44,7 +44,9 @@ void task_main(uint32_t initial_data)
 
 	//初始化消息队列
 	_lwmsgq_init((pointer)pccommand_queue,COMMAND_NUM_MESSAGES,COMMAND_MSG_SIZE);
-	_lwmsgq_init((pointer)register_queue,RE_NUM_MESSAGES,RE_MSG_SIZE);
+	_lwmsgq_init((pointer)register_queue,REGISTER_NUM_MESSAGES,REGISTER_MSG_SIZE);
+	_lwmsgq_init((pointer)recv_queue,RECV_NUM_MESSAGES,RECV_MSG_SIZE);
+	_lwmsgq_init((pointer)send_queue,SEND_NUM_MESSAGES,SEND_MSG_SIZE);
 
 
     //5. 创建其他任务

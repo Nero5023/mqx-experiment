@@ -26,21 +26,22 @@ void task_rf_recv(uint32_t initial)
 	while(TRUE) 
 	{
 		//以下加入用户程序--------------------------------------------------------
-		//1）无限等待RF接收事件位置一
-		_lwevent_wait_for(&lwevent_group, EVENT_RF_RECV, FALSE, NULL);
+		_mqx_uint recv_msg[RECV_MSG_SIZE];//用于接收recv_queue中的消息
 
-		uint_8 length = length_of_NZP((pointer)rf_recvBuf);
-		uint_8 data_length = data_length_of_NZP((pointer)rf_recvBuf);
+		_lwmsgq_receive((pointer)recv_queue,recv_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
+
+		uint_8 length = length_of_NZP((pointer)recv_msg);
+		uint_8 data_length = data_length_of_NZP((pointer)recv_msg);
 
 
 		char data[56];
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
-		if (parse_NZP((pointer)rf_recvBuf, length, data)) {
+		if (parse_NZP((pointer)recv_msg, length, data)) {
 			// uart data
 			// 获取 NZP 的类型
-			NZP_TYPE type = type_of_NZP((pointer)rf_recvBuf);
+			NZP_TYPE type = type_of_NZP((pointer)recv_msg);
 			// 获取发送源的地址
-			uint_8 addr = addr_of_NZP((pointer)rf_recvBuf);
+			uint_8 addr = addr_of_NZP((pointer)recv_msg);
 
 			switch (type) {
 				case NZP_REGISTER:// 有注册消息到来
@@ -62,8 +63,6 @@ void task_rf_recv(uint32_t initial)
 
 		}
 		
-		//3）RF接收事件位清零
-		_lwevent_clear(&lwevent_group, EVENT_RF_RECV);
 	}//任务循环体end_while
 }
 

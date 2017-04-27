@@ -3,7 +3,7 @@
 //  Protocol
 //
 //  Created by Nero Zuo on 17/3/29.
-//  Copyright 漏 2017骞�Nero. All rights reserved.
+//  Copyright 婕 2017楠烇拷Nero. All rights reserved.
 //
 
 
@@ -20,7 +20,7 @@
 #ifndef Protocol_h
 #define Protocol_h
 
-#include "common.h"    //鍖呭惈鍏叡瑕佺礌澶存枃浠�
+#include "common.h"    //閸栧懎鎯堥崗顒鍙＄憰浣虹婢跺瓨鏋冩禒锟
 #include <stdio.h>
 #define NZP_HEADER_LENGTH 8
 
@@ -71,6 +71,7 @@ int data_length_of_NZP(char *message);
 //=====================================================================
 int length_of_NZP(char *message);
 
+
 //=====================================================================
 //函数名称：parse_NZP
 //函数返回：int 0：失败 1：成功
@@ -90,7 +91,6 @@ int parse_NZP(char *message, int length, char* data);
 //=====================================================================
 NZP_TYPE type_of_NZP(char *message);
 
-
 //=====================================================================
 //函数名称：addr_of_NZP
 //函数返回：uint_8 返回 NZP 协议的发送源节点地址
@@ -98,6 +98,5 @@ NZP_TYPE type_of_NZP(char *message);
 //功能概要：通过传入的 message，返回 NZP 协议发送源节点地址
 //=====================================================================
 uint_8 addr_of_NZP(char *message);
-
 
 #endif /* Protocol_h */

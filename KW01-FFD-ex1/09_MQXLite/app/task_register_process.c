@@ -17,7 +17,7 @@ void removeAddr(char addr) {
 
 void task_register_process(uint32_t initial_data){
 
-	_mqx_uint re_msg[RE_MSG_SIZE];
+	_mqx_uint re_msg[REGISTER_MSG_SIZE];
 
 	while(TRUE){
 		_lwmsgq_receive((pointer)register_queue,re_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0); //µÈ´ý×¢²áÏûÏ¢

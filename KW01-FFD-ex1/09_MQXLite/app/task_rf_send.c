@@ -23,14 +23,11 @@ void task_rf_send(uint32_t initial)
 	while(TRUE) 
 	{
 		//以下加入用户程序--------------------------------------------------------
-		//1）无限等待RF发送事件位置一
-		_lwevent_wait_for(&lwevent_group, EVENT_RF_SEND, FALSE, NULL);
 
-
-		RFSendDataByCSMACA(rf_sentDataLength,rf_sentBuf,0,255);
-
-		//清除RF发送事件位
-		_lwevent_clear(&lwevent_group, EVENT_RF_SEND);
+		_mqx_uint send_msg_temp[SEND_MSG_SIZE];
+		_lwmsgq_receive((pointer)send_queue,send_msg_temp,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
+		uint_8 len =  length_of_NZP(send_msg_temp);
+		RFSendDataByCSMACA(len,send_msg_temp,0,255);
 
 	}//任务循环体end_while
 }

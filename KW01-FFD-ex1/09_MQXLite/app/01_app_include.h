@@ -121,13 +121,29 @@ uint_8 task_pc_command_stack[TASK_PC_COMMAND_STACK_SIZE];
 //3.1消息队列
 #define COMMAND_NUM_MESSAGES  3
 #define COMMAND_MSG_SIZE      16
-
-#define RE_NUM_MESSAGES  3
-#define RE_MSG_SIZE      16
-
-
-uint_32 register_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RE_NUM_MESSAGES*RE_MSG_SIZE]; //从机注册消息队列
 uint_32 pccommand_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+COMMAND_NUM_MESSAGES*COMMAND_MSG_SIZE]; //pc指令消息队列
+
+
+#define REGISTER_NUM_MESSAGES  3
+#define REGISTER_MSG_SIZE      16
+uint_32 register_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+REGISTER_NUM_MESSAGES*REGISTER_MSG_SIZE]; //从机注册消息队列
+
+
+#define RECV_NUM_MESSAGES  3
+#define RECV_MSG_SIZE      16
+uint_32 recv_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RECV_NUM_MESSAGES*RECV_MSG_SIZE]; //来自主机的指令消息队列
+
+#define SEND_NUM_MESSAGES  3
+#define SEND_MSG_SIZE      16
+uint_32 send_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+SEND_NUM_MESSAGES*SEND_MSG_SIZE]; //待发送的指令消息队列
+
+
+
+
+
+
+
+
 
 
 //---------------------------------------------------------------------------
