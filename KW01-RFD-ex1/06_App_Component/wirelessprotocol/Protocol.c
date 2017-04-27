@@ -18,7 +18,6 @@
 
 #define NZP_V1 1
 
-char const BROADCAST_ADDR = 0b11111111;
 
 unsigned short checksum(void *b, int len);
 void strcat_header_data(char *res, char const *header, char const *data, int datalength);

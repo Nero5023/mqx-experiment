@@ -24,6 +24,8 @@
 #include <stdio.h>
 #define NZP_HEADER_LENGTH 8
 
+#define BROADCAST_ADDR  0xff
+
 typedef struct NZP_HEADER {
     char source;
     char destination;
@@ -42,6 +44,8 @@ typedef enum NZP_TYPE {
     NZP_CONTIONUOUS_MONITOR = 6,
     NZP_HEARTBEAT = 7
 }NZP_TYPE;
+
+
 
 //=====================================================================
 //函数名称：NZP_v1_data

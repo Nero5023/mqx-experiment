@@ -18,11 +18,13 @@ void task_pc_command(uint32_t initial_data){
         // 等待 pc_com_msg 消息队列（等待 pc_command ）
         _lwmsgq_receive((pointer)pccommand_queue,pc_com_msg,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0); 
         char *data = pc_com_msg;
+        uint_8 aliveAddrs[REG_COUNT];
+        uint_8 aliveCount;
         uint_8 j = 0;
         switch (data[0]) {
             case PC_COM_NODES:        // 询问所有的节点状态
-                while (rfdAddrs[count] != 0) { count++; }
-                sendNodeStatus(count,rfdAddrs);
+                aliveCount = alive_node_addrs(aliveAddrs);
+                sendNodeStatus(aliveCount,aliveAddrs);
                 break;
             case PC_COM_TEMP:
                 des = data[1];       // 询问地址为 des 节点的温度信息

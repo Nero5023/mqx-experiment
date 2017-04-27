@@ -48,8 +48,8 @@
             this.BtnState = new System.Windows.Forms.Button();
             this.TbShowHex = new System.Windows.Forms.TextBox();
             this.lbDec = new System.Windows.Forms.Label();
-            this.TbShowDec = new System.Windows.Forms.TextBox();
             this.BtnSCIClearRec = new System.Windows.Forms.Button();
+            this.TbShowDec = new System.Windows.Forms.TextBox();
             this.TSSLState = new System.Windows.Forms.ToolStripStatusLabel();
             this.sSSerialPortInfo = new System.Windows.Forms.StatusStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -345,18 +345,6 @@
             this.lbDec.TabIndex = 10;
             this.lbDec.Text = "十进制显示(Dec)";
             // 
-            // TbShowDec
-            // 
-            this.TbShowDec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TbShowDec.Location = new System.Drawing.Point(31, 418);
-            this.TbShowDec.Margin = new System.Windows.Forms.Padding(4);
-            this.TbShowDec.Multiline = true;
-            this.TbShowDec.Name = "TbShowDec";
-            this.TbShowDec.ReadOnly = true;
-            this.TbShowDec.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TbShowDec.Size = new System.Drawing.Size(544, 118);
-            this.TbShowDec.TabIndex = 9;
-            // 
             // BtnSCIClearRec
             // 
             this.BtnSCIClearRec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -369,6 +357,18 @@
             this.BtnSCIClearRec.Text = "清空接收框(Clear)";
             this.BtnSCIClearRec.UseVisualStyleBackColor = true;
             this.BtnSCIClearRec.Click += new System.EventHandler(this.btnClearRec_Click);
+            // 
+            // TbShowDec
+            // 
+            this.TbShowDec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TbShowDec.Location = new System.Drawing.Point(31, 418);
+            this.TbShowDec.Margin = new System.Windows.Forms.Padding(4);
+            this.TbShowDec.Multiline = true;
+            this.TbShowDec.Name = "TbShowDec";
+            this.TbShowDec.ReadOnly = true;
+            this.TbShowDec.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.TbShowDec.Size = new System.Drawing.Size(481, 173);
+            this.TbShowDec.TabIndex = 9;
             // 
             // TSSLState
             // 
@@ -411,7 +411,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(519, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(588, 709);
+            this.groupBox1.Size = new System.Drawing.Size(301, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";

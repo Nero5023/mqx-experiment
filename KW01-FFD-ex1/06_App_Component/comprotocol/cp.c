@@ -41,3 +41,10 @@ void sendNodeTempInfo(char nodeAddr, char* tempFloat) {
     uart_sendN(UART_0,dataLength,dataToSend);
 }
 
+// 发送节点丢失信息
+void sendNodeDeathInfo(uint_8 nodeAddr) {
+	char dataToSend[2];
+	dataToSend[0] = NodeDeathInfo;
+	dataToSend[1] = nodeAddr;
+	uart_sendN(UART_0,2,dataToSend);
+}

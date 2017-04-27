@@ -734,12 +734,61 @@ namespace SerialPort
             this.textBox3.Text += info;
         }
 
-        // nodes 在线的通知
-        private void nodesHaveChanged(int nodesNum, byte[] nodesAddrs)
+
+        private void nodeHaveLeft(byte nodeAddr)
         {
-            for (int i = 0; i < nodesAddrs.Length; i++) {
-                nodeHaveRegistered(nodesAddrs[i]);
+            nodeAddr = (byte)((int)nodeAddr - 1);
+            new Animator2D(
+                new Path2D(MyBarWithPic[nodeAddr].pic.Location.X, 300, MyBarWithPic[nodeAddr].pic.Location.Y, MyBarWithPic[nodeAddr].pic.Location.Y, 1000)
+                )
+            .Play(MyBarWithPic[nodeAddr].pic, Animator2D.KnownProperties.Location);
+
+            new Animator2D(
+                new Path2D(MyBarWithPic[nodeAddr].bar.Location.X,404 , MyBarWithPic[nodeAddr].bar.Location.Y, MyBarWithPic[nodeAddr].bar.Location.Y, 1000)
+             )
+            .Play(MyBarWithPic[nodeAddr].bar, Animator2D.KnownProperties.Location);
+
+
+            String info = String.Format("\n节点离开网络,地址:  {0:G}\r\n", nodeAddr + 1);
+            this.textBox3.Text += info;
+        }
+
+
+
+
+
+        // nodes 在线的通知
+        private void nodesHaveChanged(int nodesNum, byte[] nodesAddrs,bool isIn)
+        {
+    
+            for(int j = 0; j < 6; j++)
+            {
+                bool isFind = false;
+                for (int i = 0; i < nodesAddrs.Length; i++)
+                {
+                    if(j== nodesAddrs[i])
+                    {
+                        isFind = true;
+                        if (isIn)
+                        {
+                            nodeHaveRegistered(nodesAddrs[i]);
+                        }
+                        else
+                        {
+                            nodeHaveLeft(nodesAddrs[i]);
+                        }
+                        break;
+                    }
+                }
+                if (!isFind)
+                {
+                    if(isIn)
+                    {
+                        nodeHaveLeft((byte)j);
+                    }
+                }
             }
+
         }
 
         // 收到 node 发送的温度通知
@@ -769,7 +818,8 @@ namespace SerialPort
             RegisterSuccess = 's',  // s|node address
             NodeStatus = 'n',       // n|num of nodes|node0|node1...
             TempInfo = 't',       // t|node address|temp(float)
-            ADCContinuousMonitor = 'c' // c
+            ADCContinuousMonitor = 'c', // c
+            NodeDeathInfo = 'd'  //d|death of node
         }
 
         // 解析收到的信息
@@ -791,15 +841,22 @@ namespace SerialPort
                     {
                         nodesAddrs[i] = receiveData[i + 2];
                     }
-                    nodesHaveChanged(nodesNum, nodesAddrs);
+                    if (nodesNum == 0)
+                    {
+                        this.textBox3.Text += "当前网络中无节点\r\n";
+                    }
+                    nodesHaveChanged(nodesNum, nodesAddrs,true);
+                    break;
+                case (byte)FFDDataType.NodeDeathInfo:
+                    byte[] addr = new byte[1];
+                    addr[0] = receiveData[1];
+                    nodesHaveChanged(1, addr,false);
                     break;
                 case (byte)FFDDataType.TempInfo:
-                    
                     float temp = System.BitConverter.ToSingle(receiveData,2);
                     nodeHaveGottenTemp(receiveData[1], temp);
                     break;
                 default:
-                    // Console.WriteLine("Other");
                     break;
             }
         }
