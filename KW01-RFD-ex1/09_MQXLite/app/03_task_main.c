@@ -33,7 +33,8 @@ void task_main(uint32_t initial_data)
     seconds=0;
     net_status = UNREGISTERED;
     is_continous_monitoring = 0;
-
+    Lage_Data_Flag = CAN_NOT_SEND;
+    
 	//初始化消息队列
 	_lwmsgq_init((pointer)recv_queue,RECV_NUM_MESSAGES,RECV_MSG_SIZE);
 	_lwmsgq_init((pointer)send_queue,SEND_NUM_MESSAGES,SEND_MSG_SIZE);

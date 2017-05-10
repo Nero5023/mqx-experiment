@@ -36,6 +36,11 @@
 
 #define SELF_ADDR 0x09
 
+// Lage_Data_Flag 大数据发送标志位
+#define CAN_NOT_SEND 0
+#define CAN_SEND 1
+#define IS_SENDING 2
+
 
 //1.2 宏定义常量
 
@@ -54,6 +59,8 @@ GLOBAL_VAR_PRE char rfdKeys[9];         // store the rfdkeys
 
 uint_8 ADDR_INFO[10][3];  // store register info 
 
+uint_8 Lage_Data_Flag;   // 0: 不能发送，1: 可以发送，2：正在发送
+
 
 MUTEX_STRUCT mutex_rf_recvBuf;  //接收操作互斥信号量
 uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）
@@ -69,6 +76,7 @@ LWEVENT_STRUCT  lwevent_group;
 #define  EVENT_RF_SEND        ((1uL)<<(2))   //RF发送事件位
 #define  EVENT_UART0_RE       ((1uL)<<(4))   //串口0接收完整数据帧事件位
 #define  EVENT_FLASH          ((1uL)<<(5))   //Flash操作事件位
+#define  EVENT_RECEIVE_CTS    ((1uL)<<(6))   //收到 CTS 报文
 
 //---------------------------------------------------------------------------
 // 第二部分

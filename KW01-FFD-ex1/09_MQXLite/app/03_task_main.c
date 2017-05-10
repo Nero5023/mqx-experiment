@@ -41,6 +41,8 @@ void task_main(uint32_t initial_data)
     	rfdKeys[i]=0;
     }
 
+    Lage_Data_Flag = CAN_NOT_SEND;
+
     init_addr_info(); //≥ı ºªØ ADDR_DATA
 
 

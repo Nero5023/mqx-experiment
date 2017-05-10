@@ -69,6 +69,11 @@ uint_8 is_continous_monitoring;
 
 #define PC_NODE_ADDR   0x09
 
+// Lage_Data_Flag 大数据发送标志位
+#define CAN_NOT_SEND 0
+#define CAN_SEND 1
+#define IS_SENDING 2
+
 
 //1.4 声明轻量级事件组
 LWEVENT_STRUCT  lwevent_group;
@@ -78,6 +83,9 @@ LWEVENT_STRUCT  lwevent_group;
 #define  EVENT_UART0_RE     	 ((1uL)<<(4))   //串口0接收完整数据帧事件位
 #define  EVENT_FLASH        	 ((1uL)<<(5))   //Flash操作事件位
 #define  EVENT_COMMAND_PROCESS   ((1uL)<<(6))   //函数处理
+#define  EVENT_RECEIVE_CTS       ((1uL)<<(7))   //收到 CTS 报文
+
+uint_8 Lage_Data_Flag;   // 0: 不能发送，1: 可以发送，2：正在发送
 
 //---------------------------------------------------------------------------
 // 第二部分
@@ -143,6 +151,7 @@ uint_8 task_adc_stack[TASK_ADC_STACK_SIZE];
 
 uint_32 recv_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RECV_NUM_MESSAGES*RECV_MSG_SIZE]; //来自主机的指令消息队列
 uint_32 send_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+SEND_NUM_MESSAGES*SEND_MSG_SIZE]; //待发送的指令消息队列
+
 
 
 

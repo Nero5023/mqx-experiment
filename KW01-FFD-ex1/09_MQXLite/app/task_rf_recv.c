@@ -60,6 +60,28 @@ void task_rf_recv(uint32_t initial)
 				case NZP_HEARTBEAT:
 					receive_heartbeat_from(addr);
 					break;
+				case NZP_RTS:
+					// CAN_NOT_SEND mean there is no other things
+					if Lage_Data_Flag == CAN_NOT_SEND: {
+						Lage_Data_Flag = IS_SENDING;
+						WPSendData("1", 1, NZP_CTS, addr, 0);
+					}else {
+						WPSendData("0", 1, NZP_CTS, addr, 0);
+					}
+					break;
+				case NZP_CTS:
+					if (data[0] == "1") {
+						Lage_Data_Flag = CAN_SEND;
+					} else {
+						Lage_Data_Flag = CAN_NOT_SEND;
+					}
+					break;
+				case NZP_TS_END:
+					Lage_Data_Flag = CAN_NOT_SEND;
+					WPSendData("a", 1, NZP_ACK, destination, 0);
+					break;
+				case NZP_ACK:
+					break;
 				default:
 					break;
 			}

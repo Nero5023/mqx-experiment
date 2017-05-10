@@ -44,7 +44,8 @@ typedef enum NZP_TYPE {
     NZP_RTS = 8,
     NZP_CTS = 9,
     NZP_TS_DATA = 10,
-    NZP_ACK = 11
+    NZP_ACK = 11,
+    NZP_TS_END = 12
 }NZP_TYPE;
 
 //=====================================================================
