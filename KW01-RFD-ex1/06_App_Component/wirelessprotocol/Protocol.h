@@ -40,7 +40,11 @@ typedef enum NZP_TYPE {
     NZP_TEMPERATURE = 4,
     NZP_TOUCH = 5,
     NZP_CONTIONUOUS_MONITOR = 6,
-    NZP_HEARTBEAT = 7
+    NZP_HEARTBEAT = 7,
+    NZP_RTS = 8,
+    NZP_CTS = 9,
+    NZP_TS_DATA = 10,
+    NZP_ACK = 11
 }NZP_TYPE;
 
 //=====================================================================
