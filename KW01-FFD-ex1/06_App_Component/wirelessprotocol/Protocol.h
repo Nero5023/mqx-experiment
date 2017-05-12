@@ -114,7 +114,7 @@ uint_8 addr_of_NZP(char *message);
 uint_8 frameOrder_of_NZP_TS(uint_8* message);
 
 //=====================================================================
-//函数名称：frameOrder_of_NZP_TS
+//函数名称：data_of_NZP_TS
 //函数返回：uint_8 返回 是否成功，1：成功 0：错误
 //参数说明：message: NZP 协议的字符串指针
 //           data: 将要返回的结果的字符串地址
