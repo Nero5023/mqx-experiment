@@ -42,7 +42,7 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, char destination, uint_8 end
     if (end) {
         canSendData = 0;
         frameCount = 0;
-        Lage_Data_Flag = CAN_NOT_SEND;
+        // Lage_Data_Flag = CAN_NOT_SEND;
         WPSendData("a", 1, NZP_TS_END, destination, 0);
         return 1;
     }
@@ -50,13 +50,15 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, char destination, uint_8 end
     uint_8 i = 0;
     if (canSendData == 0) {
         WPSendData("a", 1, NZP_RTS, destination, 0);
-        _time_delay_ticks(ONE_SECONE_DELAY/2);   // µÈ´ý 0.5s
-        if (Lage_Data_Flag == CAN_SEND) {
-            Lage_Data_Flag = IS_SENDING;
-            canSendData = 1;
-        }else {
-            return 0;
-        }
+        canSendData = 1;
+        // Lage_Data_Flag = IS_SENDING;
+        // _time_delay_ticks(ONE_SECONE_DELAY/2);   // µÈ´ý 0.5s
+        // if (Lage_Data_Flag == CAN_SEND) {
+        //     Lage_Data_Flag = IS_SENDING;
+        //     canSendData = 1;
+        // }else {
+        //     return 0;
+        // }
     }
     uint_8 frameNums = length/MaxFrameLength;
     uint_8 lastFrameLength = length%MaxFrameLength;
