@@ -27,8 +27,23 @@ void generateRegisterData();
 //       NZP_TYPE: 发送 NZP 协议的种类
 //    destination: 发送的目的地
 //  needEncrypted: 是否需要发送目的地
-//功能概要：通过传入的 message，返回 NZP 协议报文的类型
+//功能概要：发送一帧 rf 数据
 //=====================================================================
 void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted);
 
+
+// 返回 0 表示发送失败
+// 返回 1 表示发送成功
+//=====================================================================
+//函数名称：WPSENDLargeData
+//函数返回：0 表示发送失败 
+//        1 表示发送成功
+//参数说明：   data: 将要发送数据的字符串指针
+//         length: 发送的数据长度
+//    totalLength: 发送的总数据长度
+//    destination: 发送的目的地
+//            end: 是否结束发送
+//功能概要：发送一帧 rf 大数据
+//=====================================================================
+uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength,char destination, uint_8 end);
 #endif
