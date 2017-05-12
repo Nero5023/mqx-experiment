@@ -48,3 +48,24 @@ void sendNodeDeathInfo(uint_8 nodeAddr) {
 	dataToSend[1] = nodeAddr;
 	uart_sendN(UART_0,2,dataToSend);
 }
+
+// 发送大数据头信息
+void sendBigDataStart(uint_8 nodeAddr) {
+    uint_8 dataToSend[2];
+    dataToSend[0] = BigDataStart;
+    dataToSend[1] = nodeAddr;
+    uart_sendN(UART_0,2,dataToSend);
+}
+
+// 发送大数据的一帧数据
+void sendBigData(uint_8* data, uint_8 length) {
+    uint_8 dataToSend[1+length];
+    dataToSend[0] = BigData;
+    memcpy((dataToSend+1), data, length);
+    uart_sendN(UART_0, length+1, dataToSend);
+}
+
+// 发送大数据的尾信息
+void sendBigDataEnd() {
+    uart_sendN(UART_0, 1, sendBigDataEnd);
+}

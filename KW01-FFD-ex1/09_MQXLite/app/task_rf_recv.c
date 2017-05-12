@@ -69,6 +69,7 @@ void task_rf_recv(uint32_t initial)
 					// 	WPSendData("0", 1, NZP_CTS, addr, 0);
 					// }
 					// Lage_Data_Flag = IS_SENDING;
+					sendBigDataStart(addr);
 					break;
 				case NZP_CTS:
 					// if (data[0] == "1") {
@@ -78,12 +79,13 @@ void task_rf_recv(uint32_t initial)
 					// }
 					break;
 				case NZP_TS_DATA:
-					uint_8 frameOrder = data[0];
-					data += 1;
-					
+					// uint_8 frameOrder = data[0];
+					// data += 1;
+					sendBigData(data, data_length);
 					break
 				case NZP_TS_END:
-					Lage_Data_Flag = CAN_NOT_SEND;
+					// Lage_Data_Flag = CAN_NOT_SEND;
+					sendBigDataEnd();
 					WPSendData("a", 1, NZP_ACK, addr, 0);
 					break;
 				case NZP_ACK:
