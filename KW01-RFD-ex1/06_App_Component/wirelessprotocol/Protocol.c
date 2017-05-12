@@ -175,6 +175,35 @@ uint_8 addr_of_NZP(char *message){
     return h->source;
 }
 
+// return the frame order of NZP
+uint_8 frameOrder_of_NZP_TS(uint_8* message) {
+    uint_8 dataLengh = data_length_of_NZP(message);
+    uint_8 data[dataLengh];
+    uint_8 totalLength = length_of_NZP(message);
+    if (type_of_NZP(message) != NZP_TS_DATA) {
+        return -1;
+    }
+    if (parse_NZP(message, totalLength, data)) {
+        return data[0];
+    }
+    return -1;
+}
+
+// return the data of NZP Ts 
+// 1 success
+// 0 failed
+uint_8 data_of_NZP_TS(uint_8* message, uint_8* data) {
+    uint_8 totalLength = length_of_NZP(message);
+    if (type_of_NZP(message) != NZP_TS_DATA) {
+        return 0;
+    }
+    if (parse_NZP(message, totalLength, data)) {
+        data += 1;
+        return 1;
+    }
+    return 0;
+}
+
 
 
 
