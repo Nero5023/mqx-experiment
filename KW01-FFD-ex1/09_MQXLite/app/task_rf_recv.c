@@ -76,6 +76,11 @@ void task_rf_recv(uint32_t initial)
 						Lage_Data_Flag = CAN_NOT_SEND;
 					}
 					break;
+				case NZP_TS_DATA:
+					uint_8 frameOrder = data[0];
+					data += 1;
+					
+					break
 				case NZP_TS_END:
 					Lage_Data_Flag = CAN_NOT_SEND;
 					WPSendData("a", 1, NZP_ACK, destination, 0);
