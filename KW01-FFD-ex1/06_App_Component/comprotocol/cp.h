@@ -14,7 +14,9 @@ typedef enum FFDDataType {
     RegisterSuccess = 's',  // s|node address
     NodeStatus = 'n',       // n|num of nodes|node0|node1...
     TempInfo   = 't',        // t|node address|temp(float)
-    NodeDeathInfo = 'd'  // d|node addr
+    NodeDeathInfo = 'd',  // d|node addr
+    BigDataBegin = 'b', //b| the begin of bigdatafile
+	BigDataEnd = 'e',  //e| the end of bigdatafile
 } FFDDataType;
 
 

@@ -643,7 +643,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmSCI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "串口测试工程(苏州大学飞思卡尔嵌入式系统研究中心)";
+            this.Text = "ZigBee网络pc端程序";
             this.Load += new System.EventHandler(this.FrmSCI_Load);
             this.SetSerialPort.ResumeLayout(false);
             this.SetSerialPort.PerformLayout();
