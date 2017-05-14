@@ -812,9 +812,9 @@ namespace SerialPort
                 temp = 130 + 0;
             }
             new Animator(
-                new Path(MyBarWithPic[nodeAddr].bar.Value, Math.Abs(temp - 130), 300)
+                new WinFormAnimation.Path(MyBarWithPic[nodeAddr].bar.Value, Math.Abs(temp - 130), 300)
                 ).Play(MyBarWithPic[nodeAddr].bar, Animator.KnownProperties.Value);
-
+            
         }
 
         enum FFDDataType
@@ -1087,6 +1087,10 @@ namespace SerialPort
 
         private void 发送文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+
+            string a= ((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner.Name.ToString();
+            int number = a[a.Length - 1] - '0';
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = false;
             fileDialog.Title = "请选择文件";
@@ -1098,6 +1102,7 @@ namespace SerialPort
 
                 MessageBox.Show("已选择文件:" + filename, "选择文件提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Image img_to_send = Image.FromFile(filename);
+                byte[] img_bin= convertByte(img_to_send);
 
                 //TODO:把img_to_send发送给对应j节点
 
