@@ -1,11 +1,15 @@
+
 #include "01_app_include.h"    //应用任务公共头文件
 
 #define PC_COM_MSG_SIZE 16
 
 typedef enum PC_COM_TYPE {
     PC_COM_NODES  = 'n',
-    PC_COM_TEMP = 't',  // data[1] 代表 发送的目的地
-    PC_COM_CONTIONUOUS = 'c' // data[1] 代表 发送的目的地
+    PC_COM_TEMP = 't',         // data[1] 代表 发送的目的地
+    PC_COM_CONTIONUOUS = 'c',  // data[1] 代表 发送的目的地
+    PC_BIG_DATA_START = 'l', // l | totoalLength | destination
+    PC_BIG_DATA = 'b',       // d | dataLength | data
+    PC_BIG_DATA_END = 'e'    // e |
 } PC_COM_TYPE;
 
 void task_pc_command(uint32_t initial_data){
@@ -13,6 +17,10 @@ void task_pc_command(uint32_t initial_data){
     _mqx_uint pc_com_msg[PC_COM_MSG_SIZE];
     uint_8 count = 0;
     uint_8 i = 0;
+
+    uint_8 totoalLength = 0;
+    uint_8 destination = 0;  // destination addr
+    uint_8 dataLength;
     char des;
     while (TRUE) {
         // 等待 pc_com_msg 消息队列（等待 pc_command ）
@@ -33,6 +41,20 @@ void task_pc_command(uint32_t initial_data){
             case PC_COM_CONTIONUOUS:
                 des = data[1];
                 WPSendData("a", 1, NZP_CONTIONUOUS_MONITOR, des-'0', 0);
+                break;
+            case PC_LARGE_DATA_START:
+                totoalLength = data[1];
+                destination = data[2];
+                break;
+            case PC_LARGE_DATA:
+                dataLength = data[1];
+                data += 2; 
+                WPSENDLargeData(data, dataLength, totoalLength, destination, 0);
+                break;
+            case PC_LARGE_DATA_END:
+                WPSENDLargeData('1', 1, totoalLength, destination, 1);
+                totoalLength = 0;
+                destination = 0;
                 break;
             default:
                 break;

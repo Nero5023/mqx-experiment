@@ -8,7 +8,7 @@
 #define ONE_SECONE_DELAY       200
 
 char* encrypted(char* data){
-    return data;
+	return data;
 }
 
 
@@ -36,27 +36,29 @@ void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uin
 
 // 返回 0 表示发送失败
 // 返回 1 表示发送成功
-uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, char destination, uint_8 end) {
+uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char destination, uint_8 end) {
     static uint_8 canSendData = 0;
     static uint_8 frameCount = 0;  // 从 0 开始
     if (end) {
         canSendData = 0;
         frameCount = 0;
-        Lage_Data_Flag = CAN_NOT_SEND;
+        // Lage_Data_Flag = CAN_NOT_SEND;
         WPSendData("a", 1, NZP_TS_END, destination, 0);
         return 1;
     }
     uint_8 MaxFrameLength = 50;
     uint_8 i = 0;
     if (canSendData == 0) {
-        WPSendData("a", 1, NZP_RTS, destination, 0);
-        _time_delay_ticks(ONE_SECONE_DELAY/2);   // 等待 0.5s
-        if (Lage_Data_Flag == CAN_SEND) {
-            Lage_Data_Flag = IS_SENDING;
-            canSendData = 1;
-        }else {
-            return 0;
-        }
+        WPSendData(&totalLength, 1, NZP_RTS, destination, 0);
+        canSendData = 1;
+        // Lage_Data_Flag = IS_SENDING;
+        // _time_delay_ticks(ONE_SECONE_DELAY/2);   // 等待 0.5s
+        // if (Lage_Data_Flag == CAN_SEND) {
+        //     Lage_Data_Flag = IS_SENDING;
+        //     canSendData = 1;
+        // }else {
+        //     return 0;
+        // }
     }
     uint_8 frameNums = length/MaxFrameLength;
     uint_8 lastFrameLength = length%MaxFrameLength;

@@ -12,11 +12,12 @@
 
 typedef enum FFDDataType {
     RegisterSuccess = 's',  // s|node address
-    NodeStatus = 'n',       // n|num of nodes|node0|node1...
-    TempInfo   = 't',        // t|node address|temp(float)
-    NodeDeathInfo = 'd',  // d|node addr
-    BigDataBegin = 'b', //b| the begin of bigdatafile
-	BigDataEnd = 'e',  //e| the end of bigdatafile
+    NodeStatus    = 'n',       // n|num of nodes|node0|node1...
+    TempInfo      = 't',        // t|node address|temp(float)
+    NodeDeathInfo = 'd',  // d | node addr
+    BigDataStart  = 'l',  // l | node addr      //the begin of bigdatafile
+	BigDataEnd    = 'e',  // e | the end of bigdatafile
+    BIGData       = 'd'   // d | frame order | data
 } FFDDataType;
 
 
@@ -31,5 +32,14 @@ void sendNodeTempInfo(char nodeAddr, char* tempFloat) ;
 
 // 发送节点丢失信息
 void sendNodeDeathInfo(uint_8 nodeAddr);
+
+// 发送大数据头信息
+void sendBigDataStart(uint_8 nodeAddr);
+
+// 发送大数据的一帧数据
+void sendBigData(uint_8* data, uint_8 length);
+
+// 发送大数据的尾信息
+void sendBigDataEnd();
 
 #endif
