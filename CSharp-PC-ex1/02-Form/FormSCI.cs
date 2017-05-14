@@ -727,7 +727,7 @@ namespace SerialPort
         private void sendBigData(string data, object sender, EventArgs e) {
             byte len = (byte)data.Length;
             byte[] lenArr = {len};
-            string str = System.Text.Encoding.Default.GetString(lengthAndAddr);
+            string str = System.Text.Encoding.Default.GetString(lenArr);
             string dataToSend = "b" + str + data;
             sendUARTData(dataToSend, sender, e);
         }
@@ -1131,7 +1131,7 @@ namespace SerialPort
                 byte[] img_bin= convertByte(img_to_send);
 
                 //TODO:把img_to_send发送给对应j节点
-
+                sendBigDataStart((byte)number,)
 
 
             }
