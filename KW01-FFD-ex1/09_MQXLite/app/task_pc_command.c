@@ -42,16 +42,16 @@ void task_pc_command(uint32_t initial_data){
                 des = data[1];
                 WPSendData("a", 1, NZP_CONTIONUOUS_MONITOR, des-'0', 0);
                 break;
-            case PC_LARGE_DATA_START:
+            case PC_BIG_DATA_START:
                 totoalLength = data[1];
                 destination = data[2];
                 break;
-            case PC_LARGE_DATA:
+            case PC_BIG_DATA:
                 dataLength = data[1];
                 data += 2; 
                 WPSENDLargeData(data, dataLength, totoalLength, destination, 0);
                 break;
-            case PC_LARGE_DATA_END:
+            case PC_BIG_DATA_END:
                 WPSENDLargeData('1', 1, totoalLength, destination, 1);
                 totoalLength = 0;
                 destination = 0;

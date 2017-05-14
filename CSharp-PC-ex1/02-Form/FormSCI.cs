@@ -714,6 +714,29 @@ namespace SerialPort
             sendUARTData(dataToSend, sender, e);
         }
 
+        // 发送大数据，头
+        // totalLength 共多少帧数据
+        private void sendBigDataStart(byte nodeAddr, byte totalLength, object sender, EventArgs e) {
+            byte[] lengthAndAddr = {totalLength, nodeAddr};
+            string str = System.Text.Encoding.Default.GetString(lengthAndAddr);
+            string dataToSend = "l" + str;
+            sendUARTData(dataToSend, sender, e);
+        }
+
+        // 发送大数据，数据帧
+        private void sendBigData(string data, object sender, EventArgs e) {
+            byte len = (byte)data.Length;
+            byte[] lenArr = {len};
+            string str = System.Text.Encoding.Default.GetString(lengthAndAddr);
+            string dataToSend = "b" + str + data;
+            sendUARTData(dataToSend, sender, e);
+        }
+
+        // 发送大数据，尾
+        private void sendBigDataEnd(object sender, EventArgs e) {
+            sendUARTData("e", sender, e);
+        }
+
         // node 注册成功通知
         private void nodeHaveRegistered(byte nodeAddr)
         {
@@ -823,7 +846,10 @@ namespace SerialPort
             NodeStatus = 'n',       // n|num of nodes|node0|node1...
             TempInfo = 't',       // t|node address|temp(float)
             ADCContinuousMonitor = 'c', // c
-            NodeDeathInfo = 'd'  //d|death of node
+            NodeDeathInfo = 'd',  //d|death of node
+            BigDataStart  = 'l',   // l | totoalLength | destination
+            BigData       = 'b',   // d | dataLength | data
+            BigDataEnd    = 'e'    // e |
         }
 
         // 解析收到的信息
