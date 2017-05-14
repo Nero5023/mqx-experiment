@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using WinFormAnimation;
@@ -873,32 +874,56 @@ namespace SerialPort
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("1", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left )
+            {
+                sendQueryTempInfo("1", sender, e);
+            }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("2", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left)
+            {
+                sendQueryTempInfo("2", sender, e);
+            }
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("3", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left)
+            {
+                sendQueryTempInfo("3", sender, e);
+            }
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("4", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left)
+            {
+                sendQueryTempInfo("4", sender, e);
+            }
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("5", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left)
+            {
+                sendQueryTempInfo("5", sender, e);
+            }
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
         {
-            sendQueryTempInfo("6", sender, e);
+            MouseEventArgs Mouse_e = (MouseEventArgs)e;
+            if (Mouse_e.Button == MouseButtons.Left)
+            {
+                sendQueryTempInfo("6", sender, e);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1037,6 +1062,48 @@ namespace SerialPort
             }
             sendContinusMinotor("6", sender, e);
 
+        }
+
+        private byte[] convertByte(Image img)
+        {
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, img.RawFormat);
+            //byte[] bytes = new byte[ms.Length];
+            //ms.Read(bytes, 0, Convert.ToInt32(ms.Length));
+            //以上两句改成下面两句
+            byte[] bytes = ms.ToArray();
+            ms.Close();
+            return bytes;
+        }
+
+        ///二进制生成图片
+        private Image convertImg(byte[] datas)
+        {
+            MemoryStream ms = new MemoryStream(datas);
+            Image img = Image.FromStream(ms, true);
+            ms.Close();
+            return img;
+        }
+
+        private void 发送文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = false;
+            fileDialog.Title = "请选择文件";
+            fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                string filename = fileDialog.FileNames[0];
+
+                MessageBox.Show("已选择文件:" + filename, "选择文件提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Image img_to_send = Image.FromFile(filename);
+
+                //TODO:把img_to_send发送给对应j节点
+
+
+
+            }
         }
     }
 

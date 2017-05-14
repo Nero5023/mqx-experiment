@@ -71,6 +71,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SetSerialPort.SuspendLayout();
             this.SerialPortSend.SuspendLayout();
             this.SerialPortReceive.SuspendLayout();
@@ -84,6 +86,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LbPortName
@@ -411,7 +414,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(528, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 709);
+            this.groupBox1.Size = new System.Drawing.Size(452, 709);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
@@ -557,6 +560,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox1.Location = new System.Drawing.Point(300, 55);
@@ -626,6 +630,21 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.发送文件ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 58);
+            // 
+            // 发送文件ToolStripMenuItem
+            // 
+            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
+            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.发送文件ToolStripMenuItem.Text = "发送文件";
+            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
+            // 
             // FrmSCI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -663,6 +682,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,6 +739,8 @@
         private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 发送文件ToolStripMenuItem;
     }
 }
 
