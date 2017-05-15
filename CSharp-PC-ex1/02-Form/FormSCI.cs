@@ -724,17 +724,47 @@ namespace SerialPort
         }
 
         // 发送大数据，数据帧
-        private void sendBigData(string data, object sender, EventArgs e) {
+        private void sendBigDataFrame(byte[] data, object sender, EventArgs e) {
             byte len = (byte)data.Length;
             byte[] lenArr = {len};
+            string dataStr = System.Text.Encoding.Default.GetString(data);
             string str = System.Text.Encoding.Default.GetString(lenArr);
-            string dataToSend = "b" + str + data;
+            string dataToSend = "b" + str + dataStr;
             sendUARTData(dataToSend, sender, e);
         }
 
         // 发送大数据，尾
         private void sendBigDataEnd(object sender, EventArgs e) {
             sendUARTData("e", sender, e);
+        }
+
+        // 获取 subarray
+        public static byte[] SubArray<T>(byte[] data, int index, int length)
+        {
+            byte[] result = new byte[length];
+            Array.Copy(data, index, result, 0, length);
+            return result;
+        }
+
+        // 发送大数据
+        private void sendBigData(byte nodeAddr, byte[] data, object sender, EventArgs e) {
+            int FrameLength = 50;
+            int counts = data.Length / FrameLength;
+            int lastFrameLength = data.Length % FrameLength;
+            int sendCount = counts;
+            if (lastFrameLength != 0) {
+                sendCount += 1;
+            }
+            sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
+            for (int i = 0; i < count; i++) {
+                byte[] toSend = SubArray(data, i*FrameLength, FrameLength);
+                sendBigDataFrame(toSend, sender, e);
+            }
+            if (lastFrameLength != 0) {
+                byte[] toSend = SubArray(data, count*FrameLength, lastFrameLength);
+                sendBigDataFrame(toSend, sender, e);
+            }
+            sendBigDataEnd(sender, e);
         }
 
         // node 注册成功通知
