@@ -40,7 +40,7 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 //        1 表示发送成功
 //参数说明：   data: 将要发送数据的字符串指针
 //         length: 发送的数据长度
-//    totalLength: 发送的总数据长度
+//    totalLength: 发送的总数据长度, 总数据帧数
 //    destination: 发送的目的地
 //            end: 是否结束发送
 //功能概要：发送一帧 rf 大数据
