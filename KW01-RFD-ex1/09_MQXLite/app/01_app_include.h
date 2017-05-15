@@ -149,8 +149,17 @@ uint_8 task_adc_stack[TASK_ADC_STACK_SIZE];
 #define SEND_NUM_MESSAGES  3
 #define SEND_MSG_SIZE      16
 
+#define FLASH_WRITE_NUM_MESSAGES 3
+#define FLASH_WRITE_MSG_SIZE     16
+
+#define FLASH_READ_NUM_MESSAGES 3
+#define FLASH_READ_MSG_SIZE     16
+
 uint_32 recv_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+RECV_NUM_MESSAGES*RECV_MSG_SIZE]; //来自主机的指令消息队列
 uint_32 send_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+SEND_NUM_MESSAGES*SEND_MSG_SIZE]; //待发送的指令消息队列
+uint_32 flash_write_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+FLASH_WRITE_NUM_MESSAGES*FLASH_WRITE_MSG_SIZE]; //待写入的flash消息队列
+uint_32 flash_read_queue[sizeof(LWMSGQ_STRUCT)/sizeof(uint_32)+FLASH_READ_NUM_MESSAGES*FLASH_READ_MSG_SIZE]; //待写入的flash消息队列
+
 
 
 

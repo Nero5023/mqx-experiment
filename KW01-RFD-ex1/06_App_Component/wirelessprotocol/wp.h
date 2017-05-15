@@ -7,6 +7,8 @@
 #define WP_H
 #include "Protocol.h"
 
+#define MaxFrameLength 52
+
 typedef enum NET_STATUS{
 	UNREGISTERED=1, 			//尚未注册 		--> task_wp_register函数发送注册信息
 	REGISTERING, 				//注册中  			--> task_rf_recv函数等待接收返回
@@ -36,11 +38,11 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 // 返回 1 表示发送成功
 //=====================================================================
 //函数名称：WPSENDLargeData
-//函数返回：0 表示发送失败 
+//函数返回：0 表示发送失败
 //        1 表示发送成功
 //参数说明：   data: 将要发送数据的字符串指针
 //         length: 发送的数据长度
-//    totalLength: 发送的总数据长度
+//    totalLength: 发送的总数据长度, 总数据帧数
 //    destination: 发送的目的地
 //            end: 是否结束发送
 //功能概要：发送一帧 rf 大数据

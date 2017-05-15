@@ -27,10 +27,8 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 
 
 void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count) {
-    uint_8 dataToSend = uint_8[length+1];
-    dataToSend[0] = count;
-    dataAddr = dataToSend+1;
-    memcpy(dataAddr, data, length)
+	uint_8 dataToSend[length+1];
+    memcpy(dataToSend+1, data, length);
     WPSendData(dataToSend, length+1, NZP_TS_DATA, destination, 0);
 }
 
@@ -78,4 +76,5 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
     }
     return 1;
 }
+
 

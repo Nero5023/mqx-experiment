@@ -82,7 +82,7 @@ void task_rf_recv(uint32_t initial)
 					// uint_8 frameOrder = data[0];
 					// data += 1;
 					sendBigData(data, data_length);
-					break
+					break;
 				case NZP_TS_END:
 					// Lage_Data_Flag = CAN_NOT_SEND;
 					sendBigDataEnd();

@@ -34,6 +34,9 @@ void task_rf_recv(uint32_t initial)
 		uint_8 length = length_of_NZP(recv_msg);
 		uint_8 data_length = data_length_of_NZP(recv_msg);
 		char data[56];
+		uint_8 total_len;
+		uint_8 frameOrder;
+		uint_8 flash_send_temp[FLASH_WRITE_MSG_SIZE*4];
 
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP(recv_msg, length, data)) {
@@ -67,29 +70,26 @@ void task_rf_recv(uint32_t initial)
 					}
 					break;
 				case NZP_RTS:
-					// CAN_NOT_SEND mean there is no other things
-					// if Lage_Data_Flag == CAN_NOT_SEND: {
-					// 	Lage_Data_Flag = IS_SENDING;
-					// 	WPSendData("1", 1, NZP_CTS, addr, 0);
-					// }else {
-					// 	WPSendData("0", 1, NZP_CTS, addr, 0);
-					// }
+					total_len =  data[0];
+					data[0]='B'; //begin of flash write
+					data[1]=total_len;
+					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_CTS:
-					// if (data[0] == "1") {
-					// 	Lage_Data_Flag = CAN_SEND;
-					// } else {
-					// 	Lage_Data_Flag = CAN_NOT_SEND;
-					// }
+					//not use
 					break;
 				case NZP_TS_DATA:
-					uint_8 frameOrder = data[0];
-					data += 1;
-
+					frameOrder = data[0];
+					flash_send_temp[0]='w';
+					flash_send_temp[1]=frameOrder; //存入序号,根据序号直接存入对应位置
+					memcpy(flash_send_temp+2,data+1,MaxFrameLength); //最后一帧可能拷贝无用数据
+					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_TS_END:
 					Lage_Data_Flag = CAN_NOT_SEND;
-					WPSendData("a", 1, NZP_ACK, addr, 0);
+					WPSendData("a", 1, NZP_ACK, PC_NODE_ADDR, 0);
+					data[0]='S';//写入结束
+					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_ACK:
 					break;
