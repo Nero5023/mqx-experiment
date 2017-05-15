@@ -44,7 +44,7 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
         WPSendData("a", 1, NZP_TS_END, destination, 0);
         return 1;
     }
-    uint_8 MaxFrameLength = 50;
+
     uint_8 i = 0;
     if (canSendData == 0) {
         WPSendData(&totalLength, 1, NZP_RTS, destination, 0);

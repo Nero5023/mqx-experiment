@@ -20,6 +20,7 @@ void task_uart0_re(uint32_t initial)
 	uint_16 offset;
 	uint_16 count;
 	uint_16 ret;	//操作返回值
+	_mqx_uint pc_com_msg[COMMAND_MSG_SIZE];
 	//2. 给有关变量赋初值
 
 	//3. 进入任务循环体
@@ -35,7 +36,8 @@ void task_uart0_re(uint32_t initial)
 //		//TODO:data长度需要修改
 //		char data[4];
 //		memcpy(data, g_uart_recvBuf+2, len);
-		_lwmsgq_send((pointer)pccommand_queue,g_uart_recvBuf+2,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
+		memcpy(pc_com_msg, g_uart_recvBuf+2, len);
+		_lwmsgq_send((pointer)pccommand_queue,pc_com_msg,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
 
 		ENABLE_INTERRUPTS;
 

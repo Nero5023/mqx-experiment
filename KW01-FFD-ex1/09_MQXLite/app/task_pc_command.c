@@ -1,7 +1,6 @@
 
 #include "01_app_include.h"    //应用任务公共头文件
 
-#define PC_COM_MSG_SIZE 16
 
 typedef enum PC_COM_TYPE {
     PC_COM_NODES  = 'n',
@@ -14,7 +13,7 @@ typedef enum PC_COM_TYPE {
 
 void task_pc_command(uint32_t initial_data){
     // 消息队列数据
-    _mqx_uint pc_com_msg[PC_COM_MSG_SIZE];
+    _mqx_uint pc_com_msg[COMMAND_MSG_SIZE];
     uint_8 count = 0;
     uint_8 i = 0;
 

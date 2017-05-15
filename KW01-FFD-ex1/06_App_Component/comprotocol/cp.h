@@ -17,7 +17,7 @@ typedef enum FFDDataType {
     NodeDeathInfo = 'd',  // d | node addr
     BigDataStart  = 'l',  // l | node addr      //the begin of bigdatafile
 	BigDataEnd    = 'e',  // e | the end of bigdatafile
-    BIGData       = 'd'   // d | frame order | data
+    BigData       = 'd'   // d | frame order | data
 } FFDDataType;
 
 
