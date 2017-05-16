@@ -28,9 +28,9 @@ void task_rf_send(uint32_t initial)
 		_lwmsgq_receive((pointer)send_queue,send_msg_temp,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
 
 		uint_8 len =  length_of_NZP(send_msg_temp);
-		uart_sendN(UART_0,4,"====");
-		uart_sendN(UART_0,len,send_msg_temp);
-		uart_sendN(UART_0,4,"====");
+		//uart_sendN(UART_0,4,"====");
+		//uart_sendN(UART_0,len,send_msg_temp);
+		//uart_sendN(UART_0,4,"====");
 		RFSendDataByCSMACA(len,send_msg_temp,0,255);
 
 	}//任务循环体end_while

@@ -39,6 +39,7 @@ void task_flash(uint32_t initial)
 	uint_8 total_len = 0;
 	uint_8 frameOrder= 0;
 	uint_8 flash_write_temp[FLASH_WRITE_MSG_SIZE*4];
+	uint_8 write_len=0;
 
 	//2. 给有关变量赋初值
 
@@ -59,30 +60,42 @@ void task_flash(uint32_t initial)
 			//开始写入flash,记录下总帧数
 			total_len = flash_write_temp[1];
 			flash_erase(FILE_INFO_SECTOR);
-			flash_write(FILE_INFO_SECTOR,0,1,total_len);
+			flash_write(FILE_INFO_SECTOR,0,1,&total_len);
+			getCurrentSectorAndOffset(total_len-1,&sector,&offset);
+			for(i=0;i<=sector;i++){
+				flash_erase(FLASH_START_SECTOR+sector);
+			}
 			break;
 
 		case 'R':
+			uart_send_string(UART_0,"read begin");
 			flash_read(FILE_INFO_SECTOR,0,1,&total_len); //从flash读出文件长度
-			i=1;
+			i=0;
 			while(i<total_len){
 				getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-				flash_read(FLASH_START_SECTOR+sector,offset*52,MaxFrameLength,flash_write_temp);
+				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp);
+				uart_sendN(UART_0,3,flash_write_temp);
 				WPSENDLargeData(flash_write_temp,MaxFrameLength,total_len,PC_NODE_ADDR,0);
+				uart_send_string(UART_0,"read after data");
 				i++;
 			}
-			WPSENDLargeData("",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
-
+			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
+			uart_send_string(UART_0,"read end");
 			break;
 
 		case 'W':
 			DISABLE_INTERRUPTS;//关中断
 
 			frameOrder = flash_write_temp[1];
-
+			write_len = flash_write_temp[2];
+			uart_send_string(UART_0,"Data to write:");
+			uart_sendN(UART_0,5,flash_write_temp+3);
 			getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-
-			flash_write(FLASH_START_SECTOR+sector,offset*52,MaxFrameLength,((char*)flash_write_temp)+1);
+			uart_send_string(UART_0,"Sector:");
+			uart_send1(UART_0,sector+'0');
+			uart_send_string(UART_0,"Offset:");
+			uart_send1(UART_0,offset+'0');
+			flash_write(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp+3);
 
 
 			ENABLE_INTERRUPTS;//开中断

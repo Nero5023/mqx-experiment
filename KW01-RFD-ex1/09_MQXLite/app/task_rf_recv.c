@@ -41,8 +41,8 @@ void task_rf_recv(uint32_t initial)
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP(recv_msg, length, data)) {
 
-			// 用于 debug
-			uart_sendN(UART_0,data_length,data);
+//			// 用于 debug
+//			uart_sendN(UART_0,data_length,data);
 
 			// 获取数据报协议类型
 			NZP_TYPE type = type_of_NZP(recv_msg);
@@ -70,6 +70,7 @@ void task_rf_recv(uint32_t initial)
 					}
 					break;
 				case NZP_RTS:
+					uart_send_string(UART_0,"write begin");
 					total_len =  data[0];
 					data[0]='B'; //begin of flash write
 					data[1]=total_len;
@@ -79,19 +80,27 @@ void task_rf_recv(uint32_t initial)
 					//not use
 					break;
 				case NZP_TS_DATA:
+					uart_send_string(UART_0,"write data");
+					uart_sendN(UART_0,4,data);
 					frameOrder = data[0];
-					flash_send_temp[0]='w';
+					flash_send_temp[0]='W';
 					flash_send_temp[1]=frameOrder; //存入序号,根据序号直接存入对应位置
-					memcpy(flash_send_temp+2,data+1,MaxFrameLength); //最后一帧可能拷贝无用数据
-					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
+					flash_send_temp[2]=data_length-1;
+					memcpy(flash_send_temp+3,data+1,data_length-1); //最后一帧可能拷贝无用数据
+					_lwmsgq_send((pointer)flash_write_queue,flash_send_temp,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_TS_END:
+					uart_send_string(UART_0,"write end");
 					Lage_Data_Flag = CAN_NOT_SEND;
 					WPSendData("a", 1, NZP_ACK, PC_NODE_ADDR, 0);
 					data[0]='S';//写入结束
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_ACK:
+					break;
+				case NZP_DATA_READ:
+					data[0]='R';
+					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				default:
 					break;

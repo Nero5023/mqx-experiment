@@ -1,4 +1,6 @@
-﻿namespace SerialPort
+﻿using System.Windows.Forms;
+
+namespace SerialPort
 {
     partial class FrmSCI
     {
@@ -66,13 +68,14 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SetSerialPort.SuspendLayout();
             this.SerialPortSend.SuspendLayout();
             this.SerialPortReceive.SuspendLayout();
@@ -84,9 +87,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LbPortName
@@ -287,34 +290,32 @@
             this.SerialPortReceive.Controls.Add(this.BtnSCIClearRec);
             this.SerialPortReceive.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SerialPortReceive.ForeColor = System.Drawing.Color.Red;
-            this.SerialPortReceive.Location = new System.Drawing.Point(763, 418);
+            this.SerialPortReceive.Location = new System.Drawing.Point(31, 602);
             this.SerialPortReceive.Margin = new System.Windows.Forms.Padding(4);
             this.SerialPortReceive.Name = "SerialPortReceive";
             this.SerialPortReceive.Padding = new System.Windows.Forms.Padding(4);
-            this.SerialPortReceive.Size = new System.Drawing.Size(739, 295);
+            this.SerialPortReceive.Size = new System.Drawing.Size(1058, 295);
             this.SerialPortReceive.TabIndex = 7;
             this.SerialPortReceive.TabStop = false;
             this.SerialPortReceive.Text = "接收数据设置(Setting Receiving Data)";
-            this.SerialPortReceive.Visible = false;
             // 
             // TbShowString
             // 
             this.TbShowString.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TbShowString.Location = new System.Drawing.Point(144, 165);
+            this.TbShowString.Location = new System.Drawing.Point(488, 104);
             this.TbShowString.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowString.Multiline = true;
             this.TbShowString.Name = "TbShowString";
             this.TbShowString.ReadOnly = true;
             this.TbShowString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TbShowString.Size = new System.Drawing.Size(103, 99);
+            this.TbShowString.Size = new System.Drawing.Size(528, 99);
             this.TbShowString.TabIndex = 16;
-            this.TbShowString.Visible = false;
             // 
             // BtnState
             // 
             this.BtnState.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnState.ForeColor = System.Drawing.Color.Black;
-            this.BtnState.Location = new System.Drawing.Point(292, 212);
+            this.BtnState.Location = new System.Drawing.Point(307, 141);
             this.BtnState.Margin = new System.Windows.Forms.Padding(4);
             this.BtnState.Name = "BtnState";
             this.BtnState.Size = new System.Drawing.Size(180, 29);
@@ -326,15 +327,14 @@
             // TbShowHex
             // 
             this.TbShowHex.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TbShowHex.Location = new System.Drawing.Point(27, 165);
+            this.TbShowHex.Location = new System.Drawing.Point(9, 99);
             this.TbShowHex.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowHex.Multiline = true;
             this.TbShowHex.Name = "TbShowHex";
             this.TbShowHex.ReadOnly = true;
             this.TbShowHex.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TbShowHex.Size = new System.Drawing.Size(92, 99);
+            this.TbShowHex.Size = new System.Drawing.Size(276, 99);
             this.TbShowHex.TabIndex = 13;
-            this.TbShowHex.Visible = false;
             // 
             // lbDec
             // 
@@ -352,7 +352,7 @@
             // 
             this.BtnSCIClearRec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnSCIClearRec.ForeColor = System.Drawing.Color.Black;
-            this.BtnSCIClearRec.Location = new System.Drawing.Point(292, 165);
+            this.BtnSCIClearRec.Location = new System.Drawing.Point(307, 65);
             this.BtnSCIClearRec.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSCIClearRec.Name = "BtnSCIClearRec";
             this.BtnSCIClearRec.Size = new System.Drawing.Size(165, 29);
@@ -385,10 +385,10 @@
             this.sSSerialPortInfo.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.sSSerialPortInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSSLState});
-            this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 843);
+            this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 804);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(1148, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(1137, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -414,7 +414,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(528, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(452, 709);
+            this.groupBox1.Size = new System.Drawing.Size(441, 670);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
@@ -572,6 +572,29 @@
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.发送文件ToolStripMenuItem,
+            this.查看图片ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(139, 52);
+            // 
+            // 发送文件ToolStripMenuItem
+            // 
+            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
+            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.发送文件ToolStripMenuItem.Text = "发送文件";
+            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
+            // 
+            // 查看图片ToolStripMenuItem
+            // 
+            this.查看图片ToolStripMenuItem.Name = "查看图片ToolStripMenuItem";
+            this.查看图片ToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.查看图片ToolStripMenuItem.Text = "查看图片";
+            this.查看图片ToolStripMenuItem.Click += new System.EventHandler(this.查看图片ToolStripMenuItem_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBox3);
@@ -630,26 +653,11 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.发送文件ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 58);
-            // 
-            // 发送文件ToolStripMenuItem
-            // 
-            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
-            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.发送文件ToolStripMenuItem.Text = "发送文件";
-            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
-            // 
             // FrmSCI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1148, 866);
+            this.ClientSize = new System.Drawing.Size(1137, 827);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -679,10 +687,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,6 +727,14 @@
         //private System.Windows.Forms.ProgressBar[] MyProgressBarList = new System.Windows.Forms.ProgressBar[8];
 
         private BarWithPic[] MyBarWithPic = new BarWithPic[8];
+        
+        private byte[] img_to_show = new byte[256];
+        private int MaxFrameLength = 52;
+
+        private PictureBox pb ;
+        private Form pic_form ;
+
+
 
         private int currentPic=0;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -741,6 +757,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 发送文件ToolStripMenuItem;
+        private ToolStripMenuItem 查看图片ToolStripMenuItem;
     }
 }
 

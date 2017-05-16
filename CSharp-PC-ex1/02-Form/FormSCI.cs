@@ -64,23 +64,11 @@ namespace SerialPort
             MyBarWithPic[3] = new BarWithPic(this.pictureBox4, this.progressBar4);
             MyBarWithPic[4] = new BarWithPic(this.pictureBox5, this.progressBar5);
             MyBarWithPic[5] = new BarWithPic(this.pictureBox6, this.progressBar1);
-            
-            /*
-            MyPicBoxList[0] = this.pictureBox1;
-            MyPicBoxList[1] = this.pictureBox2;
-            MyPicBoxList[2] = this.pictureBox3;
-            MyPicBoxList[3] = this.pictureBox4;
-            MyPicBoxList[4] = this.pictureBox5;
-            MyPicBoxList[5] = this.pictureBox6;
 
-            MyProgressBarList[0] = this.progressBar7;
-            MyProgressBarList[1] = this.progressBar2;
-            MyProgressBarList[2] = this.progressBar3;
-            MyProgressBarList[3] = this.progressBar4;
-            MyProgressBarList[4] = this.progressBar5;
-            MyProgressBarList[5] = this.progressBar1;
-            */
 
+           pb = new PictureBox();
+           pic_form = new Form();
+           pic_form.Controls.Add(pb);
 
 
         }
@@ -714,6 +702,14 @@ namespace SerialPort
             sendUARTData(dataToSend, sender, e);
         }
 
+        private void sendDataRead(byte nodeaddr, object sender, EventArgs e)
+        {
+            byte[] dataToSend = { (byte)'r',nodeaddr };
+            string str = System.Text.Encoding.Default.GetString(dataToSend);
+            sendUARTData(str, sender, e);
+        }
+
+
         // 发送大数据，头
         // totalLength 共多少帧数据
         private void sendBigDataStart(byte nodeAddr, byte totalLength, object sender, EventArgs e) {
@@ -731,6 +727,7 @@ namespace SerialPort
             string str = System.Text.Encoding.Default.GetString(lenArr);
             string dataToSend = "b" + str + dataStr;
             sendUARTData(dataToSend, sender, e);
+            Delay(100);
         }
 
         // 发送大数据，尾
@@ -739,7 +736,7 @@ namespace SerialPort
         }
 
         // 获取 subarray
-        public static byte[] SubArray<T>(byte[] data, int index, int length)
+        public static byte[] SubArray(byte[] data, int index, int length)
         {
             byte[] result = new byte[length];
             Array.Copy(data, index, result, 0, length);
@@ -748,7 +745,7 @@ namespace SerialPort
 
         // 发送大数据
         private void sendBigData(byte nodeAddr, byte[] data, object sender, EventArgs e) {
-            int FrameLength = 50;
+            int FrameLength = 52;
             int counts = data.Length / FrameLength;
             int lastFrameLength = data.Length % FrameLength;
             int sendCount = counts;
@@ -756,12 +753,12 @@ namespace SerialPort
                 sendCount += 1;
             }
             sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < counts; i++) {
                 byte[] toSend = SubArray(data, i*FrameLength, FrameLength);
                 sendBigDataFrame(toSend, sender, e);
             }
             if (lastFrameLength != 0) {
-                byte[] toSend = SubArray(data, count*FrameLength, lastFrameLength);
+                byte[] toSend = SubArray(data, counts*FrameLength, lastFrameLength);
                 sendBigDataFrame(toSend, sender, e);
             }
             sendBigDataEnd(sender, e);
@@ -917,6 +914,17 @@ namespace SerialPort
                 case (byte)FFDDataType.TempInfo:
                     float temp = System.BitConverter.ToSingle(receiveData,2);
                     nodeHaveGottenTemp(receiveData[1], temp);
+                    break;
+
+                case (byte)FFDDataType.BigDataStart:
+                    //pictureBox1.Image = convertImg(img_to_show);
+                    break;
+                case (byte)FFDDataType.BigData:
+                    int frameOrder = receiveData[1];
+                    Buffer.BlockCopy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, MaxFrameLength);
+                    break;
+                case (byte)FFDDataType.BigDataEnd:
+
                     break;
                 default:
                     break;
@@ -1146,7 +1154,7 @@ namespace SerialPort
 
 
             string a= ((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner.Name.ToString();
-            int number = a[a.Length - 1] - '0';
+            int addr = a[a.Length - 1] - '0';
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = false;
             fileDialog.Title = "请选择文件";
@@ -1157,14 +1165,20 @@ namespace SerialPort
                 string filename = fileDialog.FileNames[0];
 
                 MessageBox.Show("已选择文件:" + filename, "选择文件提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Image img_to_send = Image.FromFile(filename);
-                byte[] img_bin= convertByte(img_to_send);
-
+                FileStream file = new FileStream(filename, FileMode.Open);
+                file.Seek(0, SeekOrigin.Begin);
+                byte[] file_bin = new byte[30];
+                file.Read(file_bin, 0, 30);
                 //TODO:把img_to_send发送给对应j节点
-                sendBigDataStart((byte)number,)
-
+                sendBigData((byte)addr, file_bin, sender, e);
+                file.Close();
 
             }
+        }
+
+        private void 查看图片ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sendDataRead(1, sender, e);
         }
     }
 

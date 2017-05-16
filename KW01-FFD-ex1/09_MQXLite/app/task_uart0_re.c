@@ -33,9 +33,6 @@ void task_uart0_re(uint32_t initial)
 		DISABLE_INTERRUPTS;
 
 		uint_8 len = g_uart_recvBuf[1];
-//		//TODO:data长度需要修改
-//		char data[4];
-//		memcpy(data, g_uart_recvBuf+2, len);
 		memcpy(pc_com_msg, g_uart_recvBuf+2, len);
 		_lwmsgq_send((pointer)pccommand_queue,pc_com_msg,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
 

@@ -8,7 +8,8 @@ typedef enum PC_COM_TYPE {
     PC_COM_CONTIONUOUS = 'c',  // data[1] 代表 发送的目的地
     PC_BIG_DATA_START = 'l', // l | totoalLength | destination
     PC_BIG_DATA = 'b',       // d | dataLength | data
-    PC_BIG_DATA_END = 'e'    // e |
+    PC_BIG_DATA_END = 'e',    // e |
+    PC_BIG_DATA_READ = 'r'  // r | address
 } PC_COM_TYPE;
 
 void task_pc_command(uint32_t initial_data){
@@ -55,6 +56,9 @@ void task_pc_command(uint32_t initial_data){
                 totoalLength = 0;
                 destination = 0;
                 break;
+            case PC_BIG_DATA_READ:
+            	WPSendData("a",1,NZP_DATA_READ,data[1],0);
+            	break;
             default:
                 break;
         }
