@@ -97,6 +97,7 @@ void task_rf_recv(uint32_t initial)
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_ACK:
+					uart_send_string(UART_0,"Recv ACK");
 					break;
 				case NZP_DATA_READ:
 					data[0]='R';

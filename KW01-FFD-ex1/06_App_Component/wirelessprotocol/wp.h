@@ -7,7 +7,7 @@
 #define WP_H
 #include "Protocol.h"
 
-#define MaxFrameLength 52
+#define MaxFrameLength 48
 
 typedef enum NET_STATUS{
 	UNREGISTERED=1, 			//尚未注册 		--> task_wp_register函数发送注册信息

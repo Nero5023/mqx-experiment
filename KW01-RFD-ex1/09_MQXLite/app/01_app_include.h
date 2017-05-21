@@ -116,7 +116,7 @@ uint_8 Lage_Data_Flag;   // 0: 不能发送，1: 可以发送，2：正在发送
 #define TASK_RF_RECV_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_UART0_RECV_STACK_SIZE (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_RF_SEND_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
-#define TASK_FLASH_STACK_SIZE      (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)///TODO:大小是否合适？
+#define TASK_FLASH_STACK_SIZE      (sizeof(TD_STRUCT) + 1024 + PSP_STACK_ALIGNMENT + 1)///TODO:大小是否合适？
 #define TASK_WP_REGISTER_STACK_SIZE    (sizeof(TD_STRUCT) + 200 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_ADC_STACK_SIZE        (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
 

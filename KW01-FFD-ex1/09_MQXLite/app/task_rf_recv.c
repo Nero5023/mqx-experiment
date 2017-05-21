@@ -85,7 +85,8 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_TS_END:
 					// Lage_Data_Flag = CAN_NOT_SEND;
-					sendBigDataEnd();
+					uart_send_string(UART_0,"Send ACK");
+					sendBigDataEnd();//uart send to pc
 					WPSendData("a", 1, NZP_ACK, addr, 0);
 					break;
 				case NZP_ACK:

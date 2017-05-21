@@ -7,7 +7,7 @@
 
 #include "01_app_include.h"    //应用任务公共头文件
 #define FILE_INFO_SECTOR 109
-#define FLASH_START_SECTOR 110
+#define FLASH_START_SECTOR 30
 uint_8  bufRetErr[18]  = {'M',0x15,'F','l','a','s','h','-','x','x','x','x','x','-','E','r','r'};
 
 
@@ -39,6 +39,7 @@ void task_flash(uint32_t initial)
 	uint_8 total_len = 0;
 	uint_8 frameOrder= 0;
 	uint_8 flash_write_temp[FLASH_WRITE_MSG_SIZE*4];
+	uint_8 flash_read_temp[FLASH_WRITE_MSG_SIZE*4];
 	uint_8 write_len=0;
 
 	//2. 给有关变量赋初值
@@ -48,10 +49,10 @@ void task_flash(uint32_t initial)
 	{
 		//以下加入用户程序--------------------------------------------------------
 		int i;
-
+		uart_send_string(UART_0,"FlashTB");
 		//1）无限等待RF接收消息
 		_lwmsgq_receive((pointer)flash_write_queue,flash_write_temp,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
-
+		uart_send_string(UART_0,"FlashTA");
 		//2）调用接收函数
 		//读取flash指定扇区操作
 		switch(flash_write_temp[0]){
@@ -71,18 +72,25 @@ void task_flash(uint32_t initial)
 			uart_send_string(UART_0,"read begin");
 			flash_read(FILE_INFO_SECTOR,0,1,&total_len); //从flash读出文件长度
 			i=0;
+//			WPSendData(&total_len, 1, NZP_RTS, PC_NODE_ADDR, 0);
 			while(i<total_len){
 				getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp);
-				uart_sendN(UART_0,3,flash_write_temp);
-				WPSENDLargeData(flash_write_temp,MaxFrameLength,total_len,PC_NODE_ADDR,0);
-				uart_send_string(UART_0,"read after data");
+				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp+1);
+//				uart_sendN(UART_0,3,flash_read_temp);
+				WPSENDLargeData(flash_read_temp,MaxFrameLength,total_len,PC_NODE_ADDR,0);
+//				flash_read_temp[0]=i;
+//				WPSendData(flash_read_temp,MaxFrameLength,NZP_TS_DATA,PC_NODE_ADDR,0);
+//				WPSENDLargeDataWithFrame(flash_read_temp, MaxFrameLength, PC_NODE_ADDR, i);
+				//WPSendData('1',1, NZP_DATA, PC_NODE_ADDR, 0);
+//				uart_send_string(UART_0,"read after data");
 				i++;
+//				_time_delay_ticks(100);
 			}
+//			WPSendData("a",1,NZP_TS_END,PC_NODE_ADDR,0);
 			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
-			uart_send_string(UART_0,"read end");
+			uart_send_string(UART_0,"read end 0");
 			break;
-
+;
 		case 'W':
 			DISABLE_INTERRUPTS;//关中断
 
@@ -102,24 +110,11 @@ void task_flash(uint32_t initial)
 			break;
 		case 'S':
 			//写入结束
-			sector = FLASH_START_SECTOR;
+			sector = 0;
 			offset = 0;
-		case 'E':
-			DISABLE_INTERRUPTS;//关中断
-//			if(flash_erase(g_uart_recvBuf[4]) == 0 )
-//			{
-//				g_uart_sentBuf[0]=(uint_8)'M';     //
-//				g_uart_sentBuf[1]=32+1;            //
-//				g_uart_sentBuf[2]= (uint_8)'C';    //
-//				flash_read(g_uart_recvBuf[4], 0, 32, &g_uart_sentBuf[3]);
-//				g_uart_sentBuf[g_uart_sentBuf[1]+2]  = (uint_8)'U';
-//				uart_sendN(UART_0,g_uart_sentBuf[1]+3, &g_uart_sentBuf[0]);
-//			}
-//			else
-//			{
-//				uart_sendN(UART_0,18,&bufRetErr[0]);
-//			}
-			ENABLE_INTERRUPTS;//开中断
+			break;
+		default:
+			break;
 		}
 
 	}//任务循环体end_while

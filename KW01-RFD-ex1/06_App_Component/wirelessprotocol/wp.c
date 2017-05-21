@@ -21,15 +21,20 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 
     RF_Init(255);           //RF模块初始化
 
-    _lwmsgq_send((pointer)send_queue,p_data,0);
+    _lwmsgq_send((pointer)send_queue,p_data,LWMSGQ_SEND_BLOCK_ON_FULL);
 
 }
 
 
 void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count) {
-    uint_8 dataToSend[length+1];
+
+	uint_8 dataToSend[length+1];
+	dataToSend[0] = count;
     memcpy(dataToSend+1, data, length);
     WPSendData(dataToSend, length+1, NZP_TS_DATA, destination, 0);
+    uart_send_string(UART_0,"After send TS_DATA");
+	_time_delay_ticks(20);
+
 }
 
 // 返回 0 表示发送失败
@@ -42,22 +47,19 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
         frameCount = 0;
         // Lage_Data_Flag = CAN_NOT_SEND;
         WPSendData("a", 1, NZP_TS_END, destination, 0);
+        uart_send_string(UART_0,"Frame end");
         return 1;
     }
 
     uint_8 i = 0;
     if (canSendData == 0) {
         WPSendData(&totalLength, 1, NZP_RTS, destination, 0);
+        uart_send_string(UART_0,"After send RTS");
         canSendData = 1;
-        // Lage_Data_Flag = IS_SENDING;
-        // _time_delay_ticks(ONE_SECONE_DELAY/2);   // 等待 0.5s
-        // if (Lage_Data_Flag == CAN_SEND) {
-        //     Lage_Data_Flag = IS_SENDING;
-        //     canSendData = 1;
-        // }else {
-        //     return 0;
-        // }
+        _time_delay_ticks(20);
+
     }
+
     uint_8 frameNums = length/MaxFrameLength;
     uint_8 lastFrameLength = length%MaxFrameLength;
     uint_8 *dataToSend;
@@ -74,6 +76,7 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
         WPSENDLargeDataWithFrame(dataToSend, lastFrameLength, destination, frameCount);
         frameCount+=1;
     }
+    uart_send_string(UART_0,"Before return");
     return 1;
 }
 
