@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinFormAnimation;
@@ -745,7 +746,7 @@ namespace SerialPort
 
         // 发送大数据
         private void sendBigData(byte nodeAddr, byte[] data, object sender, EventArgs e) {
-            int FrameLength = 52;
+            int FrameLength = MaxFrameLength;
             int counts = data.Length / FrameLength;
             int lastFrameLength = data.Length % FrameLength;
             int sendCount = counts;
@@ -875,7 +876,7 @@ namespace SerialPort
             ADCContinuousMonitor = 'c', // c
             NodeDeathInfo = 'd',  //d|death of node
             BigDataStart  = 'l',   // l | totoalLength | destination
-            BigData       = 'b',   // d | dataLength | data
+            BigData       = 'D',   // D | dataLength | data
             BigDataEnd    = 'e'    // e |
         }
 
@@ -921,15 +922,26 @@ namespace SerialPort
                     break;
                 case (byte)FFDDataType.BigData:
                     int frameOrder = receiveData[1];
-                    Buffer.BlockCopy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, MaxFrameLength);
+                   Buffer.BlockCopy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, receiveData.Length-2);
                     break;
                 case (byte)FFDDataType.BigDataEnd:
-
+                    try
+                    {
+                        Image res_img = convertImg(img_to_show);
+                        pictureBox1.Image = res_img;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("显示图片失败");
+                    }
+               
                     break;
                 default:
                     break;
             }
         }
+
+      
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -1167,10 +1179,14 @@ namespace SerialPort
                 MessageBox.Show("已选择文件:" + filename, "选择文件提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FileStream file = new FileStream(filename, FileMode.Open);
                 file.Seek(0, SeekOrigin.Begin);
-                byte[] file_bin = new byte[30];
-                file.Read(file_bin, 0, 30);
-                //TODO:把img_to_send发送给对应j节点
-                sendBigData((byte)addr, file_bin, sender, e);
+
+                byte[] buff = null;
+                BinaryReader br = new BinaryReader(file);
+                long numBytes = new FileInfo(filename).Length;
+                buff = br.ReadBytes((int)numBytes);
+
+                sendBigData((byte)addr, buff, sender, e);
+
                 file.Close();
 
             }

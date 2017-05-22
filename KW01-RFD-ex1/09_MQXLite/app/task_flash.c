@@ -69,13 +69,14 @@ void task_flash(uint32_t initial)
 			break;
 
 		case 'R':
-			uart_send_string(UART_0,"read begin");
+			uart_send_string(UART_0,"read begin\n");
 			flash_read(FILE_INFO_SECTOR,0,1,&total_len); //从flash读出文件长度
 			i=0;
 //			WPSendData(&total_len, 1, NZP_RTS, PC_NODE_ADDR, 0);
+			frameOrder = 0;
 			while(i<total_len){
-				getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp+1);
+				getCurrentSectorAndOffset(i,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
+				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
 //				uart_sendN(UART_0,3,flash_read_temp);
 				WPSENDLargeData(flash_read_temp,MaxFrameLength,total_len,PC_NODE_ADDR,0);
 //				flash_read_temp[0]=i;
@@ -83,12 +84,13 @@ void task_flash(uint32_t initial)
 //				WPSENDLargeDataWithFrame(flash_read_temp, MaxFrameLength, PC_NODE_ADDR, i);
 				//WPSendData('1',1, NZP_DATA, PC_NODE_ADDR, 0);
 //				uart_send_string(UART_0,"read after data");
+				uart_sendN(UART_0, MaxFrameLength, flash_read_temp);
 				i++;
 //				_time_delay_ticks(100);
 			}
 //			WPSendData("a",1,NZP_TS_END,PC_NODE_ADDR,0);
 			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
-			uart_send_string(UART_0,"read end 0");
+			uart_send_string(UART_0,"read end 0\n");
 			break;
 ;
 		case 'W':
@@ -97,12 +99,12 @@ void task_flash(uint32_t initial)
 			frameOrder = flash_write_temp[1];
 			write_len = flash_write_temp[2];
 			uart_send_string(UART_0,"Data to write:");
-			uart_sendN(UART_0,5,flash_write_temp+3);
+			uart_sendN(UART_0,write_len,flash_write_temp+3);
 			getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-			uart_send_string(UART_0,"Sector:");
-			uart_send1(UART_0,sector+'0');
-			uart_send_string(UART_0,"Offset:");
-			uart_send1(UART_0,offset+'0');
+//			uart_send_string(UART_0,"Sector:");
+//			uart_send1(UART_0,sector+'0');
+//			uart_send_string(UART_0,"Offset:");
+//			uart_send1(UART_0,offset+'0');
 			flash_write(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp+3);
 
 

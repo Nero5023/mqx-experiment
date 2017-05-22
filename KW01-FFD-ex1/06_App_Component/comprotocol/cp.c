@@ -8,11 +8,26 @@
 #include "cp.h"
 #include "uart.h"
 
+#define UART_FRAME_HEAD 0x05
+#define UART_FRAME_TAIL 0x03
+
+
+
+void MyUartSendN(uint_8 datalength,uint_8* data){
+	uart_send1(UART_0,UART_FRAME_HEAD);
+	uart_send1(UART_0,datalength);
+
+	uart_sendN(UART_0,datalength,data);
+
+	uart_send1(UART_0,UART_FRAME_TAIL);
+}
+
+
 // 发送节点注册成功消息
 void sendNodeReisterSuccessInfo(char nodeAddr) {
     char dataToSend[2] = {RegisterSuccess, nodeAddr};
     char dataLength = 2;
-    uart_sendN(UART_0,dataLength,dataToSend);
+    MyUartSendN(dataLength,dataToSend);
 }
 
 // 发送在线节点信息
@@ -25,7 +40,8 @@ void sendNodeStatus(char numOfNodes, char* nodesAddrs) {
         dataToSend[i+2] = nodesAddrs[i];
     }
     char dataLength = 2 + numOfNodes;
-   	uart_sendN(UART_0,dataLength,dataToSend);
+    MyUartSendN(dataLength,dataToSend);
+//   	uart_sendN(UART_0,dataLength,dataToSend);
 }
 
 // 发送温度信息
@@ -38,7 +54,8 @@ void sendNodeTempInfo(char nodeAddr, char* tempFloat) {
     for (i = 0; i < 4; i++) {
         dataToSend[i+2] = tempFloat[i];
     }
-    uart_sendN(UART_0,dataLength,dataToSend);
+    MyUartSendN(dataLength,dataToSend);
+//    uart_sendN(UART_0,dataLength,dataToSend);
 }
 
 // 发送节点丢失信息
@@ -46,7 +63,8 @@ void sendNodeDeathInfo(uint_8 nodeAddr) {
 	char dataToSend[2];
 	dataToSend[0] = NodeDeathInfo;
 	dataToSend[1] = nodeAddr;
-	uart_sendN(UART_0,2,dataToSend);
+	MyUartSendN(2,dataToSend);
+//	uart_sendN(UART_0,2,dataToSend);
 }
 
 // 发送大数据头信息
@@ -54,7 +72,8 @@ void sendBigDataStart(uint_8 nodeAddr) {
     uint_8 dataToSend[2];
     dataToSend[0] = BigDataStart;
     dataToSend[1] = nodeAddr;
-    uart_sendN(UART_0,2,dataToSend);
+    MyUartSendN(2,dataToSend);
+//    uart_sendN(UART_0,2,dataToSend);
 }
 
 // 发送大数据的一帧数据
@@ -62,10 +81,15 @@ void sendBigData(uint_8* data, uint_8 length) {
     uint_8 dataToSend[1+length];
     dataToSend[0] = BigData;
     memcpy((dataToSend+1), data, length);
-    uart_sendN(UART_0, length+1, dataToSend);
+    MyUartSendN(length+1,dataToSend);
+//    uart_sendN(UART_0, length+1, dataToSend);
 }
 
 // 发送大数据的尾信息
 void sendBigDataEnd() {
-    uart_sendN(UART_0, 1, sendBigDataEnd);
+	_time_delay_ticks(80);
+	uint_8 dataToSend[1];
+	dataToSend[0] = BigDataEnd;
+	MyUartSendN(1,dataToSend);
+//	 uart_sendN(UART_0, 1, dataToSend);
 }

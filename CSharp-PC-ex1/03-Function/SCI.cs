@@ -136,33 +136,66 @@ namespace SerialPort
         ///-----------------------------------------------------------------
         public bool SCIReceiveData(ref byte[] ReceiveArray)
         {
-            int lenPre,lenNow;
+            byte FrameHead = 0x05;
+            byte FrameTail = 0x03;
+            byte[] head = new byte[1];
+            byte[] tail = new byte[1];
+            byte[] len = new byte[1];
 
-            lenPre = 0;
-            lenNow = 1;
-
-            if (!this.IsOpen)
+            while (true)
             {
-                return false;
+                this.Read(head, 0, 1);
+                if (head[0] != FrameHead)
+                {
+                    continue;
+                }
+                this.Read(len, 0, 1);
+                int length = len[0];
+                ReceiveArray = new byte[length];
+                while (this.BytesToRead < length) 
+                {
+                    System.Threading.Thread.Sleep(Convert.ToInt32(Math.Ceiling(2.0 * 9 * 1000 / (this.BaudRate))));
+                }
+                this.Read(ReceiveArray, 0, length);
+                this.Read(tail, 0, 1);
+                if (tail[0] == FrameTail)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            //一帧收完后统一转码处理，防止中文出现乱码
-            while (lenPre < lenNow)
-            {
 
-                System.Threading.Thread.Sleep(Convert.ToInt32(Math.Ceiling(2.0*9*1000/(this.BaudRate)) ));
-                lenPre = lenNow;
-                lenNow = this.BytesToRead;//获取接收缓冲区中的字节数
+            //int lenPre,lenNow;
+
+            //lenPre = 0;
+            //lenNow = 1;
+
+            //if (!this.IsOpen)
+            //{
+            //    return false;
+            //}
+
+            ////一帧收完后统一转码处理，防止中文出现乱码
+            //while (lenPre < lenNow)
+            //{
+
+            //    System.Threading.Thread.Sleep(Convert.ToInt32(Math.Ceiling(2.0*9*1000/(this.BaudRate)) ));
+            //    lenPre = lenNow;
+            //    lenNow = this.BytesToRead;//获取接收缓冲区中的字节数
             
-            }
+            //}
 
-            try{
-                ReceiveArray = new byte[lenNow];
-                this.Read(ReceiveArray, 0, lenNow);//从接收缓冲区中读取数据，将其放入ReceiveArray中,并清除缓冲区       
-            }catch{
-                return false;//产生错误,返回false
-            }
-            return true;//正确，返回true
+            //try{
+            //    ReceiveArray = new byte[lenNow];
+            //    this.Read(ReceiveArray, 0, lenNow);//从接收缓冲区中读取数据，将其放入ReceiveArray中,并清除缓冲区       
+            //}catch{
+            //    return false;//产生错误,返回false
+            //}
+            //return true;//正确，返回true
         }
 
         ///-----------------------------------------------------------------

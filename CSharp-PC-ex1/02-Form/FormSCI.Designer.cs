@@ -728,8 +728,8 @@ namespace SerialPort
 
         private BarWithPic[] MyBarWithPic = new BarWithPic[8];
         
-        private byte[] img_to_show = new byte[256];
-        private int MaxFrameLength = 52;
+        private byte[] img_to_show = new byte[2048];
+        private int MaxFrameLength = 48;
 
         private PictureBox pb ;
         private Form pic_form ;

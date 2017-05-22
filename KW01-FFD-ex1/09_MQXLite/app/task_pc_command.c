@@ -48,8 +48,7 @@ void task_pc_command(uint32_t initial_data){
                 break;
             case PC_BIG_DATA:
                 dataLength = data[1];
-                data += 2; 
-                WPSENDLargeData(data, dataLength, totoalLength, destination, 0);
+                WPSENDLargeData(data+2, dataLength, totoalLength, destination, 0);
                 break;
             case PC_BIG_DATA_END:
                 WPSENDLargeData('1', 1, totoalLength, destination, 1);
