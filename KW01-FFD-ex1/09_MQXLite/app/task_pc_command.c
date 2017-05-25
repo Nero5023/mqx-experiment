@@ -29,6 +29,7 @@ void task_pc_command(uint32_t initial_data){
         uint_8 aliveAddrs[REG_COUNT];
         uint_8 aliveCount;
         uint_8 j = 0;
+        uint_8 frameOrder;
         switch (data[0]) {
             case PC_COM_NODES:        // 询问所有的节点状态
                 aliveCount = alive_node_addrs(aliveAddrs);
@@ -45,13 +46,17 @@ void task_pc_command(uint32_t initial_data){
             case PC_BIG_DATA_START:
                 totoalLength = data[1];
                 destination = data[2];
+                //WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count)
+                //WPSENDLargeDataWithFrame()
+                WPSendData(&totoalLength, 1, NZP_RTS, destination, 0);
                 break;
             case PC_BIG_DATA:
-                dataLength = data[1];
-                WPSENDLargeData(data+2, dataLength, totoalLength, destination, 0);
+            	frameOrder = data[1];
+                dataLength = data[2];
+                WPSENDLargeDataWithFrame(data+3, dataLength, destination, frameOrder);
                 break;
             case PC_BIG_DATA_END:
-                WPSENDLargeData('1', 1, totoalLength, destination, 1);
+            	WPSendData("a", 1, NZP_TS_END, destination, 0);
                 totoalLength = 0;
                 destination = 0;
                 break;

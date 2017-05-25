@@ -99,15 +99,15 @@ void task_flash(uint32_t initial)
 			frameOrder = flash_write_temp[1];
 			write_len = flash_write_temp[2];
 //			uart_send_string(UART_0,"Data to write:");
-			uart_sendN(UART_0,write_len,flash_write_temp+3);
+			//uart_sendN(UART_0,write_len,flash_write_temp+3);
 			getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
 //			uart_send_string(UART_0,"Sector:");
 //			uart_send1(UART_0,sector+'0');
 //			uart_send_string(UART_0,"Offset:");
 //			uart_send1(UART_0,offset+'0');
 			flash_write(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp+3);
-
-
+//			flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
+			uart_sendN(UART_0,write_len,flash_write_temp+3);
 			ENABLE_INTERRUPTS;//开中断
 			break;
 		case 'S':

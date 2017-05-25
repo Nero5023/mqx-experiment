@@ -48,4 +48,6 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 //功能概要：发送一帧 rf 大数据
 //=====================================================================
 uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength,char destination, uint_8 end);
+
+void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count);
 #endif

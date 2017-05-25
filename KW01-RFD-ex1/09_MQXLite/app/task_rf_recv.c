@@ -38,6 +38,11 @@ void task_rf_recv(uint32_t initial)
 		uint_8 frameOrder;
 		uint_8 flash_send_temp[FLASH_WRITE_MSG_SIZE*4];
 
+		uint_8 received_data[256];
+		uint_8 i;
+		uint_8 not_received_data[256];
+		uint_8 not_received_count;
+
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP(recv_msg, length, data)) {
 
@@ -70,10 +75,14 @@ void task_rf_recv(uint32_t initial)
 					}
 					break;
 				case NZP_RTS:
-					uart_send_string(UART_0,"write begin");
+					uart_send_string(UART_0,"write begin\r\n");
 					total_len =  data[0];
 					data[0]='B'; //begin of flash write
 					data[1]=total_len;
+					for (i = 0; i < total_len; i++) {
+						received_data[i] = 0;
+					}
+					not_received_count = 0;
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_CTS:
@@ -90,14 +99,22 @@ void task_rf_recv(uint32_t initial)
 					_lwmsgq_send((pointer)flash_write_queue,flash_send_temp,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_TS_END:
-					uart_send_string(UART_0,"write end");
+					uart_send_string(UART_0,"write end\r\n");
 					Lage_Data_Flag = CAN_NOT_SEND;
-					WPSendData("a", 1, NZP_ACK, PC_NODE_ADDR, 0);
+
+					for (i = 0; i < total_len;i++) {
+						if (received_data[i] == 0) {
+							not_received_count+=1;
+							not_received_data[not_received_count] = i;
+						}
+					}
+					not_received_data[0] = not_received_count; // 第一位 没收到的帧数x，之后x个为没收到的帧
+					WPSendData(not_received_data, not_received_count+1, NZP_ACK, PC_NODE_ADDR, 0);
 					data[0]='S';//写入结束
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_ACK:
-					uart_send_string(UART_0,"Recv ACK");
+					uart_send_string(UART_0,"Recv ACK\r\n");
 					break;
 				case NZP_DATA_READ:
 					data[0]='R';
