@@ -95,6 +95,7 @@ void task_rf_recv(uint32_t initial)
 					flash_send_temp[0]='W';
 					flash_send_temp[1]=frameOrder; //存入序号,根据序号直接存入对应位置
 					flash_send_temp[2]=data_length-1;
+					received_data[frameOrder] = 1;
 					memcpy(flash_send_temp+3,data+1,data_length-1); //最后一帧可能拷贝无用数据
 					_lwmsgq_send((pointer)flash_write_queue,flash_send_temp,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
