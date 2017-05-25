@@ -111,6 +111,7 @@ void task_rf_recv(uint32_t initial)
 					}
 					not_received_data[0] = not_received_count; // 第一位 没收到的帧数x，之后x个为没收到的帧
 					WPSendData(not_received_data, not_received_count+1, NZP_ACK, PC_NODE_ADDR, 0);
+					not_received_count = 0;
 					data[0]='S';//写入结束
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
