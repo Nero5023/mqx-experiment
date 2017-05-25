@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SerialPort
 {
@@ -728,7 +729,8 @@ namespace SerialPort
 
         private BarWithPic[] MyBarWithPic = new BarWithPic[8];
         
-        private byte[] img_to_show = new byte[2048];
+        private byte[] img_to_show;
+        private List<byte> img_byte_list;
         private int MaxFrameLength = 48;
 
         private PictureBox pb ;

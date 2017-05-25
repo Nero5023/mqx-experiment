@@ -49,10 +49,10 @@ void task_flash(uint32_t initial)
 	{
 		//以下加入用户程序--------------------------------------------------------
 		int i;
-		uart_send_string(UART_0,"FlashTB");
+//		uart_send_string(UART_0,"FlashTB");
 		//1）无限等待RF接收消息
 		_lwmsgq_receive((pointer)flash_write_queue,flash_write_temp,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
-		uart_send_string(UART_0,"FlashTA");
+//		uart_send_string(UART_0,"FlashTA");
 		//2）调用接收函数
 		//读取flash指定扇区操作
 		switch(flash_write_temp[0]){
@@ -69,7 +69,7 @@ void task_flash(uint32_t initial)
 			break;
 
 		case 'R':
-			uart_send_string(UART_0,"read begin\n");
+//			uart_send_string(UART_0,"read begin\n");
 			flash_read(FILE_INFO_SECTOR,0,1,&total_len); //从flash读出文件长度
 			i=0;
 //			WPSendData(&total_len, 1, NZP_RTS, PC_NODE_ADDR, 0);
@@ -90,7 +90,7 @@ void task_flash(uint32_t initial)
 			}
 //			WPSendData("a",1,NZP_TS_END,PC_NODE_ADDR,0);
 			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
-			uart_send_string(UART_0,"read end 0\n");
+//			uart_send_string(UART_0,"read end 0\n");
 			break;
 ;
 		case 'W':
@@ -98,7 +98,7 @@ void task_flash(uint32_t initial)
 
 			frameOrder = flash_write_temp[1];
 			write_len = flash_write_temp[2];
-			uart_send_string(UART_0,"Data to write:");
+//			uart_send_string(UART_0,"Data to write:");
 			uart_sendN(UART_0,write_len,flash_write_temp+3);
 			getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
 //			uart_send_string(UART_0,"Sector:");

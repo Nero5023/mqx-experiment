@@ -80,7 +80,7 @@ void task_rf_recv(uint32_t initial)
 					//not use
 					break;
 				case NZP_TS_DATA:
-					uart_send_string(UART_0,"write data");
+//					uart_send_string(UART_0,"write data");
 					uart_sendN(UART_0,4,data);
 					frameOrder = data[0];
 					flash_send_temp[0]='W';

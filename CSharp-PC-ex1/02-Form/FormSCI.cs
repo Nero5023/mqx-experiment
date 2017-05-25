@@ -681,6 +681,7 @@ namespace SerialPort
             BtnSCIClearSend_Click(sender, e);
             this.TbSCISend.Text = data;
             BtnSCISend_Click(sender, e);
+            Delay(120);
         }
         
         // 发送请求节点信息数据 uart
@@ -728,7 +729,6 @@ namespace SerialPort
             string str = System.Text.Encoding.Default.GetString(lenArr);
             string dataToSend = "b" + str + dataStr;
             sendUARTData(dataToSend, sender, e);
-            Delay(100);
         }
 
         // 发送大数据，尾
@@ -755,12 +755,16 @@ namespace SerialPort
             }
             sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
             for (int i = 0; i < counts; i++) {
+                Console.Write("send frame :");
+                Console.WriteLine(i.ToString());
                 byte[] toSend = SubArray(data, i*FrameLength, FrameLength);
                 sendBigDataFrame(toSend, sender, e);
             }
             if (lastFrameLength != 0) {
                 byte[] toSend = SubArray(data, counts*FrameLength, lastFrameLength);
                 sendBigDataFrame(toSend, sender, e);
+                Console.Write("send frame :");
+                Console.WriteLine(counts.ToString());
             }
             sendBigDataEnd(sender, e);
         }
@@ -883,6 +887,7 @@ namespace SerialPort
         // 解析收到的信息
         private void parseRecivedData(byte[] receiveData)
         {
+            
             if (receiveData.Length <= 0)
             {
                 return;
@@ -918,15 +923,23 @@ namespace SerialPort
                     break;
 
                 case (byte)FFDDataType.BigDataStart:
-                    //pictureBox1.Image = convertImg(img_to_show);
+                    img_byte_list = new List<byte>();
                     break;
                 case (byte)FFDDataType.BigData:
                     int frameOrder = receiveData[1];
-                   Buffer.BlockCopy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, receiveData.Length-2);
+                    Console.Write("rcev  data frame:");
+                    Console.WriteLine(frameOrder.ToString());
+                    img_byte_list.AddRange(receiveData.Skip(2));
                     break;
                 case (byte)FFDDataType.BigDataEnd:
                     try
                     {
+                        img_to_show = img_byte_list.ToArray();
+                        FileStream fs = new FileStream("C:\\Users\\49738\\Desktop\\haha.jpg", FileMode.Create);
+                        fs.Write(img_to_show, 0, img_to_show.Length);
+                        //清空缓冲区、关闭流
+                        fs.Flush();
+                        fs.Close();
                         Image res_img = convertImg(img_to_show);
                         pictureBox1.Image = res_img;
                     }
