@@ -48,7 +48,10 @@ namespace SerialPort
 
         }
 
-
+        private int totalLength = 0;
+        private _02_Form.ProcessBarForm pgb;
+        public delegate void ChangeEventHandler(object s, EventArgs e);
+        public event ChangeEventHandler Changed;
 
         ///-----------------------------------------------------------------
         /// <summary>                                                       
@@ -127,6 +130,19 @@ namespace SerialPort
                 this.BtnSCISwitch.Enabled = false;
 
             }
+        }
+
+        public void OnChanged(EventArgs e)
+        {
+            if (this.pgb == null)
+            {
+                pgb = new _02_Form.ProcessBarForm();
+            }
+            if (this.pgb.Visible == false)
+            {
+                this.pgb.Show();
+            }
+            this.Update();
         }
 
         ///-----------------------------------------------------------------
@@ -460,6 +476,11 @@ namespace SerialPort
             else
             {
                 ((TextBox)textbox).Text += text;
+                if (((TextBox)textbox).Text.Length >= 100)
+                {
+                    ((TextBox)textbox).Text = "";
+                }
+                    
                 //把光标放在最后一行
                 ((TextBox)textbox).SelectionStart =
                                            ((TextBox)textbox).Text.Length;
@@ -768,23 +789,36 @@ namespace SerialPort
             if (lastFrameLength != 0) {
                 sendCount += 1;
             }
+            pgb = new _02_Form.ProcessBarForm();
+            pgb.Show();
 
             sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
+
+           
             for (int i = 0; i < counts; i++) {
                 Console.Write("send frame :");
                 Console.WriteLine(i.ToString());
                 byte[] toSend = SubArray(data, i*FrameLength, FrameLength);
                 sendBigDataFrame((byte)i,toSend, sender, e);
+                textBox3.Text = string.Format("正在发送第{0}帧...\r\n", i+1) + textBox3.Text;
+                string t = string.Format("{0}/{1}", i+1, sendCount);
+                pgb.updateText(t);
+                pgb.updateValue((i + 1) * 100 / sendCount);
             }
             if (lastFrameLength != 0) {
                 byte[] toSend = SubArray(data, counts*FrameLength, lastFrameLength);
                 sendBigDataFrame((byte)(sendCount-1),toSend, sender, e);
                 Console.Write("send frame :");
                 Console.WriteLine(counts.ToString());
+                textBox3.Text = string.Format("正在发送第{0}帧...\r\n", sendCount) + textBox3.Text;
+                string t = string.Format("{0}/{1}", sendCount, sendCount);
+                pgb.updateText(t);
+                pgb.updateValue(100);
             }
             sendBigDataEnd(sender, e);
             Console.Write("send end.");
             this.mTimeoutObject = new ManualResetEvent(true);
+            pgb.Close();
         }
 
 
@@ -908,7 +942,7 @@ namespace SerialPort
         // 解析收到的信息
         private void parseRecivedData(byte[] receiveData)
         {
-            
+
             if (receiveData.Length <= 0)
             {
                 return;
@@ -944,20 +978,41 @@ namespace SerialPort
                     break;
 
                 case (byte)FFDDataType.BigDataStart:
+                    backgroundWorker1.RunWorkerAsync();
+                    recv_count = 0;
+                    pgb = new _02_Form.ProcessBarForm();
+                    //pgb_.Show();
+                    
+                    //pgb.Show();
+                    if (InvokeRequired)
+                    {
+                        this.Invoke(new Action(() => pgb.Show()));
+                    }
+                    pgb.updateValue(0);
                     img_byte_list = new List<byte>();
                     img_to_show = new byte[MaxFrameLength * receiveData[2]];
+                    totalLength = (int)receiveData[2];
                     recv_data_flag = new byte[receiveData[2]];
                     not_recv_datas = new byte[receiveData[2]];
                     big_data_source_addr = receiveData[1];
                     break;
                 case (byte)FFDDataType.BigData:
-                    int frameOrder = receiveData[1];
-                    Console.Write("rcev  data frame:");
-                    Console.WriteLine(frameOrder.ToString());
-                    //Console.Write("Data: ");
-                    //Console.WriteLine(Convert.ToString(receiveData));
 
-                    //img_byte_list.AddRange(receiveData.Skip(2));
+                    int frameOrder = receiveData[1];
+                    recv_count++;
+                    string t = string.Format("{0}/{1}", recv_count, totalLength);
+                    
+
+                    if (InvokeRequired)
+                    {
+                        this.Invoke(new Action(() => pgb.updateValue((recv_count)*100/totalLength)));
+                        this.Invoke(new Action(() => pgb.updateText(t)));
+                    }
+
+                    textBox3.Text = string.Format("正在接收第{0}帧...\r\n", frameOrder)+ textBox3.Text;
+                    Console.Write("rcev  data frame:");
+                    Console.Write(frameOrder.ToString()+"/");
+                    Console.WriteLine(totalLength.ToString());
                     recv_data_flag[frameOrder] = 1;
                     Array.Copy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, receiveData.Length - 2);
                     break;
@@ -976,35 +1031,31 @@ namespace SerialPort
                     Console.Write(not_recv_count.ToString());
                     Console.WriteLine(" frames");
                     sendPCMissFrames(big_data_source_addr, not_recv_datas, null, null);
-                    try
+                    if (not_recv_count == 0)
                     {
-                        //img_to_show = img_byte_list.ToArray();
-                        FileStream fs = new FileStream("C:\\Users\\49738\\Desktop\\haha.jpg", FileMode.Create);
-                        fs.Write(img_to_show, 0, img_to_show.Length);
-                        //清空缓冲区、关闭流
-                        fs.Flush();
-                        fs.Close();
-                        Image res_img = convertImg(img_to_show);
-                        pictureBox1.Image = res_img;
+                        showAvatorImage(img_to_show, 1);
+                        MessageBox.Show("传输完成");
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("显示图片失败");
+                        textBox3.Text = string.Format("共缺少{0}帧,正在重传...\r\n", not_recv_count) + textBox3.Text;
                     }
                
                     break;
                 case (byte)FFDDataType.BigDataMiss:
                     int missNumber = receiveData[1];
+                    textBox3.Text = string.Format("共缺少{0}帧,正在重传...\r\n", missNumber) + textBox3.Text;
                     Console.Write("miss frame:");
                     Console.WriteLine(missNumber.ToString());
                     byte[] missOrder = new byte[missNumber];
                     SubArray(receiveData, 2, missNumber).CopyTo(missOrder,0);
                     foreach(byte order in missOrder)
                     {
+
                         byte[] toSend = SubArray(buff, order * MaxFrameLength, MaxFrameLength);
                         sendBigDataFrame(order, toSend, null, null);
+                        textBox3.Text = string.Format("正在发送第{0}帧...\r\n", order) + textBox3.Text;
                     }
-
                     sendBigDataEnd(null, null);
                     break;
                 default:
@@ -1012,7 +1063,11 @@ namespace SerialPort
             }
         }
 
-      
+        private void showAvatorImage(byte[] buff_, int avatorNum)
+        {
+            Image res_img = convertImg(buff);
+            pictureBox1.Image = res_img;
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -1256,7 +1311,9 @@ namespace SerialPort
                 long numBytes = new FileInfo(filename).Length;
                 buff = br.ReadBytes((int)numBytes);
 
+
                 sendBigData((byte)addr, buff, sender, e);
+
 
                 file.Close();
 

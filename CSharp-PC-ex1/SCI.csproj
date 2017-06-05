@@ -71,12 +71,21 @@
     <Compile Include="02-Form\FormSCI.Designer.cs">
       <DependentUpon>FormSCI.cs</DependentUpon>
     </Compile>
+    <Compile Include="02-Form\ProcessBarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02-Form\ProcessBarForm.Designer.cs">
+      <DependentUpon>ProcessBarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="03-Function\Program.cs" />
     <Compile Include="03-Function\PublicVar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="02-Form\FormSCI.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormSCI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02-Form\ProcessBarForm.resx">
+      <DependentUpon>ProcessBarForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
