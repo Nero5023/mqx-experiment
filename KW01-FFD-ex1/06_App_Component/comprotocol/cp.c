@@ -68,11 +68,12 @@ void sendNodeDeathInfo(uint_8 nodeAddr) {
 }
 
 // 发送大数据头信息
-void sendBigDataStart(uint_8 nodeAddr) {
-    uint_8 dataToSend[2];
+void sendBigDataStart(uint_8 nodeAddr, uint_8 totalFrameCount) {
+    uint_8 dataToSend[3];
     dataToSend[0] = BigDataStart;
     dataToSend[1] = nodeAddr;
-    MyUartSendN(2,dataToSend);
+    dataToSend[2] = totalFrameCount;
+    MyUartSendN(3,dataToSend);
 //    uart_sendN(UART_0,2,dataToSend);
 }
 
@@ -87,9 +88,19 @@ void sendBigData(uint_8* data, uint_8 length) {
 
 // 发送大数据的尾信息
 void sendBigDataEnd() {
-	_time_delay_ticks(80);
 	uint_8 dataToSend[1];
 	dataToSend[0] = BigDataEnd;
 	MyUartSendN(1,dataToSend);
 //	 uart_sendN(UART_0, 1, dataToSend);
+}
+
+
+void sendBigDataMiss(uint_8* data){
+
+	//  BigDataMiss | miss number | miss frame order
+	uint_8 dataToSend[data[0]+2];
+	dataToSend[0] = BigDataMiss;
+	memcpy(dataToSend+1,data,data[0]+1);
+	MyUartSendN(data[0]+2,dataToSend);
+
 }

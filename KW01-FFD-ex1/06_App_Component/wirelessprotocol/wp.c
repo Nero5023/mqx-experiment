@@ -21,7 +21,7 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 
     RF_Init(255);           //RFÄ£¿é³õÊ¼»¯
 
-    _lwmsgq_send((pointer)send_queue,p_data,LWMSGQ_SEND_BLOCK_ON_FULL);
+    _lwmsgq_send((pointer)send_queue,p_data,0);
 
 }
 
