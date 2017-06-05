@@ -32,7 +32,7 @@ void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uin
 	dataToSend[0] = count;
     memcpy(dataToSend+1, data, length);
     WPSendData(dataToSend, length+1, NZP_TS_DATA, destination, 0);
-    uart_send_string(UART_0,"After send TS_DATA");
+//    uart_send_string(UART_0,"After send TS_DATA");
 	_time_delay_ticks(20);
 
 }
@@ -54,7 +54,7 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
     uint_8 i = 0;
     if (canSendData == 0) {
         WPSendData(&totalLength, 1, NZP_RTS, destination, 0);
-        uart_send_string(UART_0,"After send RTS");
+//        uart_send_string(UART_0,"After send RTS");
         canSendData = 1;
         _time_delay_ticks(20);
 
@@ -76,7 +76,7 @@ uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength, char des
         WPSENDLargeDataWithFrame(dataToSend, lastFrameLength, destination, frameCount);
         frameCount+=1;
     }
-    uart_send_string(UART_0,"Before return");
+//    uart_send_string(UART_0,"Before return");
     return 1;
 }
 

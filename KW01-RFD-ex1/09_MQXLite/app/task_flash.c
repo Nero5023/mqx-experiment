@@ -84,7 +84,7 @@ void task_flash(uint32_t initial)
 //				WPSENDLargeDataWithFrame(flash_read_temp, MaxFrameLength, PC_NODE_ADDR, i);
 				//WPSendData('1',1, NZP_DATA, PC_NODE_ADDR, 0);
 //				uart_send_string(UART_0,"read after data");
-				uart_sendN(UART_0, MaxFrameLength, flash_read_temp);
+//				uart_sendN(UART_0, MaxFrameLength, flash_read_temp);
 				i++;
 //				_time_delay_ticks(100);
 			}
@@ -92,7 +92,6 @@ void task_flash(uint32_t initial)
 			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
 //			uart_send_string(UART_0,"read end 0\n");
 			break;
-;
 		case 'W':
 			DISABLE_INTERRUPTS;//关中断
 
@@ -107,7 +106,11 @@ void task_flash(uint32_t initial)
 //			uart_send1(UART_0,offset+'0');
 			flash_write(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp+3);
 //			flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
-			uart_sendN(UART_0,write_len,flash_write_temp+3);
+//			uart_sendN(UART_0,write_len,flash_write_temp+3);
+//			write_len = sprintf(flash_read_temp, "Write %d frame\n",frameOrder);
+			uart_send1(UART_0, frameOrder/10+'0');
+			uart_send1(UART_0, frameOrder%10+'0');
+			uart_send_string(UART_0,"frame\r\n");
 			ENABLE_INTERRUPTS;//开中断
 			break;
 		case 'S':
@@ -115,6 +118,28 @@ void task_flash(uint32_t initial)
 			sector = 0;
 			offset = 0;
 			break;
+		case 'M':
+			DISABLE_INTERRUPTS;//关中断
+
+
+			uart_send1(UART_0, flash_write_temp[1]/10+'0');
+			uart_send1(UART_0, flash_write_temp[1]%10+'0');
+			uart_send_string(UART_0," frames pc feel miss \r\n");
+
+
+			for(i=0;i<flash_write_temp[1];i++){
+				frameOrder = flash_write_temp[2+i];
+				getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
+				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
+//				uart_sendN(UART_0,3,flash_read_temp);
+
+				WPSENDLargeDataWithFrame(flash_read_temp,MaxFrameLength,PC_NODE_ADDR,frameOrder);
+			}
+			WPSendData("a", 1, NZP_TS_END, PC_NODE_ADDR, 0);
+
+			ENABLE_INTERRUPTS;//开中断
+			break;
+
 		default:
 			break;
 		}

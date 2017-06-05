@@ -19,6 +19,12 @@ void task_rf_recv(uint32_t initial)
 {	
 	//1. 声明任务使用的变量
 	uint_8 i;
+	uint_8 received_data[256];
+	uint_8 not_received_data[50];
+	uint_8 not_received_count;
+	uint_8 total_len;
+	uint_8 frameOrder;
+	uint_8 j;
 
 	//2. 给有关变量赋初值
 
@@ -34,14 +40,10 @@ void task_rf_recv(uint32_t initial)
 		uint_8 length = length_of_NZP(recv_msg);
 		uint_8 data_length = data_length_of_NZP(recv_msg);
 		char data[56];
-		uint_8 total_len;
-		uint_8 frameOrder;
+
 		uint_8 flash_send_temp[FLASH_WRITE_MSG_SIZE*4];
 
-		uint_8 received_data[256];
-		uint_8 i;
-		uint_8 not_received_data[256];
-		uint_8 not_received_count;
+		
 
 		// 解析 NZP 协议，如果解析成功（发送给自己的，checksum 正确）
 		if (parse_NZP(recv_msg, length, data)) {
@@ -90,7 +92,7 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_TS_DATA:
 //					uart_send_string(UART_0,"write data");
-					uart_sendN(UART_0,4,data);
+//					uart_sendN(UART_0,4,data);
 					frameOrder = data[0];
 					flash_send_temp[0]='W';
 					flash_send_temp[1]=frameOrder; //存入序号,根据序号直接存入对应位置
@@ -109,6 +111,9 @@ void task_rf_recv(uint32_t initial)
 							not_received_data[not_received_count] = i;
 						}
 					}
+					uart_send_string(UART_0,"miss ");
+					uart_send1(UART_0, not_received_count +'0');
+					uart_send_string(UART_0," frames!\r\n");
 					not_received_data[0] = not_received_count; // 第一位 没收到的帧数x，之后x个为没收到的帧
 					WPSendData(not_received_data, not_received_count+1, NZP_ACK, PC_NODE_ADDR, 0);
 					not_received_count = 0;
@@ -116,6 +121,14 @@ void task_rf_recv(uint32_t initial)
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
 				case NZP_ACK:
+					//data: 'M'|missCount|missOrders...
+					uart_send_string(UART_0,"=========");
+					uart_sendN(UART_0,data[1]+2,data);
+					uart_send_string(UART_0,"=========");
+					if(data[1]!=0){
+					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
+					}
+
 					uart_send_string(UART_0,"Recv ACK\r\n");
 					break;
 				case NZP_DATA_READ:
