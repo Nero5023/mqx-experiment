@@ -45,7 +45,7 @@ void task_rf_recv(uint32_t initial)
 
 			switch (type) {
 				case NZP_REGISTER:// 有注册消息到来
-					_lwmsgq_send((pointer)register_queue,data,0); //放入注册消息队列中
+					_lwmsgq_send((pointer)register_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
 					break;
 				case NZP_DATA:// 需要直接打印的消息
 					uart_sendN(UART_0, data_length, data);

@@ -64,6 +64,7 @@ uint32_t seconds;	          //PIT记录复位后的时间（单位：秒）
 float g_temperature;          //芯片温度
 uint_8 g_rfRecCount;
 uint_8 rf_sentDataLength;
+uint_8 light_control_value;  // 灯控制信息
 
 uint_8 is_continous_monitoring;
 

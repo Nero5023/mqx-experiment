@@ -75,7 +75,6 @@ namespace SerialPort
            pic_form = new Form();
            pic_form.Controls.Add(pb);
 
-
         }
 
         ///-----------------------------------------------------------------
@@ -744,6 +743,17 @@ namespace SerialPort
             sendUARTData(str, sender, e);
         }
 
+        // 发送灯控制信息
+        public void sendLightControlMessage(byte nodeaddr, byte value, object sender, EventArgs e)
+        {
+            byte[] dataToSend = new byte[3];
+            dataToSend[0] = (byte)'L';
+            dataToSend[1] = nodeaddr;
+            dataToSend[2] = value;
+            string str = System.Text.Encoding.Default.GetString(dataToSend);
+            sendUARTData(str, sender, e);
+        }
+
 
         // 发送大数据，头
         // totalLength 共多少帧数据
@@ -1347,7 +1357,24 @@ namespace SerialPort
             sendDataRead((byte)addr, sender, e);
         }
 
+        private void 控制小灯ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string a = ((ContextMenuStrip)((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner).SourceControl.Name.ToString();
+            int addr = a[a.Length - 1] - '0';
+            var lightFrequentForm = new _02_Form.小灯闪烁频率控制((byte)addr,this);
+            lightFrequentForm.Show();
 
+        }
+
+        private void 帮助ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 帮助ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            
+        }
     }
 
 

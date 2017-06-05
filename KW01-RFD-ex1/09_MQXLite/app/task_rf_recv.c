@@ -122,6 +122,9 @@ void task_rf_recv(uint32_t initial)
 					data[0]='R';
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
+				case NZP_LIGHT_CONTROL:
+					light_control_value = data[0];
+					break;
 				default:
 					break;
 			}
