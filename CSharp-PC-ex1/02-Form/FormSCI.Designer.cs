@@ -488,6 +488,7 @@ namespace SerialPort
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox2.Location = new System.Drawing.Point(300, 155);
@@ -503,6 +504,7 @@ namespace SerialPort
             // 
             this.pictureBox6.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox6.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox6.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox6.Location = new System.Drawing.Point(300, 573);
@@ -518,6 +520,7 @@ namespace SerialPort
             // 
             this.pictureBox5.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox5.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox5.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox5.Location = new System.Drawing.Point(300, 472);
@@ -533,6 +536,7 @@ namespace SerialPort
             // 
             this.pictureBox4.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox4.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox4.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox4.Location = new System.Drawing.Point(300, 363);
@@ -548,6 +552,7 @@ namespace SerialPort
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox3.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox3.Location = new System.Drawing.Point(300, 257);
@@ -582,7 +587,7 @@ namespace SerialPort
             this.发送文件ToolStripMenuItem,
             this.查看图片ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(145, 56);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 84);
             // 
             // 发送文件ToolStripMenuItem
             // 

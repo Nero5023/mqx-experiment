@@ -775,7 +775,15 @@ namespace SerialPort
         public static byte[] SubArray(byte[] data, int index, int length)
         {
             byte[] result = new byte[length];
-            Array.Copy(data, index, result, 0, length);
+            try
+            {
+                Array.Copy(data, index, result, 0, length);
+            }
+            catch
+            {
+
+            }
+            
             return result;
         }
 
@@ -1033,7 +1041,7 @@ namespace SerialPort
                     sendPCMissFrames(big_data_source_addr, not_recv_datas, null, null);
                     if (not_recv_count == 0)
                     {
-                        showAvatorImage(img_to_show, 1);
+                        showAvatorImage(img_to_show, big_data_source_addr);
                         MessageBox.Show("传输完成");
                     }
                     else
@@ -1066,7 +1074,19 @@ namespace SerialPort
         private void showAvatorImage(byte[] buff_, int avatorNum)
         {
             Image res_img = convertImg(buff);
-            pictureBox1.Image = res_img;
+            switch (avatorNum)
+            {
+                case 1:
+                    pictureBox1.Image = res_img;
+                    break;
+                case 2:
+                    pictureBox2.Image = res_img;
+                    break;
+                case 3:
+                    pictureBox3.Image = res_img;
+                    break;
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1291,7 +1311,7 @@ namespace SerialPort
         {
 
 
-            string a= ((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner.Name.ToString();
+            string a= ((ContextMenuStrip)((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner).SourceControl.Name.ToString();
             int addr = a[a.Length - 1] - '0';
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = false;
@@ -1322,8 +1342,12 @@ namespace SerialPort
 
         private void 查看图片ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            sendDataRead(1, sender, e);
+            string a = ((ContextMenuStrip)((ControlAccessibleObject)((System.Windows.Forms.ToolStripMenuItem)sender).AccessibilityObject.Parent).Owner).SourceControl.Name.ToString();
+            int addr = a[a.Length - 1] - '0';
+            sendDataRead((byte)addr, sender, e);
         }
+
+
     }
 
 
