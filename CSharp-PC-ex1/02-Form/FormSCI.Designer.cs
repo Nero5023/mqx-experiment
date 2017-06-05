@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SerialPort
@@ -730,12 +731,19 @@ namespace SerialPort
         private BarWithPic[] MyBarWithPic = new BarWithPic[8];
         
         private byte[] img_to_show;
+        private byte[] recv_data_flag;
+        private byte[] not_recv_datas;
+        private byte big_data_source_addr;
         private List<byte> img_byte_list;
         private int MaxFrameLength = 48;
 
         private PictureBox pb ;
         private Form pic_form ;
+        private byte[] buff; //store the file
 
+        private ManualResetEvent mTimeoutObject;
+        //ACK标记变量
+        private bool mBoTimeout;
 
 
         private int currentPic=0;
