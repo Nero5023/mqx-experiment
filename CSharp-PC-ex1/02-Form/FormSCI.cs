@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WinFormAnimation;
 
@@ -678,10 +679,11 @@ namespace SerialPort
         // Send data through uart
         private void sendUARTData(string data, object sender, EventArgs e)
         {
+            
             BtnSCIClearSend_Click(sender, e);
             this.TbSCISend.Text = data;
             BtnSCISend_Click(sender, e);
-            Delay(120);
+            Delay(200);
         }
         
         // 发送请求节点信息数据 uart
@@ -711,6 +713,16 @@ namespace SerialPort
             sendUARTData(str, sender, e);
         }
 
+        private void sendPCMissFrames(byte nodeaddr, byte[] missDatas, object sender, EventArgs e)
+        {
+            byte[] dataToSend = new byte[missDatas[0] + 3];
+            dataToSend[0] = (byte)'M';
+            dataToSend[1] = nodeaddr;
+            Array.Copy(missDatas, 0, dataToSend, 2, missDatas[0] + 1);
+            string str = System.Text.Encoding.Default.GetString(dataToSend);
+            sendUARTData(str, sender, e);
+        }
+
 
         // 发送大数据，头
         // totalLength 共多少帧数据
@@ -722,12 +734,14 @@ namespace SerialPort
         }
 
         // 发送大数据，数据帧
-        private void sendBigDataFrame(byte[] data, object sender, EventArgs e) {
+        private void sendBigDataFrame(byte frameOrder,byte[] data, object sender, EventArgs e) {
             byte len = (byte)data.Length;
             byte[] lenArr = {len};
+            byte[] orderArr = { frameOrder };
             string dataStr = System.Text.Encoding.Default.GetString(data);
-            string str = System.Text.Encoding.Default.GetString(lenArr);
-            string dataToSend = "b" + str + dataStr;
+            string len_str = System.Text.Encoding.Default.GetString(lenArr);
+            string frameOrder_str = Encoding.Default.GetString(orderArr);
+            string dataToSend = "b"+frameOrder_str + len_str + dataStr;
             sendUARTData(dataToSend, sender, e);
         }
 
@@ -746,6 +760,7 @@ namespace SerialPort
 
         // 发送大数据
         private void sendBigData(byte nodeAddr, byte[] data, object sender, EventArgs e) {
+
             int FrameLength = MaxFrameLength;
             int counts = data.Length / FrameLength;
             int lastFrameLength = data.Length % FrameLength;
@@ -753,21 +768,26 @@ namespace SerialPort
             if (lastFrameLength != 0) {
                 sendCount += 1;
             }
+
             sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
             for (int i = 0; i < counts; i++) {
                 Console.Write("send frame :");
                 Console.WriteLine(i.ToString());
                 byte[] toSend = SubArray(data, i*FrameLength, FrameLength);
-                sendBigDataFrame(toSend, sender, e);
+                sendBigDataFrame((byte)i,toSend, sender, e);
             }
             if (lastFrameLength != 0) {
                 byte[] toSend = SubArray(data, counts*FrameLength, lastFrameLength);
-                sendBigDataFrame(toSend, sender, e);
+                sendBigDataFrame((byte)(sendCount-1),toSend, sender, e);
                 Console.Write("send frame :");
                 Console.WriteLine(counts.ToString());
             }
             sendBigDataEnd(sender, e);
+            Console.Write("send end.");
+            this.mTimeoutObject = new ManualResetEvent(true);
         }
+
+
 
         // node 注册成功通知
         private void nodeHaveRegistered(byte nodeAddr)
@@ -881,7 +901,8 @@ namespace SerialPort
             NodeDeathInfo = 'd',  //d|death of node
             BigDataStart  = 'l',   // l | totoalLength | destination
             BigData       = 'D',   // D | dataLength | data
-            BigDataEnd    = 'e'    // e |
+            BigDataEnd    = 'e'  ,  // e 
+            BigDataMiss = 'm', // m | miss number | miss frame orders
         }
 
         // 解析收到的信息
@@ -924,17 +945,40 @@ namespace SerialPort
 
                 case (byte)FFDDataType.BigDataStart:
                     img_byte_list = new List<byte>();
+                    img_to_show = new byte[MaxFrameLength * receiveData[2]];
+                    recv_data_flag = new byte[receiveData[2]];
+                    not_recv_datas = new byte[receiveData[2]];
+                    big_data_source_addr = receiveData[1];
                     break;
                 case (byte)FFDDataType.BigData:
                     int frameOrder = receiveData[1];
                     Console.Write("rcev  data frame:");
                     Console.WriteLine(frameOrder.ToString());
-                    img_byte_list.AddRange(receiveData.Skip(2));
+                    //Console.Write("Data: ");
+                    //Console.WriteLine(Convert.ToString(receiveData));
+
+                    //img_byte_list.AddRange(receiveData.Skip(2));
+                    recv_data_flag[frameOrder] = 1;
+                    Array.Copy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, receiveData.Length - 2);
                     break;
                 case (byte)FFDDataType.BigDataEnd:
+                    int not_recv_count = 0;
+                    for (int i = 0; i < recv_data_flag.Length; i++)
+                    {
+                        if (recv_data_flag[i] == 0)
+                        {
+                            not_recv_count++;
+                            not_recv_datas[not_recv_count] = (byte)i;
+                        }
+                    }
+                    not_recv_datas[0] = (byte)not_recv_count;
+                    Console.Write("pc read: miss ");
+                    Console.Write(not_recv_count.ToString());
+                    Console.WriteLine(" frames");
+                    sendPCMissFrames(big_data_source_addr, not_recv_datas, null, null);
                     try
                     {
-                        img_to_show = img_byte_list.ToArray();
+                        //img_to_show = img_byte_list.ToArray();
                         FileStream fs = new FileStream("C:\\Users\\49738\\Desktop\\haha.jpg", FileMode.Create);
                         fs.Write(img_to_show, 0, img_to_show.Length);
                         //清空缓冲区、关闭流
@@ -948,6 +992,20 @@ namespace SerialPort
                         MessageBox.Show("显示图片失败");
                     }
                
+                    break;
+                case (byte)FFDDataType.BigDataMiss:
+                    int missNumber = receiveData[1];
+                    Console.Write("miss frame:");
+                    Console.WriteLine(missNumber.ToString());
+                    byte[] missOrder = new byte[missNumber];
+                    SubArray(receiveData, 2, missNumber).CopyTo(missOrder,0);
+                    foreach(byte order in missOrder)
+                    {
+                        byte[] toSend = SubArray(buff, order * MaxFrameLength, MaxFrameLength);
+                        sendBigDataFrame(order, toSend, null, null);
+                    }
+
+                    sendBigDataEnd(null, null);
                     break;
                 default:
                     break;
@@ -1193,7 +1251,7 @@ namespace SerialPort
                 FileStream file = new FileStream(filename, FileMode.Open);
                 file.Seek(0, SeekOrigin.Begin);
 
-                byte[] buff = null;
+
                 BinaryReader br = new BinaryReader(file);
                 long numBytes = new FileInfo(filename).Length;
                 buff = br.ReadBytes((int)numBytes);
