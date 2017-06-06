@@ -1,4 +1,3 @@
-
 #include "01_app_include.h"    //应用任务公共头文件
 
 
@@ -9,7 +8,9 @@ typedef enum PC_COM_TYPE {
     PC_BIG_DATA_START = 'l', // l | totoalLength | destination
     PC_BIG_DATA = 'b',       // d | dataLength | data
     PC_BIG_DATA_END = 'e',    // e |
-    PC_BIG_DATA_READ = 'r'  // r | address
+    PC_BIG_DATA_READ = 'r',  // r | address
+	PC_MISS_DATA     = 'M',  // M | addr |miss data length | data
+	PC_LIGHT_CONTROL_MESSAGE = 'L' // L  | addr | value
 } PC_COM_TYPE;
 
 void task_pc_command(uint32_t initial_data){
@@ -51,17 +52,26 @@ void task_pc_command(uint32_t initial_data){
                 WPSendData(&totoalLength, 1, NZP_RTS, destination, 0);
                 break;
             case PC_BIG_DATA:
+//            	MyUartSendN("send one Frame");
             	frameOrder = data[1];
                 dataLength = data[2];
                 WPSENDLargeDataWithFrame(data+3, dataLength, destination, frameOrder);
                 break;
             case PC_BIG_DATA_END:
             	WPSendData("a", 1, NZP_TS_END, destination, 0);
-                totoalLength = 0;
-                destination = 0;
                 break;
             case PC_BIG_DATA_READ:
             	WPSendData("a",1,NZP_DATA_READ,data[1],0);
+            	break;
+            case PC_MISS_DATA:
+            	// data[2]: the number of miss frames
+            	destination = data[1];
+            	data[1] = 'M';
+            	WPSendData(data+1, data[2]+2, NZP_ACK, destination, 0);
+            	break;
+            case PC_LIGHT_CONTROL_MESSAGE:
+            	destination = data[1];
+            	WPSendData(data+2, 1, NZP_LIGHT_CONTROL, destination, 0);
             	break;
             default:
                 break;

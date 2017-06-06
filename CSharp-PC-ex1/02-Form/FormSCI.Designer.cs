@@ -65,31 +65,34 @@ namespace SerialPort
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.控制小灯ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.查看图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
             this.SetSerialPort.SuspendLayout();
             this.SerialPortSend.SuspendLayout();
             this.SerialPortReceive.SuspendLayout();
             this.sSSerialPortInfo.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -97,7 +100,7 @@ namespace SerialPort
             // LbPortName
             // 
             this.LbPortName.AutoSize = true;
-            this.LbPortName.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LbPortName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LbPortName.ForeColor = System.Drawing.Color.Black;
             this.LbPortName.Location = new System.Drawing.Point(23, 40);
             this.LbPortName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -108,7 +111,7 @@ namespace SerialPort
             // 
             // CbSCIComNum
             // 
-            this.CbSCIComNum.Font = new System.Drawing.Font("SimHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CbSCIComNum.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CbSCIComNum.FormattingEnabled = true;
             this.CbSCIComNum.Location = new System.Drawing.Point(297, 36);
             this.CbSCIComNum.Margin = new System.Windows.Forms.Padding(4);
@@ -124,9 +127,9 @@ namespace SerialPort
             this.SetSerialPort.Controls.Add(this.Baud);
             this.SetSerialPort.Controls.Add(this.LbPortName);
             this.SetSerialPort.Controls.Add(this.CbSCIComNum);
-            this.SetSerialPort.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SetSerialPort.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SetSerialPort.ForeColor = System.Drawing.Color.Red;
-            this.SetSerialPort.Location = new System.Drawing.Point(763, 66);
+            this.SetSerialPort.Location = new System.Drawing.Point(763, 72);
             this.SetSerialPort.Margin = new System.Windows.Forms.Padding(4);
             this.SetSerialPort.Name = "SetSerialPort";
             this.SetSerialPort.Padding = new System.Windows.Forms.Padding(4);
@@ -139,7 +142,7 @@ namespace SerialPort
             // LblSCI
             // 
             this.LblSCI.AutoSize = true;
-            this.LblSCI.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LblSCI.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LblSCI.ForeColor = System.Drawing.Color.Black;
             this.LblSCI.Location = new System.Drawing.Point(24, 94);
             this.LblSCI.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -149,7 +152,7 @@ namespace SerialPort
             // 
             // CbSCIBaud
             // 
-            this.CbSCIBaud.Font = new System.Drawing.Font("SimHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CbSCIBaud.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CbSCIBaud.FormattingEnabled = true;
             this.CbSCIBaud.Items.AddRange(new object[] {
             "9600",
@@ -166,7 +169,7 @@ namespace SerialPort
             // Baud
             // 
             this.Baud.AutoSize = true;
-            this.Baud.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Baud.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Baud.ForeColor = System.Drawing.Color.Black;
             this.Baud.Location = new System.Drawing.Point(24, 72);
             this.Baud.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -177,9 +180,9 @@ namespace SerialPort
             // 
             // BtnSCISwitch
             // 
-            this.BtnSCISwitch.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnSCISwitch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnSCISwitch.ForeColor = System.Drawing.Color.Black;
-            this.BtnSCISwitch.Location = new System.Drawing.Point(40, 29);
+            this.BtnSCISwitch.Location = new System.Drawing.Point(40, 35);
             this.BtnSCISwitch.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSCISwitch.Name = "BtnSCISwitch";
             this.BtnSCISwitch.Size = new System.Drawing.Size(211, 40);
@@ -196,9 +199,9 @@ namespace SerialPort
             this.SerialPortSend.Controls.Add(this.BtnSCIClearSend);
             this.SerialPortSend.Controls.Add(this.TbSCISend);
             this.SerialPortSend.Controls.Add(this.lbType);
-            this.SerialPortSend.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SerialPortSend.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SerialPortSend.ForeColor = System.Drawing.Color.Red;
-            this.SerialPortSend.Location = new System.Drawing.Point(763, 202);
+            this.SerialPortSend.Location = new System.Drawing.Point(763, 208);
             this.SerialPortSend.Margin = new System.Windows.Forms.Padding(4);
             this.SerialPortSend.Name = "SerialPortSend";
             this.SerialPortSend.Padding = new System.Windows.Forms.Padding(4);
@@ -211,7 +214,7 @@ namespace SerialPort
             // LabNote
             // 
             this.LabNote.AutoSize = true;
-            this.LabNote.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LabNote.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LabNote.ForeColor = System.Drawing.Color.Black;
             this.LabNote.Location = new System.Drawing.Point(496, 28);
             this.LabNote.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -221,7 +224,7 @@ namespace SerialPort
             // 
             // BtnSCISend
             // 
-            this.BtnSCISend.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnSCISend.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnSCISend.ForeColor = System.Drawing.Color.Black;
             this.BtnSCISend.Location = new System.Drawing.Point(18, 77);
             this.BtnSCISend.Margin = new System.Windows.Forms.Padding(4);
@@ -234,7 +237,7 @@ namespace SerialPort
             // 
             // CbSCISendType
             // 
-            this.CbSCISendType.Font = new System.Drawing.Font("SimHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CbSCISendType.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CbSCISendType.FormattingEnabled = true;
             this.CbSCISendType.Items.AddRange(new object[] {
             "字符串方式(String)",
@@ -249,7 +252,7 @@ namespace SerialPort
             // 
             // BtnSCIClearSend
             // 
-            this.BtnSCIClearSend.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnSCIClearSend.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnSCIClearSend.ForeColor = System.Drawing.Color.Black;
             this.BtnSCIClearSend.Location = new System.Drawing.Point(18, 114);
             this.BtnSCIClearSend.Margin = new System.Windows.Forms.Padding(4);
@@ -262,7 +265,7 @@ namespace SerialPort
             // 
             // TbSCISend
             // 
-            this.TbSCISend.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TbSCISend.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.TbSCISend.Location = new System.Drawing.Point(243, 77);
             this.TbSCISend.Margin = new System.Windows.Forms.Padding(4);
             this.TbSCISend.Multiline = true;
@@ -274,7 +277,7 @@ namespace SerialPort
             // lbType
             // 
             this.lbType.AutoSize = true;
-            this.lbType.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbType.ForeColor = System.Drawing.Color.Black;
             this.lbType.Location = new System.Drawing.Point(15, 47);
             this.lbType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -290,7 +293,7 @@ namespace SerialPort
             this.SerialPortReceive.Controls.Add(this.TbShowHex);
             this.SerialPortReceive.Controls.Add(this.lbDec);
             this.SerialPortReceive.Controls.Add(this.BtnSCIClearRec);
-            this.SerialPortReceive.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SerialPortReceive.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SerialPortReceive.ForeColor = System.Drawing.Color.Red;
             this.SerialPortReceive.Location = new System.Drawing.Point(31, 602);
             this.SerialPortReceive.Margin = new System.Windows.Forms.Padding(4);
@@ -303,7 +306,7 @@ namespace SerialPort
             // 
             // TbShowString
             // 
-            this.TbShowString.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TbShowString.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.TbShowString.Location = new System.Drawing.Point(488, 104);
             this.TbShowString.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowString.Multiline = true;
@@ -315,7 +318,7 @@ namespace SerialPort
             // 
             // BtnState
             // 
-            this.BtnState.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnState.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnState.ForeColor = System.Drawing.Color.Black;
             this.BtnState.Location = new System.Drawing.Point(307, 141);
             this.BtnState.Margin = new System.Windows.Forms.Padding(4);
@@ -328,7 +331,7 @@ namespace SerialPort
             // 
             // TbShowHex
             // 
-            this.TbShowHex.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TbShowHex.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.TbShowHex.Location = new System.Drawing.Point(9, 99);
             this.TbShowHex.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowHex.Multiline = true;
@@ -341,7 +344,7 @@ namespace SerialPort
             // lbDec
             // 
             this.lbDec.AutoSize = true;
-            this.lbDec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbDec.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbDec.ForeColor = System.Drawing.Color.Black;
             this.lbDec.Location = new System.Drawing.Point(15, 56);
             this.lbDec.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -352,7 +355,7 @@ namespace SerialPort
             // 
             // BtnSCIClearRec
             // 
-            this.BtnSCIClearRec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnSCIClearRec.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnSCIClearRec.ForeColor = System.Drawing.Color.Black;
             this.BtnSCIClearRec.Location = new System.Drawing.Point(307, 65);
             this.BtnSCIClearRec.Margin = new System.Windows.Forms.Padding(4);
@@ -365,8 +368,8 @@ namespace SerialPort
             // 
             // TbShowDec
             // 
-            this.TbShowDec.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TbShowDec.Location = new System.Drawing.Point(31, 418);
+            this.TbShowDec.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TbShowDec.Location = new System.Drawing.Point(31, 424);
             this.TbShowDec.Margin = new System.Windows.Forms.Padding(4);
             this.TbShowDec.Multiline = true;
             this.TbShowDec.Name = "TbShowDec";
@@ -377,7 +380,7 @@ namespace SerialPort
             // 
             // TSSLState
             // 
-            this.TSSLState.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TSSLState.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.TSSLState.Name = "TSSLState";
             this.TSSLState.Size = new System.Drawing.Size(89, 18);
             this.TSSLState.Text = "没有操作!";
@@ -412,9 +415,9 @@ namespace SerialPort
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.pictureBox3);
             this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.groupBox1.Location = new System.Drawing.Point(528, 29);
+            this.groupBox1.Location = new System.Drawing.Point(528, 35);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(441, 670);
             this.groupBox1.TabIndex = 9;
@@ -487,6 +490,7 @@ namespace SerialPort
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox2.Location = new System.Drawing.Point(300, 155);
@@ -498,10 +502,42 @@ namespace SerialPort
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             this.pictureBox2.DoubleClick += new System.EventHandler(this.pictureBox2_DoubleClick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.发送文件ToolStripMenuItem,
+            this.查看图片ToolStripMenuItem,
+            this.控制小灯ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(145, 82);
+            // 
+            // 发送文件ToolStripMenuItem
+            // 
+            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
+            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.发送文件ToolStripMenuItem.Text = "发送文件";
+            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
+            // 
+            // 查看图片ToolStripMenuItem
+            // 
+            this.查看图片ToolStripMenuItem.Name = "查看图片ToolStripMenuItem";
+            this.查看图片ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.查看图片ToolStripMenuItem.Text = "查看图片";
+            this.查看图片ToolStripMenuItem.Click += new System.EventHandler(this.查看图片ToolStripMenuItem_Click);
+            // 
+            // 控制小灯ToolStripMenuItem
+            // 
+            this.控制小灯ToolStripMenuItem.Name = "控制小灯ToolStripMenuItem";
+            this.控制小灯ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.控制小灯ToolStripMenuItem.Text = "控制小灯";
+            this.控制小灯ToolStripMenuItem.Click += new System.EventHandler(this.控制小灯ToolStripMenuItem_Click);
+            // 
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox6.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox6.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox6.Location = new System.Drawing.Point(300, 573);
@@ -517,6 +553,7 @@ namespace SerialPort
             // 
             this.pictureBox5.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox5.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox5.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox5.Location = new System.Drawing.Point(300, 472);
@@ -532,6 +569,7 @@ namespace SerialPort
             // 
             this.pictureBox4.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox4.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox4.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox4.Location = new System.Drawing.Point(300, 363);
@@ -547,6 +585,7 @@ namespace SerialPort
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox3.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::SerialPort.Properties.Resources.Double_Cutted_Circle_300px;
             this.pictureBox3.Location = new System.Drawing.Point(300, 257);
@@ -574,36 +613,13 @@ namespace SerialPort
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.发送文件ToolStripMenuItem,
-            this.查看图片ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(139, 52);
-            // 
-            // 发送文件ToolStripMenuItem
-            // 
-            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
-            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
-            this.发送文件ToolStripMenuItem.Text = "发送文件";
-            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
-            // 
-            // 查看图片ToolStripMenuItem
-            // 
-            this.查看图片ToolStripMenuItem.Name = "查看图片ToolStripMenuItem";
-            this.查看图片ToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
-            this.查看图片ToolStripMenuItem.Text = "查看图片";
-            this.查看图片ToolStripMenuItem.Click += new System.EventHandler(this.查看图片ToolStripMenuItem_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.ForeColor = System.Drawing.Color.Red;
-            this.groupBox2.Location = new System.Drawing.Point(31, 106);
+            this.groupBox2.Location = new System.Drawing.Point(31, 112);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
@@ -614,7 +630,7 @@ namespace SerialPort
             // 
             // textBox3
             // 
-            this.textBox3.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox3.Location = new System.Drawing.Point(27, 31);
             this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Multiline = true;
@@ -626,7 +642,7 @@ namespace SerialPort
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button2.ForeColor = System.Drawing.Color.Black;
             this.button2.Location = new System.Drawing.Point(27, 248);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
@@ -640,9 +656,9 @@ namespace SerialPort
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(275, 29);
+            this.button1.Location = new System.Drawing.Point(275, 35);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(211, 40);
@@ -654,6 +670,11 @@ namespace SerialPort
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // helpProvider1
+            // 
+            this.helpProvider1.HelpNamespace = "C:\\Users\\49738\\Documents\\HomeWork\\MQX\\ex3\\mqx-experiment\\CSharp-PC-ex1\\Resources\\" +
+    "help.htm";
             // 
             // FrmSCI
             // 
@@ -669,10 +690,13 @@ namespace SerialPort
             this.Controls.Add(this.SerialPortReceive);
             this.Controls.Add(this.SerialPortSend);
             this.Controls.Add(this.SetSerialPort);
+            this.HelpButton = true;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmSCI";
+            this.helpProvider1.SetShowHelp(this, true);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ZigBee网络pc端程序";
+            this.Text = "1427407029 金高铭  1427407007 左辰豪  1427407028 张南华  黄佳泉";
             this.Load += new System.EventHandler(this.FrmSCI_Load);
             this.SetSerialPort.ResumeLayout(false);
             this.SetSerialPort.PerformLayout();
@@ -684,12 +708,12 @@ namespace SerialPort
             this.sSSerialPortInfo.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -732,6 +756,7 @@ namespace SerialPort
         
         private byte[] img_to_show;
         private byte[] recv_data_flag;
+        private int recv_count;
         private byte[] not_recv_datas;
         private byte big_data_source_addr;
         private List<byte> img_byte_list;
@@ -768,6 +793,9 @@ namespace SerialPort
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 发送文件ToolStripMenuItem;
         private ToolStripMenuItem 查看图片ToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ToolStripMenuItem 控制小灯ToolStripMenuItem;
+        private HelpProvider helpProvider1;
     }
 }
 

@@ -34,6 +34,7 @@ void task_main(uint32_t initial_data)
     net_status = UNREGISTERED;
     is_continous_monitoring = 0;
     Lage_Data_Flag = CAN_NOT_SEND;
+    light_control_value = 50;
     
 	//初始化消息队列
 	_lwmsgq_init((pointer)recv_queue,RECV_NUM_MESSAGES,RECV_MSG_SIZE);

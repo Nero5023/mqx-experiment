@@ -34,7 +34,7 @@ void task_uart0_re(uint32_t initial)
 
 		uint_8 len = g_uart_recvBuf[1];
 		memcpy(pc_com_msg, g_uart_recvBuf+2, len);
-		_lwmsgq_send((pointer)pccommand_queue,pc_com_msg,LWMSGQ_SEND_BLOCK_ON_FULL); //放入注册消息队列中
+		_lwmsgq_send((pointer)pccommand_queue,pc_com_msg,0); //放入注册消息队列中
 
 		ENABLE_INTERRUPTS;
 
