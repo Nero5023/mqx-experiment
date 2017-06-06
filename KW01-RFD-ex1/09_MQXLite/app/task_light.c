@@ -36,42 +36,42 @@ void task_light(uint_32 initial)
 	uint_8 modNum = 0;
 	while(TRUE) 
 	{
-//		uart_send1(UART_0,'a');
-		//以下加入用户程序--------------------------------------------------------
-//		//1）控制运行指示灯闪烁
-		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
-		//2）任务延时1秒
-		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
-		SendHeartBeart();
-		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+////		uart_send1(UART_0,'a');
+//		//以下加入用户程序--------------------------------------------------------
+////		//1）控制运行指示灯闪烁
+//		light_change(LIGHT_RUN_1);      //改变运行指示灯引脚电平状态(引脚：PTD7)
+//		//2）任务延时1秒
+//		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+//		SendHeartBeart();
+//		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
+//
+//		SendHeartBeart();
 
-		SendHeartBeart();
-
-//		i = light_control_value/25 + 1;
-//		if(i == 1)
-//			modNum = 8;
-//		if(i == 2)
-//			modNum = 4;
-//		if (i == 3)
-//			modNum = 2;
-//		if (i == 4)
-//			modNum = 1;
-//		if (light_control_value == 0)
-//			light_control(LIGHT_RUN_1, LIGHT_OFF);
-//		if (light_control_value == 100)
-//			light_control(LIGHT_RUN_1, LIGHT_ON);
-//		for (i = 0; i < 8; i++) {
-//			_time_delay_ticks(ONE_SECOND_DELAY/8);
-//			if (i == 0 || i == 3) {
-//				SendHeartBeart();
-//			}
-//			if (light_control_value == 0 || light_control_value == 100) {
-//				continue;
-//			}
-//			if (i%modNum == 0) {
-//				light_change(LIGHT_RUN_1);
-//			}
-//		}
+		i = light_control_value/25 + 1;
+		if(i == 1)
+			modNum = 8;
+		if(i == 2)
+			modNum = 4;
+		if (i == 3)
+			modNum = 2;
+		if (i == 4)
+			modNum = 1;
+		if (light_control_value == 0)
+			light_control(LIGHT_RUN_1, LIGHT_OFF);
+		if (light_control_value == 100)
+			light_control(LIGHT_RUN_1, LIGHT_ON);
+		for (i = 0; i < 8; i++) {
+			_time_delay_ticks(ONE_SECOND_DELAY/8);
+			if (i == 0 || i == 3) {
+				SendHeartBeart();
+			}
+			if (light_control_value == 0 || light_control_value == 100) {
+				continue;
+			}
+			if (i%modNum == 0) {
+				light_change(LIGHT_RUN_1);
+			}
+		}
 	}//任务循环体end_while
 }
 
