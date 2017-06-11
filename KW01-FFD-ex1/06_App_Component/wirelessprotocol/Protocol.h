@@ -3,7 +3,7 @@
 //  Protocol
 //
 //  Created by Nero Zuo on 17/3/29.
-//  Copyright 婕 2017楠烇拷Nero. All rights reserved.
+//  Copyright Nero. All rights reserved.
 //
 
 
@@ -20,7 +20,7 @@
 #ifndef Protocol_h
 #define Protocol_h
 
-#include "common.h"    //閸栧懎鎯堥崗顒鍙＄憰浣虹婢跺瓨鏋冩禒锟
+#include "common.h"    
 #include <stdio.h>
 #define NZP_HEADER_LENGTH 8
 
