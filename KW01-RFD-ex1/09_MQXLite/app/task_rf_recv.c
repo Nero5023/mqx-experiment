@@ -111,10 +111,11 @@ void task_rf_recv(uint32_t initial)
 							not_received_data[not_received_count] = i;
 						}
 					}
-					uart_send_string(UART_0,"miss ");
-					uart_send1(UART_0, not_received_count +'0');
-					uart_send_string(UART_0," frames!\r\n");
+//					uart_send_string(UART_0,"miss ");
+//					uart_send1(UART_0, not_received_count +'0');
+//					uart_send_string(UART_0," frames!\r\n");
 					not_received_data[0] = not_received_count; // 第一位 没收到的帧数x，之后x个为没收到的帧
+					_time_delay_ticks(100);
 					WPSendData(not_received_data, not_received_count+1, NZP_ACK, PC_NODE_ADDR, 0);
 					not_received_count = 0;
 					data[0]='S';//写入结束
@@ -122,9 +123,9 @@ void task_rf_recv(uint32_t initial)
 					break;
 				case NZP_ACK:
 					//data: 'M'|missCount|missOrders...
-					uart_send_string(UART_0,"=========");
-					uart_sendN(UART_0,data[1]+2,data);
-					uart_send_string(UART_0,"=========");
+//					uart_send_string(UART_0,"=========");
+//					uart_sendN(UART_0,data[1]+2,data);
+//					uart_send_string(UART_0,"=========");
 					if(data[1]!=0){
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					}

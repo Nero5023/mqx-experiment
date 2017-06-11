@@ -11,6 +11,14 @@
 uint_8  bufRetErr[18]  = {'M',0x15,'F','l','a','s','h','-','x','x','x','x','x','-','E','r','r'};
 
 
+//===========================================================================
+//任务名称：getCurrentSectorAndOffset
+//功能概要：任务内部函数，用于根据frameOrder获取对应的扇区号和偏移量
+//参数说明：
+//		frameOrder：帧序列号，
+//		sector：用于返回扇区号
+//      offset：用于返回偏移量
+//===========================================================================
 void getCurrentSectorAndOffset(uint_8 frameOrder,uint_8* sector, uint_8* offset){
 	uint_8 cycle = 1024/MaxFrameLength;
 	uint_8 iterCount = frameOrder/cycle;
@@ -50,11 +58,10 @@ void task_flash(uint32_t initial)
 		//以下加入用户程序--------------------------------------------------------
 		int i;
 //		uart_send_string(UART_0,"FlashTB");
-		//1）无限等待RF接收消息
+		//1）无限等待flash操作消息到来
 		_lwmsgq_receive((pointer)flash_write_queue,flash_write_temp,LWMSGQ_RECEIVE_BLOCK_ON_EMPTY,0,0);
 //		uart_send_string(UART_0,"FlashTA");
-		//2）调用接收函数
-		//读取flash指定扇区操作
+		//2）根据接收到的flash消息的第一个直接判断读取执行什么操作
 		switch(flash_write_temp[0]){
 
 		case 'B':
@@ -69,48 +76,41 @@ void task_flash(uint32_t initial)
 			break;
 
 		case 'R':
+			//读取操作
 //			uart_send_string(UART_0,"read begin\n");
 			flash_read(FILE_INFO_SECTOR,0,1,&total_len); //从flash读出文件长度
 			i=0;
 //			WPSendData(&total_len, 1, NZP_RTS, PC_NODE_ADDR, 0);
 			frameOrder = 0;
 			while(i<total_len){
-				getCurrentSectorAndOffset(i,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
+				 //根据frameOrder计算对应的扇区号和偏移量
+				getCurrentSectorAndOffset(i,&sector,&offset);
+				 //读出一个frame
 				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
-//				uart_sendN(UART_0,3,flash_read_temp);
+				//发送一个frame
 				WPSENDLargeData(flash_read_temp,MaxFrameLength,total_len,PC_NODE_ADDR,0);
-//				flash_read_temp[0]=i;
-//				WPSendData(flash_read_temp,MaxFrameLength,NZP_TS_DATA,PC_NODE_ADDR,0);
-//				WPSENDLargeDataWithFrame(flash_read_temp, MaxFrameLength, PC_NODE_ADDR, i);
-				//WPSendData('1',1, NZP_DATA, PC_NODE_ADDR, 0);
-//				uart_send_string(UART_0,"read after data");
-//				uart_sendN(UART_0, MaxFrameLength, flash_read_temp);
+
 				i++;
-//				_time_delay_ticks(100);
+
 			}
-//			WPSendData("a",1,NZP_TS_END,PC_NODE_ADDR,0);
-			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1); // 发送结束帧
-//			uart_send_string(UART_0,"read end 0\n");
+			 // 发送结束帧
+			WPSENDLargeData(" ",MaxFrameLength,total_len,PC_NODE_ADDR,1);
 			break;
 		case 'W':
+			//写入操作
 			DISABLE_INTERRUPTS;//关中断
-
+			//帧序列号
 			frameOrder = flash_write_temp[1];
+			//写入长度
 			write_len = flash_write_temp[2];
-//			uart_send_string(UART_0,"Data to write:");
-			//uart_sendN(UART_0,write_len,flash_write_temp+3);
-			getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
-//			uart_send_string(UART_0,"Sector:");
-//			uart_send1(UART_0,sector+'0');
-//			uart_send_string(UART_0,"Offset:");
-//			uart_send1(UART_0,offset+'0');
+			//根据frameOrder计算对应的扇区号和偏移量
+			getCurrentSectorAndOffset(frameOrder,&sector,&offset);
+			//写入一个frame
 			flash_write(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_write_temp+3);
-//			flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
-//			uart_sendN(UART_0,write_len,flash_write_temp+3);
-//			write_len = sprintf(flash_read_temp, "Write %d frame\n",frameOrder);
-			uart_send1(UART_0, frameOrder/10+'0');
-			uart_send1(UART_0, frameOrder%10+'0');
-			uart_send_string(UART_0,"frame\r\n");
+			//打印调试信息
+//			uart_send1(UART_0, frameOrder/10+'0');
+//			uart_send1(UART_0, frameOrder%10+'0');
+//			uart_send_string(UART_0,"frame\r\n");
 			ENABLE_INTERRUPTS;//开中断
 			break;
 		case 'S':
@@ -119,24 +119,25 @@ void task_flash(uint32_t initial)
 			offset = 0;
 			break;
 		case 'M':
+			//重新读取丢失的frame
 			DISABLE_INTERRUPTS;//关中断
+			//打印调试信息
+//			uart_send1(UART_0, flash_write_temp[1]/10+'0');
+//			uart_send1(UART_0, flash_write_temp[1]%10+'0');
+//			uart_send_string(UART_0," frames pc feel miss \r\n");
 
-
-			uart_send1(UART_0, flash_write_temp[1]/10+'0');
-			uart_send1(UART_0, flash_write_temp[1]%10+'0');
-			uart_send_string(UART_0," frames pc feel miss \r\n");
-
-
+			//flash_write_temp[0]:'M'
+			//flash_write_temp[1]:丢失的个数
+			//flash_write_temp[2~2+丢失的个数]:丢失的frameOrder
+			//将每个丢失的frame重新发送
 			for(i=0;i<flash_write_temp[1];i++){
 				frameOrder = flash_write_temp[2+i];
 				getCurrentSectorAndOffset(frameOrder,&sector,&offset); //根据frameOrder计算对应的扇区号和偏移量
 				flash_read(FLASH_START_SECTOR+sector,offset*MaxFrameLength,MaxFrameLength,flash_read_temp);
-//				uart_sendN(UART_0,3,flash_read_temp);
-
 				WPSENDLargeDataWithFrame(flash_read_temp,MaxFrameLength,PC_NODE_ADDR,frameOrder);
 			}
+			//发送结束信息
 			WPSendData("a", 1, NZP_TS_END, PC_NODE_ADDR, 0);
-
 			ENABLE_INTERRUPTS;//开中断
 			break;
 

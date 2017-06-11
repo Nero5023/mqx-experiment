@@ -703,7 +703,7 @@ namespace SerialPort
             BtnSCIClearSend_Click(sender, e);
             this.TbSCISend.Text = data;
             BtnSCISend_Click(sender, e);
-            Delay(200);
+            Delay(100);
         }
         
         // 发送请求节点信息数据 uart
@@ -735,6 +735,7 @@ namespace SerialPort
 
         private void sendPCMissFrames(byte nodeaddr, byte[] missDatas, object sender, EventArgs e)
         {
+            Delay(500);
             byte[] dataToSend = new byte[missDatas[0] + 3];
             dataToSend[0] = (byte)'M';
             dataToSend[1] = nodeaddr;

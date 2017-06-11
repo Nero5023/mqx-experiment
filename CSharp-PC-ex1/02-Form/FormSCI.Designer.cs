@@ -303,6 +303,7 @@ namespace SerialPort
             this.SerialPortReceive.TabIndex = 7;
             this.SerialPortReceive.TabStop = false;
             this.SerialPortReceive.Text = "接收数据设置(Setting Receiving Data)";
+            this.SerialPortReceive.Visible = false;
             // 
             // TbShowString
             // 
@@ -377,6 +378,7 @@ namespace SerialPort
             this.TbShowDec.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TbShowDec.Size = new System.Drawing.Size(481, 173);
             this.TbShowDec.TabIndex = 9;
+            this.TbShowDec.Visible = false;
             // 
             // TSSLState
             // 
@@ -393,7 +395,7 @@ namespace SerialPort
             this.sSSerialPortInfo.Location = new System.Drawing.Point(0, 804);
             this.sSSerialPortInfo.Name = "sSSerialPortInfo";
             this.sSSerialPortInfo.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sSSerialPortInfo.Size = new System.Drawing.Size(1137, 23);
+            this.sSSerialPortInfo.Size = new System.Drawing.Size(995, 23);
             this.sSSerialPortInfo.TabIndex = 8;
             this.sSSerialPortInfo.Text = "statusStrip1";
             // 
@@ -419,7 +421,7 @@ namespace SerialPort
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(528, 35);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(441, 670);
+            this.groupBox1.Size = new System.Drawing.Size(299, 670);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "节点状态";
@@ -680,7 +682,7 @@ namespace SerialPort
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1137, 827);
+            this.ClientSize = new System.Drawing.Size(995, 827);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
