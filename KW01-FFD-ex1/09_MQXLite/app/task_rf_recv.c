@@ -57,40 +57,23 @@ void task_rf_recv(uint32_t initial)
 					sendNodeReisterSuccessInfo(addr);
 					receive_heartbeat_from(addr);
 					break;
-				case NZP_HEARTBEAT:
+				case NZP_HEARTBEAT:   // 收到心跳包
 					receive_heartbeat_from(addr);
 					break;
-				case NZP_RTS:
-					// CAN_NOT_SEND mean there is no other things
-					// if Lage_Data_Flag == CAN_NOT_SEND: {
-					// 	Lage_Data_Flag = IS_SENDING;
-					// 	WPSendData("1", 1, NZP_CTS, addr, 0);
-					// }else {
-					// 	WPSendData("0", 1, NZP_CTS, addr, 0);
-					// }
-					// Lage_Data_Flag = IS_SENDING;
+				case NZP_RTS:         // 收到 RTS 信包
 					sendBigDataStart(addr, data[0]);
 					break;
-				case NZP_CTS:
-					// if (data[0] == "1") {
-					// 	Lage_Data_Flag = CAN_SEND;
-					// } else {
-					// 	Lage_Data_Flag = CAN_NOT_SEND;
-					// }
+				case NZP_CTS:        // 收到 CTS 信包
 					break;
-				case NZP_TS_DATA:
-					// uint_8 frameOrder = data[0];
-					// data += 1;
+				case NZP_TS_DATA:    // 收到大数据包
 					sendBigData(data, data_length);
 					break;
-				case NZP_TS_END:
+				case NZP_TS_END:    // 收到大数据尾帧
 					// Lage_Data_Flag = CAN_NOT_SEND;
 					uart_send_string(UART_0,"Send ACK");
 					sendBigDataEnd();//uart send to pc
-					//WPSendData("a", 1, NZP_ACK, addr, 0);
 					break;
-				case NZP_ACK:
-					//data[0]: the number of missed frame
+				case NZP_ACK:  // 收到 ack, 查看是否有漏针
 					if(data[0]==0){
 						break;
 					}

@@ -58,7 +58,6 @@ void task_rf_recv(uint32_t initial)
 			switch (type) {
 				case NZP_REGISTER_Success:       // 接收到注册回复信息
 					// 解密数据
-
 					decode(data, clearText, 2, ENCRYPT_KEY);
 					if (clearText[0] == ENCRYPT_KEY && net_status == REGISTERING) { // 解密信息中的密钥与自己密钥相同时，即为发送给自己的
 						SELF_ADDR = clearText[1];  // 设置自己的地址
@@ -69,74 +68,71 @@ void task_rf_recv(uint32_t initial)
 					// 发送对应的全局变量
 					WPSendData(&g_temperature,4,NZP_TEMPERATURE,PC_NODE_ADDR,0);
 					break;
-				case NZP_CONTIONUOUS_MONITOR:
+				case NZP_CONTIONUOUS_MONITOR: // 收到持续监测指令
 					if(is_continous_monitoring==0){
 						is_continous_monitoring=1;
 					}else{
 						is_continous_monitoring=0;
 					}
 					break;
-				case NZP_RTS:
+				case NZP_RTS:  // 收到 RTS 信包
 					uart_send_string(UART_0,"write begin\r\n");
-					total_len =  data[0];
+					// 数据长度
+					total_len =  data[0];  
 					data[0]='B'; //begin of flash write
 					data[1]=total_len;
 					for (i = 0; i < total_len; i++) {
 						received_data[i] = 0;
 					}
 					not_received_count = 0;
+					// 通知 task_flash 
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
-				case NZP_CTS:
+				case NZP_CTS: // 收到 CTS 信包
 					//not use
 					break;
-				case NZP_TS_DATA:
-//					uart_send_string(UART_0,"write data");
-//					uart_sendN(UART_0,4,data);
+				case NZP_TS_DATA: // 收到大数据帧
 					frameOrder = data[0];
 					flash_send_temp[0]='W';
-					flash_send_temp[1]=frameOrder; //存入序号,根据序号直接存入对应位置
+					//存入序号,根据序号直接存入对应位置
+					flash_send_temp[1]=frameOrder; 
 					flash_send_temp[2]=data_length-1;
 					received_data[frameOrder] = 1;
 					memcpy(flash_send_temp+3,data+1,data_length-1); //最后一帧可能拷贝无用数据
+					// 通知 task_flash 
 					_lwmsgq_send((pointer)flash_write_queue,flash_send_temp,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
-				case NZP_TS_END:
+				case NZP_TS_END:  // 数据结尾
 					uart_send_string(UART_0,"write end\r\n");
 					Lage_Data_Flag = CAN_NOT_SEND;
-
+					// 查看有哪些没收到
 					for (i = 0; i < total_len;i++) {
 						if (received_data[i] == 0) {
 							not_received_count+=1;
 							not_received_data[not_received_count] = i;
 						}
 					}
-//					uart_send_string(UART_0,"miss ");
-//					uart_send1(UART_0, not_received_count +'0');
-//					uart_send_string(UART_0," frames!\r\n");
 					not_received_data[0] = not_received_count; // 第一位 没收到的帧数x，之后x个为没收到的帧
 					_time_delay_ticks(100);
+					// 发送 ack 数据包，将没有收到的帧发给源节点
 					WPSendData(not_received_data, not_received_count+1, NZP_ACK, PC_NODE_ADDR, 0);
 					not_received_count = 0;
 					data[0]='S';//写入结束
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
-				case NZP_ACK:
-					//data: 'M'|missCount|missOrders...
-//					uart_send_string(UART_0,"=========");
-//					uart_sendN(UART_0,data[1]+2,data);
-//					uart_send_string(UART_0,"=========");
+				case NZP_ACK: // 收到 ACK 信包
+					// 收到完整数据
 					if(data[1]!=0){
-					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
+						_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					}
-
 					uart_send_string(UART_0,"Recv ACK\r\n");
 					break;
-				case NZP_DATA_READ:
+				case NZP_DATA_READ: // 读数据指令
 					data[0]='R';
 					_lwmsgq_send((pointer)flash_write_queue,data,LWMSGQ_SEND_BLOCK_ON_FULL);
 					break;
-				case NZP_LIGHT_CONTROL:
+				case NZP_LIGHT_CONTROL:  // 控制小灯指令
+					// 置全局变量
 					light_control_value = data[0];
 					break;
 				default:

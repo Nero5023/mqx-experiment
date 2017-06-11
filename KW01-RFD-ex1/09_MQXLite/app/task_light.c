@@ -29,9 +29,7 @@ void SendHeartBeart(){
 
 void task_light(uint_32 initial)
 {	
-	//const uint32_t X1=0x01020304;
-	//const uint32_t X1=0x01020304 @0x30004000;
-	// 进入任务循环体
+	// 初始化变量
 	uint_8 i = 0;
 	uint_8 modNum = 0;
 	while(TRUE) 
@@ -46,7 +44,7 @@ void task_light(uint_32 initial)
 //		_time_delay_ticks(0.5*ONE_SECOND_DELAY); //每个tick对应5ms，延时200*5ms=1s
 //
 //		SendHeartBeart();
-
+		// 通过 light_control_value 获取分组值
 		i = light_control_value/25 + 1;
 		if(i == 1)
 			modNum = 8;
@@ -56,18 +54,25 @@ void task_light(uint_32 initial)
 			modNum = 2;
 		if (i == 4)
 			modNum = 1;
+		// 当 light_control_value 为 0 是，灯为暗
 		if (light_control_value == 0)
 			light_control(LIGHT_RUN_1, LIGHT_OFF);
+		// 当 light_control_value 为 100 是，灯为亮
 		if (light_control_value == 100)
 			light_control(LIGHT_RUN_1, LIGHT_ON);
+		// 整个循环 delay 1秒
 		for (i = 0; i < 8; i++) {
+			// delay 1/8s
 			_time_delay_ticks(ONE_SECOND_DELAY/8);
+			// 每半秒发一个心跳包
 			if (i == 0 || i == 3) {
 				SendHeartBeart();
 			}
+			// 若 light_control_value 为0或100时跳过
 			if (light_control_value == 0 || light_control_value == 100) {
 				continue;
 			}
+			// 控制小灯闪烁
 			if (i%modNum == 0) {
 				light_change(LIGHT_RUN_1);
 			}
