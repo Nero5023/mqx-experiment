@@ -119,7 +119,8 @@ namespace SerialPort
                 PublicVar.g_SCIBaudRate = int.Parse(this.CbSCIBaud.Text);
                 //显示当前串口信与状态信息
                 this.LblSCI.Text = str + PublicVar.g_SCIComNum + "、" +
-                                   PublicVar.g_SCIBaudRate + "\n" + msg;
+
+                PublicVar.g_SCIBaudRate + "\n" + msg;
                 this.TSSLState.Text = "无操作,请先选择波特率与串口号,打开串口," +
                                  "然后发送数据";
             }
@@ -857,7 +858,7 @@ namespace SerialPort
 
         }
 
-
+        // node 离开消息
         private void nodeHaveLeft(byte nodeAddr)
         {
             nodeAddr = (byte)((int)nodeAddr - 1);
@@ -944,6 +945,7 @@ namespace SerialPort
             
         }
 
+        //pc与pc_node 通信协议标志
         enum FFDDataType
         {
             RegisterSuccess = 's',  // s|node address
@@ -967,11 +969,13 @@ namespace SerialPort
             }
             switch (receiveData[0])
             {
+                //注册成功消息
                 case (byte)FFDDataType.RegisterSuccess:
                     nodeHaveRegistered(receiveData[1]);
                     String info = String.Format("\n新节点在网络注册,地址:  {0:G}\r\n", receiveData[1]);
                     this.textBox3.Text = info + this.textBox3.Text;
                     break;
+                //节点状态消息
                 case (byte)FFDDataType.NodeStatus:
                     byte nodesNum = receiveData[1];
                     byte[] nodesAddrs = new byte[nodesNum];
@@ -985,27 +989,29 @@ namespace SerialPort
                     }
                     nodesHaveChanged(nodesNum, nodesAddrs,true);
                     break;
+                //节点离开信息
                 case (byte)FFDDataType.NodeDeathInfo:
                     byte[] addr = new byte[1];
                     addr[0] = receiveData[1];
                     nodesHaveChanged(1, addr,false);
                     break;
+                //收到节点物理测量消息
                 case (byte)FFDDataType.TempInfo:
                     float temp = System.BitConverter.ToSingle(receiveData,2);
                     nodeHaveGottenTemp(receiveData[1], temp);
                     break;
-
+                //节点传输开始消息
                 case (byte)FFDDataType.BigDataStart:
                     backgroundWorker1.RunWorkerAsync();
                     recv_count = 0;
                     pgb = new _02_Form.ProcessBarForm();
                     //pgb_.Show();
-                    
-                    //pgb.Show();
+                    //保证线程安全
                     if (InvokeRequired)
                     {
-                        this.Invoke(new Action(() => pgb.Show()));
+                        this.Invoke(new Action(() => pgb.Show())); //显示一个进度条
                     }
+                    //根据发送进度更新进度条
                     pgb.updateValue(0);
                     img_byte_list = new List<byte>();
                     img_to_show = new byte[MaxFrameLength * receiveData[2]];
@@ -1014,19 +1020,21 @@ namespace SerialPort
                     not_recv_datas = new byte[receiveData[2]];
                     big_data_source_addr = receiveData[1];
                     break;
+                //收到节点的某一帧
                 case (byte)FFDDataType.BigData:
 
                     int frameOrder = receiveData[1];
                     recv_count++;
                     string t = string.Format("{0}/{1}", recv_count, totalLength);
-                    
 
+                    //保证线程安全
                     if (InvokeRequired)
                     {
+                        //根据接收进度更新进度条
                         this.Invoke(new Action(() => pgb.updateValue((recv_count)*100/totalLength)));
                         this.Invoke(new Action(() => pgb.updateText(t)));
                     }
-
+                    //更新log消息
                     textBox3.Text = string.Format("正在接收第{0}帧...\r\n", frameOrder)+ textBox3.Text;
                     Console.Write("rcev  data frame:");
                     Console.Write(frameOrder.ToString()+"/");
@@ -1034,6 +1042,7 @@ namespace SerialPort
                     recv_data_flag[frameOrder] = 1;
                     Array.Copy(receiveData, 2, img_to_show, frameOrder * MaxFrameLength, receiveData.Length - 2);
                     break;
+                //节点传输数据结束
                 case (byte)FFDDataType.BigDataEnd:
                     int not_recv_count = 0;
                     for (int i = 0; i < recv_data_flag.Length; i++)
@@ -1048,6 +1057,7 @@ namespace SerialPort
                     Console.Write("pc read: miss ");
                     Console.Write(not_recv_count.ToString());
                     Console.WriteLine(" frames");
+                    //发送丢失的帧
                     sendPCMissFrames(big_data_source_addr, not_recv_datas, null, null);
                     if (not_recv_count == 0)
                     {
@@ -1060,6 +1070,7 @@ namespace SerialPort
                     }
                
                     break;
+                //来自节点的丢失帧信息
                 case (byte)FFDDataType.BigDataMiss:
                     int missNumber = receiveData[1];
                     textBox3.Text = string.Format("共缺少{0}帧,正在重传...\r\n", missNumber) + textBox3.Text;
@@ -1067,6 +1078,7 @@ namespace SerialPort
                     Console.WriteLine(missNumber.ToString());
                     byte[] missOrder = new byte[missNumber];
                     SubArray(receiveData, 2, missNumber).CopyTo(missOrder,0);
+                    //重传每个丢失帧
                     foreach(byte order in missOrder)
                     {
 
