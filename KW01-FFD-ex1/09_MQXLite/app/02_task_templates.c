@@ -23,7 +23,6 @@ const TASK_TEMPLATE_STRUCT MQX_template_list[] =
 	{TASK_UART0_RE,  task_uart0_re,  TASK_UART0_RECV_STACK_SIZE, 8,     "task_uart0_Re",  0},
 	{TASK_RF_RECV,   task_rf_recv,   TASK_RF_RECV_STACK_SIZE,    8,     "task_rf_recv",   0},
 	{TASK_RF_SEND,   task_rf_send,   TASK_RF_SEND_STACK_SIZE,    8,     "task_rf_send",   0},
-	{TASK_FLASH,     task_flash,     TASK_FLASH_STACK_SIZE,      8,     "task_flash",     0},
 	{TASK_REGISTER_PROCESS, task_register_process, TASK_REGISTER_PROCESS_STACK_SIZE, 9 , "task_register_process", 0},
 	{TASK_PC_COMMAND, task_pc_command, TASK_PC_COMMAND_STACK_SIZE,8,    "task_pc_command",   0},
 	{0}

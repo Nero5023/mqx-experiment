@@ -58,7 +58,6 @@ void task_main(uint32_t initial_data)
     _task_create_at(0, TASK_RF_RECV, 0, task_rf_recv_stack,    TASK_RF_RECV_STACK_SIZE);
     _task_create_at(0, TASK_UART0_RE,0, task_uart0_Recv_stack, TASK_UART0_RECV_STACK_SIZE);
     _task_create_at(0, TASK_RF_SEND, 0, task_rf_send_stack,    TASK_RF_SEND_STACK_SIZE);
-    _task_create_at(0, TASK_FLASH,   0, task_flash_stack,       TASK_FLASH_STACK_SIZE);
     _task_create_at(0, TASK_REGISTER_PROCESS,0,task_register_process_stack, TASK_REGISTER_PROCESS_STACK_SIZE);
     _task_create_at(0, TASK_PC_COMMAND,0,task_pc_command_stack, TASK_PC_COMMAND_STACK_SIZE);
 

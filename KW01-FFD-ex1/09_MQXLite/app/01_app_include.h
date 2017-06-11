@@ -75,7 +75,6 @@ LWEVENT_STRUCT  lwevent_group;
 #define  EVENT_RF_RECV        ((1uL)<<(1))   //RF接收事件位
 #define  EVENT_RF_SEND        ((1uL)<<(2))   //RF发送事件位
 #define  EVENT_UART0_RE       ((1uL)<<(4))   //串口0接收完整数据帧事件位
-#define  EVENT_FLASH          ((1uL)<<(5))   //Flash操作事件位
 #define  EVENT_RECEIVE_CTS    ((1uL)<<(6))   //收到 CTS 报文
 
 //---------------------------------------------------------------------------
@@ -95,7 +94,6 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_RF_SEND       4
 #define TASK_UART          5
 #define TASK_UART0_RE      8
-#define TASK_FLASH	       9
 #define TASK_REGISTER_PROCESS 10
 #define TASK_PC_COMMAND    11
 
@@ -105,7 +103,6 @@ LWEVENT_STRUCT  lwevent_group;
 #define TASK_RF_RECV_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_UART0_RECV_STACK_SIZE (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_RF_SEND_STACK_SIZE    (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)
-#define TASK_FLASH_STACK_SIZE      (sizeof(TD_STRUCT) + 512 + PSP_STACK_ALIGNMENT + 1)///TODO:大小是否合适？
 #define TASK_REGISTER_PROCESS_STACK_SIZE    (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
 #define TASK_PC_COMMAND_STACK_SIZE  (sizeof(TD_STRUCT) + 400 + PSP_STACK_ALIGNMENT + 1)
 
@@ -115,7 +112,6 @@ void task_light(uint32_t initial_data);
 void task_rf_recv(uint32_t initial_data);
 void task_uart0_re(uint32_t initial_data);
 void task_rf_send(uint32_t initial_data);
-void task_flash(uint32_t initial_data);
 void task_register_process(uint32_t initial_data);
 void task_pc_command(uint32_t initial_data);
 
@@ -125,7 +121,6 @@ uint_8 task_light_stack[TASK_LIGHT_STACK_SIZE];
 uint_8 task_rf_recv_stack[TASK_RF_RECV_STACK_SIZE];
 uint_8 task_rf_send_stack[TASK_RF_SEND_STACK_SIZE];
 uint_8 task_uart0_Recv_stack[TASK_UART0_RECV_STACK_SIZE];
-uint_8 task_flash_stack[TASK_FLASH_STACK_SIZE];
 uint_8 task_register_process_stack[TASK_REGISTER_PROCESS_STACK_SIZE];
 uint_8 task_pc_command_stack[TASK_PC_COMMAND_STACK_SIZE];
 
