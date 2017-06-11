@@ -131,18 +131,6 @@ namespace SerialPort
             }
         }
 
-        public void OnChanged(EventArgs e)
-        {
-            if (this.pgb == null)
-            {
-                pgb = new _02_Form.ProcessBarForm();
-            }
-            if (this.pgb.Visible == false)
-            {
-                this.pgb.Show();
-            }
-            this.Update();
-        }
 
         ///-----------------------------------------------------------------
         /// <summary>                                                       
@@ -719,20 +707,20 @@ namespace SerialPort
             sendUARTData(dataToSend, sender, e);
         }
 
-        //
+        //对某个节点发送持续监测信号
         private void sendContinusMinotor(string nodeStr, object sender, EventArgs e) 
         {
             string dataToSend = "c" + nodeStr;
             sendUARTData(dataToSend, sender, e);
         }
-
+        //对某个节点发送读取数据信号
         private void sendDataRead(byte nodeaddr, object sender, EventArgs e)
         {
             byte[] dataToSend = { (byte)'r',nodeaddr };
             string str = System.Text.Encoding.Default.GetString(dataToSend);
             sendUARTData(str, sender, e);
         }
-
+        //对某个节点发送丢失帧信息
         private void sendPCMissFrames(byte nodeaddr, byte[] missDatas, object sender, EventArgs e)
         {
             Delay(500);
@@ -791,16 +779,23 @@ namespace SerialPort
                 Array.Copy(data, index, result, 0, length);
             }
             catch
-            {
-
-            }
-            
+            { Console.WriteLine("Error the get sub array");      }
             return result;
         }
 
-        // 发送大数据
+
+        ///-----------------------------------------------------------------
+        /// <summary>                                                                                         
+        /// 功    能:向某个节点发送大数据                                                                   
+        /// </summary>                                                      
+        /// <param name="nodeAddr"></param>                                   
+        /// <param name="data"></param>    
+        ///  <param name="sender"></param>    
+        ///  <param name="e"></param>    
+        ///-----------------------------------------------------------------
         private void sendBigData(byte nodeAddr, byte[] data, object sender, EventArgs e) {
 
+            //计算发送次数
             int FrameLength = MaxFrameLength;
             int counts = data.Length / FrameLength;
             int lastFrameLength = data.Length % FrameLength;
@@ -808,12 +803,14 @@ namespace SerialPort
             if (lastFrameLength != 0) {
                 sendCount += 1;
             }
+            //开启进度条
             pgb = new _02_Form.ProcessBarForm();
             pgb.Show();
 
+            //发送开始传输消息
             sendBigDataStart(nodeAddr, (byte)sendCount, sender, e);
 
-           
+           //发送每一帧
             for (int i = 0; i < counts; i++) {
                 Console.Write("send frame :");
                 Console.WriteLine(i.ToString());
@@ -824,6 +821,7 @@ namespace SerialPort
                 pgb.updateText(t);
                 pgb.updateValue((i + 1) * 100 / sendCount);
             }
+            //发送最后一帧
             if (lastFrameLength != 0) {
                 byte[] toSend = SubArray(data, counts*FrameLength, lastFrameLength);
                 sendBigDataFrame((byte)(sendCount-1),toSend, sender, e);
@@ -834,6 +832,7 @@ namespace SerialPort
                 pgb.updateText(t);
                 pgb.updateValue(100);
             }
+            //发送结束信息
             sendBigDataEnd(sender, e);
             Console.Write("send end.");
             this.mTimeoutObject = new ManualResetEvent(true);
