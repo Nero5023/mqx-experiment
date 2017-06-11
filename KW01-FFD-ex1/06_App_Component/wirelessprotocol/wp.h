@@ -34,8 +34,6 @@ void generateRegisterData();
 void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, char needEncrypted);
 
 
-// 返回 0 表示发送失败
-// 返回 1 表示发送成功
 //=====================================================================
 //函数名称：WPSENDLargeData
 //函数返回：0 表示发送失败
@@ -49,5 +47,15 @@ void WPSendData(char *data, char length, enum NZP_TYPE type, char destination, c
 //=====================================================================
 uint_8 WPSENDLargeData(uint_8 *data, uint_8 length, uint_8 totalLength,char destination, uint_8 end);
 
+//=====================================================================
+//函数名称：WPSENDLargeData
+//函数返回：无返回值
+//参数说明：   data: 将要发送数据的字符串指针
+//         length: 发送的数据长度
+//    destination: 发送的目的地
+//          count: 数据 frame order
+//功能概要：发送一帧 rf 大数据
+//=====================================================================
 void WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count);
+
 #endif
