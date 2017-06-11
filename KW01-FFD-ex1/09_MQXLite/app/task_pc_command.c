@@ -33,44 +33,41 @@ void task_pc_command(uint32_t initial_data){
         uint_8 frameOrder;
         switch (data[0]) {
             case PC_COM_NODES:        // 询问所有的节点状态
-                aliveCount = alive_node_addrs(aliveAddrs);
-                sendNodeStatus(aliveCount,aliveAddrs);
+                aliveCount = alive_node_addrs(aliveAddrs); // 获取所有存活的节点地址
+                sendNodeStatus(aliveCount,aliveAddrs);     // 发送 UART 给 PC 看看
                 break;
-            case PC_COM_TEMP:
+            case PC_COM_TEMP:        // 询问节点温度
                 des = data[1];       // 询问地址为 des 节点的温度信息
-                WPSendData("a", 1, NZP_TEMPERATURE, des-'0', 0);
+                WPSendData("a", 1, NZP_TEMPERATURE, des-'0', 0); // 发送询问协议
                 break;
-            case PC_COM_CONTIONUOUS:
+            case PC_COM_CONTIONUOUS: // 持续监测温度信息
                 des = data[1];
                 WPSendData("a", 1, NZP_CONTIONUOUS_MONITOR, des-'0', 0);
                 break;
-            case PC_BIG_DATA_START:
-                totoalLength = data[1];
-                destination = data[2];
-                //WPSENDLargeDataWithFrame(uint_8 *data, uint_8 length, char destination, uint_8 count)
-                //WPSENDLargeDataWithFrame()
+            case PC_BIG_DATA_START:  // 大数据的头帧
+                totoalLength = data[1];  // 总的帧数
+                destination = data[2];   // 目的地址
                 WPSendData(&totoalLength, 1, NZP_RTS, destination, 0);
                 break;
-            case PC_BIG_DATA:
-//            	MyUartSendN("send one Frame");
-            	frameOrder = data[1];
-                dataLength = data[2];
+            case PC_BIG_DATA:       // 大数据的每一帧
+            	frameOrder = data[1];  // 帧号
+                dataLength = data[2];  // 数据长度
                 WPSENDLargeDataWithFrame(data+3, dataLength, destination, frameOrder);
                 break;
-            case PC_BIG_DATA_END:
+            case PC_BIG_DATA_END:   // 数据尾
             	WPSendData("a", 1, NZP_TS_END, destination, 0);
                 break;
-            case PC_BIG_DATA_READ:
+            case PC_BIG_DATA_READ:  // 读取节点的 flash 的数据
             	WPSendData("a",1,NZP_DATA_READ,data[1],0);
             	break;
-            case PC_MISS_DATA:
+            case PC_MISS_DATA:  // 发送丢失数据帧
             	// data[2]: the number of miss frames
-            	destination = data[1];
+            	destination = data[1]; // 目标节点
             	data[1] = 'M';
             	WPSendData(data+1, data[2]+2, NZP_ACK, destination, 0);
             	break;
-            case PC_LIGHT_CONTROL_MESSAGE:
-            	destination = data[1];
+            case PC_LIGHT_CONTROL_MESSAGE:  // 控制小灯频率控制
+            	destination = data[1];      // 目标节点地址 
             	WPSendData(data+2, 1, NZP_LIGHT_CONTROL, destination, 0);
             	break;
             default:
